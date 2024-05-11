@@ -4,10 +4,10 @@
 }
 
 .over:hover {
-  transform: translateY(-10px);
-  .name {
-    color: #2f820c;
-  }
+  transform: scale(1.04);
+}
+.over:hover .name {
+  color: #2f820c;
 }
 .salsa-regular {
   font-family: "Salsa", cursive;
