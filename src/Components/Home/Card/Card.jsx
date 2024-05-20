@@ -3,14 +3,14 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
-import "./Card.css";
+import "./Crousal.css";
 
 function ActionAreaCard(prop) {
   return (
-    <Card sx={{ maxWidth: 345 }} className=" mr-10 mb-10 over">
+    <Card sx={{ maxWidth: 345 }} className=" gap-3 over mt-36">
       <CardActionArea>
         <CardMedia
-          className=" aspect-square"
+          className=" h-52"
           component="img"
           height="140"
           image={prop.img}

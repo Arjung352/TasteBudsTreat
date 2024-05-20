@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Navbar from "./Navbar";
-import Home from "./Home";
-import Recipies from "./Recipies";
-import About from "./AboutMe/About";
-import Register from "./Register";
+import Navbar from "../Navbar/Navbar";
+import Home from "../Home/Home";
+import Recipies from "../Recipies/Recipies";
+import About from "../AboutMe/About";
+import Register from "../Register/Register";
 import Error from "./Error";
 function App() {
   return (

@@ -11,7 +11,7 @@ function Myself() {
       <div className="Myself">
         <div className="Pic bg-[url('https://www.vegrecipesofindia.com/wp-content/themes/veg-recipes-2020/assets/icons/logo/logomark.svg')] pic-container">
           <img
-            src="./src/AboutMe/Myself/Me.png"
+            src="./src/Components/AboutMe/Myself/Me.png"
             alt="Arjun"
             className="MyPic"
           />

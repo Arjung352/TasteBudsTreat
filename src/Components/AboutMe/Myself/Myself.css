@@ -50,3 +50,19 @@
   color: #2f820c !important;
   padding: 4px;
 }
+@media (max-width: 900px) {
+  .Myself {
+    flex-direction: column;
+    width: 70vw;
+  }
+  .MyPic {
+    height: 100px;
+    width: 100px;
+  }
+  .Pic {
+    width: auto;
+  }
+  .AboutMe {
+    width: auto;
+  }
+}
