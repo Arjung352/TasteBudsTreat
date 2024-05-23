@@ -9,5 +9,9 @@
   color: rgb(0, 0, 0);
 }
 body {
-  background-color: #fdfdfd;
+  background-color: #fffcf6;
+  overflow-x: hidden;
+}
+.out {
+  height: 80vh;
 }

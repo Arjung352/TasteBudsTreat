@@ -14,7 +14,7 @@ function ActionAreaCard(prop) {
           component="img"
           height="140"
           image={prop.img}
-          alt="green iguana"
+          alt={prop.name}
         />
         <CardContent>
           <Typography
