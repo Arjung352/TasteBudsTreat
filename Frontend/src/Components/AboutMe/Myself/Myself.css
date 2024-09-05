@@ -31,12 +31,8 @@
   transform: translatey(-20px);
 }
 .AboutMe {
-  box-sizing: border-box;
   margin: 10px;
-  font-family: sans-serif;
   font-size: 1rem;
-  color: #565656;
-  font-weight: 700;
 }
 .Name {
   font-size: 40px;

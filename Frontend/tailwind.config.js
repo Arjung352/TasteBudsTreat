@@ -12,6 +12,7 @@ export default {
       },
       fontFamily: {
         Salsa: ["Salsa"],
+        Nato: ["Noto Sans", "sans-serif"],
       },
       screens: {
         sm: "640px",

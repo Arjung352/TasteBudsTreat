@@ -1,3 +1,4 @@
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import Favourite from "./Card/Favourite";
 import "./home.css";
@@ -32,7 +33,7 @@ function Home() {
           </div>
           <div className=" flex justify-center">
             <img
-              className=" h-fit w-auto max-w-none"
+              className="h-fit w-auto"
               src="\src\Components\Home\salad-with-fresh-vegetables-plate-top-view_169016-29107-removebg-preview.png"
             />
           </div>

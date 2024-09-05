@@ -1,3 +1,4 @@
+import React from "react";
 import name from "./name";
 import ActionAreaCard from "./Card";
 import Slider from "react-slick";
@@ -14,7 +15,7 @@ function Favourite() {
     slidesToScroll: 1,
   };
   return (
-    <Slider {...settings} className=" h-4/6">
+    <Slider {...settings} className=" h-4/6 flex ">
       {name.map((value, index) => (
         <ActionAreaCard
           key={index}
