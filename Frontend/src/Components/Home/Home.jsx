@@ -19,15 +19,18 @@ function Home() {
             <p className=" font-Salsa text-6xl">
               It's Not just Food, it's an experience.
             </p>
-            <div className=" z-10">
-              <button className="button hover:bg-darkOlive" onClick={redirect}>
-                Recipies
+            <div className=" z-10 text-lg font-WorkSans font-semibold">
+              <button
+                className="button w-2/5  hover:bg-darkOlive"
+                onClick={redirect}
+              >
+                Menu
               </button>
               <button
                 className="button bg-stone-300 hover:bg-peach text-black ml-11"
                 onClick={redirectRegister}
               >
-                Regsiter
+                Know-More
               </button>
             </div>
           </div>
