@@ -1,11 +1,10 @@
 import React from "react";
-import { ShoppingCartIcon, TruckIcon, CreditCardIcon, GiftIcon } from "@heroicons/react/24/outline"; // Updated import path
+import { ShoppingCartIcon, TruckIcon, CreditCardIcon, GiftIcon } from "@heroicons/react/24/outline"; 
 
 const ServicesSection = () => {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-50 py-10">
       <div className="max-w-6xl w-full mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Left Side - Text and Button */}
         <div className="flex flex-col justify-center">
           <h3 className="text-pink-500 text-sm uppercase font-bold mb-2">Our Story & Services</h3>
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -19,9 +18,7 @@ const ServicesSection = () => {
           </button>
         </div>
 
-        {/* Right Side - Service Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {/* Card 1 - Catering */}
           <div className="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
             <ShoppingCartIcon className="w-12 h-12 text-green-500 mb-4" />
             <h4 className="font-bold text-lg text-gray-900 mb-2">Catering</h4>
@@ -30,7 +27,6 @@ const ServicesSection = () => {
             </p>
           </div>
 
-          {/* Card 2 - Fast Delivery */}
           <div className="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
             <TruckIcon className="w-12 h-12 text-green-500 mb-4" />
             <h4 className="font-bold text-lg text-gray-900 mb-2">Fast Delivery</h4>
@@ -39,7 +35,6 @@ const ServicesSection = () => {
             </p>
           </div>
 
-          {/* Card 3 - Online Ordering */}
           <div className="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
             <CreditCardIcon className="w-12 h-12 text-green-500 mb-4" />
             <h4 className="font-bold text-lg text-gray-900 mb-2">Online Ordering</h4>
@@ -48,7 +43,6 @@ const ServicesSection = () => {
             </p>
           </div>
 
-          {/* Card 4 - Gift Cards */}
           <div className="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
             <GiftIcon className="w-12 h-12 text-green-500 mb-4" />
             <h4 className="font-bold text-lg text-gray-900 mb-2">Gift Cards</h4>
