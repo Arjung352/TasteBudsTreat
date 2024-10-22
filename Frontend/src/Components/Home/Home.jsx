@@ -1,6 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Favourite from "./Card/Favourite";
+import Testimonials from "../Testimonials/Testimonials";
+import ServicesSection from "../ServiceSection/ServiceSection";
+
 import "./home.css";
 function Home() {
   const recipie = useNavigate();
@@ -42,6 +45,8 @@ function Home() {
           </div>
         </div>
         <Favourite />
+        <Testimonials />
+        <ServicesSection />
       </div>
     </div>
   );
