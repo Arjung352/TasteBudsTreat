@@ -4,10 +4,10 @@ import { NavLink, Outlet } from "react-router-dom";
 function Navbar() {
   return (
     <>
-      <div className="flex gap-4 flex-col font-WorkSans items-center justify-center text-black  relative">
+      <div className="flex font-WorkSans items-center justify-center text-black  relative">
         <img
           src="src\Components\Navbar\taste_buds_logo_-_green-removebg-preview.png"
-          className=" h-20 w-25 "
+          className=" h-20 "
         />
         <div className="flex w-screen justify-center">
           <ul className=" flex justify-end text-2xl nav font-semibold gap-4">
@@ -24,7 +24,9 @@ function Navbar() {
               <NavLink to="/Contact-Us">Contact-Us</NavLink>
             </li>
           </ul>
-          <span className="mt-2 absolute right-16 top-0">
+        </div>
+        <div className="flex gap-6 mr-4">
+          <span>
             <NavLink to="/Cart">
               <ShoppingCartIcon
                 fontSize="large"
@@ -32,12 +34,12 @@ function Navbar() {
               />
             </NavLink>
           </span>
-          <span className="mt-2 absolute right-2 top-0">
+          <span>
             <NavLink to="/Cart">
               <img
                 src="src\Components\Navbar\google-gemini-icon.png"
                 fontSize="large"
-                className="hover:text-darkOlive aspect-square h-9 "
+                className="hover:text-darkOlive h-9 w-14 "
               />
             </NavLink>
           </span>
