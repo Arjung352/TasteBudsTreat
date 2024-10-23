@@ -5,72 +5,70 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import XIcon from "@mui/icons-material/X";
+
 function About() {
-  const ColoredLine = ({ color }) => (
-    <hr
-      style={{
-        color: color,
-        backgroundColor: color,
-        height: 2,
-        marginTop: "1rem",
-      }}
-    />
-  );
   return (
-    <div className="flex justify-center">
-      <div className="w-4/5 flex flex-row ">
-        <div className=" font-semibold font-2xl mr-16 mt-8 font-Nato">
-          <h1 className="font-bold text-4xl mb-4 text-olive">About Us</h1>
-          <h2 className="text-3xl mb-4">Namaste</h2>
-          <p>
-            We are glad that you are here and thank you for stopping by on
-            TasteBudsTreat's which has pure vegetarian recipes, mostly Indian
-            but some World Cuisine as well. There are many Eggless Baking
-            Recipes as well. Most of the recipes are in step by step pictorial
-            guide. They are easy to understand and relate too. Some recipes have
-            short videos with the stepwise photo guide.
-          </p>
-          <ColoredLine color={"black"} />
-          <h1 className="font-bold text-4xl mb-4 mt-4 text-olive">Who am I</h1>
-          <h2 className="text-3xl mb-4">Hello!</h2>
-          <p>
-            Hi, I am Arjun Gupta A 2nd Year BCA Student In SGTBIMIT Affiliated
-            in IPU.A MERN Stack Developer with a passion for building dynamic
-            and responsive web applications. Skilled in FRONT-END technologies
-            such as HTML, CSS, JavaScript, and ReactJS, as well as BACK-END
-            technologies including Node.js, PHP, Express.js, My-SQL and MongoDB.
-            Comfortable working with frameworks and libraries like Bootstrap,
-            Material-UI, and Tailwind CSS. Dedicated to continuous learning and
-            staying up-to-date with the latest industry trends.
-          </p>
-          <ColoredLine color={"black"} />
-          <h1 className="font-bold text-4xl mb-4 mt-4 text-olive">
-            Connect me!
-          </h1>
-          <div>
-            <a href="https://www.instagram.com/_arjungupta29/" target="_">
-              <InstagramIcon className="mr-2 cursor-pointer" />
-            </a>
-            <a href="https://github.com/Arjung352/" target="_">
-              <GitHubIcon className="mr-2 cursor-pointer" />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/arjun-gupta-948b11291"
-              target="_"
-            >
-              <LinkedInIcon className="cursor-pointer mr-2" />
-            </a>
-            <a href="mailto:arjung7751@gmail.com" target="_">
-              <MailOutlineIcon className="cursor-pointer mr-2" />
-            </a>
-            <a href="https://x.com/_arjungupta29" target="_">
-              <XIcon className="cursor-pointer" />
-            </a>
+    <div className="min-h-screen bg-white text-black flex justify-center items-center p-8">
+      <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-[70%_30%] gap-10">
+        <div className="space-y-10">
+          <div className="bg-opacity-70 rounded-lg shadow-lg p-8 transition duration-500 hover:bg-gray-100">
+            <h1 className="text-3xl font-extrabold mb-6 text-green-500 text-left">About Us</h1>
+            <p className="text-lg leading-relaxed text-left">
+              Welcome to <strong>TasteBudsTreat's!</strong> We are <strong>Ansh Bansal, Arjun Gupta, and 
+                Adarsh Sharma</strong>, a trio of food enthusiasts currently in our 
+                <strong>third year of Bachelor of Computer Applications (BCA) </strong> at <strong>
+                Sri Guru Tegh Bahadur Institute of Management and IT, affiliated with Guru Gobind Singh 
+                Indraprastha University (GGSIPU).</strong> Our passion for food and technology has 
+                inspired us to create this platform, where we aim to share our love for delicious 
+                treats with food lovers everywhere. TasteBudsTreat's is here to delight your 
+                taste buds with the best culinary experiences!
+            </p>
+          </div>
+
+          <div className="bg-opacity-70 rounded-lg shadow-lg p-8 transition duration-500 hover:bg-gray-100">
+            <h1 className="text-3xl font-extrabold mb-6 text-green-500 text-left">About TasteBudsTreat's</h1>
+            <p className="text-lg leading-relaxed text-left">
+              At <strong>TasteBudsTreat's</strong>, we believe that food is not just about sustenance 
+              but a <strong>source of joy and togetherness</strong>. Our platform is dedicated to 
+              discovering and sharing delectable recipes, food tips, and culinary adventures that 
+              ignite the senses.From traditional dishes to innovative creations, we celebrate the 
+              diversity and richness of flavors from around the world. Whether you're a seasoned 
+              chef or a food enthusiast, <strong>TasteBudsTreat's is your go-to destination</strong>
+              for exploring exciting, delicious, and easy-to-follow recipes that will leave you craving more.
+              Join us in this flavorful journey and let your taste buds experience the ultimate treat!
+            </p>
+          </div>
+
+          <div className="bg-opacity-70 rounded-lg shadow-lg p-8 text-center transition duration-500 hover:bg-gray-100">
+            <h1 className="text-3xl font-extrabold mb-6 text-green-500 text-left">Connect with Us</h1>
+            <div className="flex justify-start space-x-6 text-3xl">
+              <a href="https://www.instagram.com/_arjungupta29/" target="_" rel="noopener noreferrer">
+                <InstagramIcon className="hover:text-pink-500 transition duration-300" />
+              </a>
+              <a href="https://github.com/Arjung352/" target="_" rel="noopener noreferrer">
+                <GitHubIcon className="hover:text-gray-500 transition duration-300" />
+              </a>
+              <a href="https://www.linkedin.com/in/arjun-gupta-948b11291" target="_" rel="noopener noreferrer">
+                <LinkedInIcon className="hover:text-blue-500 transition duration-300" />
+              </a>
+              <a href="mailto:arjung7751@gmail.com" target="_" rel="noopener noreferrer">
+                <MailOutlineIcon className="hover:text-red-500 transition duration-300" />
+              </a>
+              <a href="https://x.com/_arjungupta29" target="_" rel="noopener noreferrer">
+                <XIcon className="hover:text-gray-400 transition duration-300" />
+              </a>
+            </div>
           </div>
         </div>
-        <Myself />
+        <div className="flex justify-end items-start">
+            <div className="bg-opacity-70 rounded-lg shadow-lg p-8 w-full text-center transition duration-500 hover:bg-gray-100">
+              <Myself />
+            </div>
+          </div>
+
       </div>
     </div>
   );
 }
+
 export default About;
