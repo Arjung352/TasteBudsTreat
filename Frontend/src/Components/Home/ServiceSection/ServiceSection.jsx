@@ -8,7 +8,7 @@ import {
 
 const ServicesSection = () => {
   return (
-    <div className="flex flex-col justify-center items-center  font-WorkSans">
+    <div className="flex flex-col justify-center items-center  font-WorkSans mb-10">
       <div className="max-w-6xl w-full mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="flex flex-col justify-center">
           <h3 className="text-red-600 text-xl uppercase font-bold mb-2">

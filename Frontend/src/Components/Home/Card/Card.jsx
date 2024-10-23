@@ -1,9 +1,5 @@
 import React from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import { CardActionArea } from "@mui/material";
+import StarIcon from "@mui/icons-material/Star";
 import "./Crousal.css";
 import { useNavigate } from "react-router-dom";
 function ActionAreaCard(prop) {
@@ -12,36 +8,24 @@ function ActionAreaCard(prop) {
     redirecting("/cart");
   };
   return (
-    <Card sx={{ maxWidth: 345 }} className=" gap-3 over mt-36 ">
-      <CardActionArea>
-        <CardMedia
-          className=" h-52"
-          component="img"
-          height="140"
-          image={prop.img}
-          alt={prop.name}
+    <div>
+      <div className="p-8 px-8 shadow-md flex flex-col items-center bg-white rounded-2xl hover:scale-105 transition-all ease-in-out mb-6">
+        <img
+          src="src\Components\Home\PopularCatagories\image\burger.png"
+          className=" aspect-square rounded-full h-32 w-32 bg-green-300 p-3"
         />
-        <CardContent>
-          <Typography
-            gutterBottom
-            variant="h5"
-            component="div"
-            className="name"
-          >
-            {prop.name}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {prop.about}
-          </Typography>
-          <button
-            className="p-2 bg-olive text-white px-4 rounded-2xl mt-4 hover:bg-darkOlive font-normal "
-            onClick={redirect}
-          >
-            Buy Now
-          </button>
-        </CardContent>
-      </CardActionArea>
-    </Card>
+        <div className=" self-start">
+          <p className=" mt-4 text-2xl font-bold">Main Dish</p>
+          <p className=" mt-2 text-xl uppercase">(description)</p>
+        </div>
+        <div className="flex justify-between w-full mt-2">
+          <p>12000</p>
+          <p className="">
+            <StarIcon /> (4.9)
+          </p>
+        </div>
+      </div>
+    </div>
   );
 }
 export default ActionAreaCard;

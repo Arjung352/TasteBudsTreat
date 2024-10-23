@@ -46,7 +46,7 @@ function Home() {
           </div>
         </div>
         <PopularCatagories />
-        {/* <Favourite /> */}
+        <Favourite />
         <Testimonials />
         <ServicesSection />
         <Footer />

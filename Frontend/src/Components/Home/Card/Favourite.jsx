@@ -15,16 +15,30 @@ function Favourite() {
     slidesToScroll: 1,
   };
   return (
-    <Slider {...settings} className=" h-4/6 flex ">
-      {name.map((value, index) => (
-        <ActionAreaCard
-          key={index}
-          img={value.img}
-          about={value.about}
-          name={value.name}
-        />
-      ))}
-    </Slider>
+    <div className=" font-WorkSans flex flex-col items-center my-8 mt-16 mx-8">
+      <div className=" self-start mx-16">
+        <div>
+          <p className=" uppercase text-red-600 text-xl font-bold mb-5">
+            special dishes
+          </p>
+        </div>
+        <div>
+          <p className="text-4xl font-semibold mb-8 w-2/5">
+            Standout Dishes From Our Menu
+          </p>
+        </div>
+      </div>
+      <Slider {...settings} className=" flex ">
+        {name.map((value, index) => (
+          <ActionAreaCard
+            key={index}
+            img={value.img}
+            about={value.about}
+            name={value.name}
+          />
+        ))}
+      </Slider>
+    </div>
   );
 }
 

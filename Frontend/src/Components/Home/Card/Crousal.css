@@ -27,3 +27,6 @@
 .slick-list {
   height: 100% !important;
 }
+.slick-slider {
+  width: 85%;
+}
