@@ -1,0 +1,31 @@
+.features {
+  width: 80%;
+  margin: auto;
+}
+
+.accordion {
+  /* background-color: #f1f1f1; */
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  transition: 0.4s;
+}
+
+.accordion.active,
+.accordion:hover {
+  background-color: #ccc;
+}
+
+.panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.7s ease-in-out;
+}
+
+.panel.open {
+  max-height: 500px; /* Set to a height large enough to fit the content */
+}

@@ -5,9 +5,40 @@
   height: 100vh;
   padding: 1rem;
 }
+/* Slide-in and slide-out keyframes */
+@keyframes slideInContent {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutContent {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+/* Apply animations */
+.slide-in {
+  animation: slideInContent 1s ease forwards;
+}
+
+.slide-out {
+  animation: slideOutContent 1s ease forwards;
+}
 
 .myself-container {
-  background-color: #ffffff;
+  overflow: hidden; /* Prevents content from overflowing outside the card */
   border-radius: 1rem;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   max-width: 28rem;
@@ -19,7 +50,7 @@
 }
 
 .my-pic {
-  border-radius: 9999px; 
+  border-radius: 9999px;
   height: 8rem;
   width: 8rem;
   object-fit: cover;
@@ -29,7 +60,7 @@
 
 .name {
   font-size: 1.5rem;
-  font-weight: 700; 
+  font-weight: 700;
   color: #1f2937;
 }
 
@@ -41,7 +72,7 @@
 
 @media (min-width: 768px) {
   .myself-container {
-    max-width: 32rem; 
+    max-width: 32rem;
     padding: 2.5rem;
   }
 
@@ -50,6 +81,6 @@
   }
 
   .about-me {
-    font-size: 1.125rem; 
+    font-size: 1.125rem;
   }
 }

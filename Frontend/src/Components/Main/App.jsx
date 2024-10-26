@@ -6,6 +6,7 @@ import Recipies from "../Recipies/Recipies";
 import About from "../AboutMe/About";
 import Cart from "../Cart/Cart";
 import Error from "./Error";
+import ContactUs from "../ContactUs/ContactUs";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route path="recipies" element={<Recipies />} />
             <Route path="about" element={<About />} />
             <Route path="cart" element={<Cart />} />
+            <Route path="Contact-Us" element={<ContactUs />} />
             <Route path="*" element={<Error />} />
           </Route>
         </Routes>
