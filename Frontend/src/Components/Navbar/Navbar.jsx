@@ -10,7 +10,7 @@ function Navbar() {
           className=" h-20 "
         />
         <div className="flex w-screen justify-center">
-          <ul className=" flex justify-end text-2xl nav font-semibold gap-4">
+          <ul className=" flex justify-end text-2xl nav font-normal gap-4">
             <li className="mr-8 mt-1 hover:text-darkOlive">
               <NavLink to="/">Home</NavLink>
             </li>
