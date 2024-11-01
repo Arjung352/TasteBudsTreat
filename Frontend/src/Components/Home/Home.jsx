@@ -25,13 +25,13 @@ function Home() {
             </p>
             <div className=" z-10 text-lg font-WorkSans font-semibold">
               <button
-                className="button w-2/5  hover:bg-darkOlive"
+                className="button bg-green-500 w-2/5   hover:scale-105 transition-all duration-300 hover:bg-olive"
                 onClick={redirect}
               >
                 Menu
               </button>
               <button
-                className="button bg-stone-300 hover:bg-peach text-black ml-11"
+                className="button bg-stone-300  hover:scale-105 transition-all duration-300 hover:bg-peach text-black ml-11"
                 onClick={redirectRegister}
               >
                 Know-More

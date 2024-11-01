@@ -1,11 +1,11 @@
 import React from "react";
 function PopularCatagories() {
   return (
-    <div className="flex flex-col items-center font-WorkSans mt-16">
-      <div className=" text-red-600 text-xl uppercase font-bold mb-4">
+    <div className="flex flex-col items-center font-WorkSans mt-20">
+      <div className=" text-red-600 text-xl uppercase font-medium mb-4">
         Customer Favourite
       </div>
-      <div className="text-5xl font-bold mb-8">Popular Catagories</div>
+      <div className="text-5xl font-medium mb-8">Popular Catagories</div>
       <div className=" grid grid-cols-4 gap-8">
         <div className="p-12 px-16 shadow-md bg-white rounded-2xl hover:scale-105 transition-all ease-in-out">
           <img

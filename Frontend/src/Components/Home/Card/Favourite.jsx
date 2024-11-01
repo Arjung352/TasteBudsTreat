@@ -15,15 +15,15 @@ function Favourite() {
     slidesToScroll: 1,
   };
   return (
-    <div className=" font-WorkSans flex flex-col items-center my-8 mt-16 mx-8">
+    <div className=" font-WorkSans flex flex-col items-center my-8 mt-20 mx-8">
       <div className=" self-start mx-16">
         <div>
-          <p className=" uppercase text-red-600 text-xl font-bold mb-5">
+          <p className=" uppercase text-red-600 text-xl font-medium mb-5">
             special dishes
           </p>
         </div>
         <div>
-          <p className="text-4xl font-semibold mb-8 w-2/5">
+          <p className="text-4xl font-medium mb-8 w-2/5">
             Standout Dishes From Our Menu
           </p>
         </div>

@@ -34,7 +34,7 @@ const TestimonialSection = () => {
   }, []);
 
   return (
-    <section className="w-full my-20 font-WorkSans">
+    <section className="w-full mt-20 font-WorkSans">
       <div className="container mx-auto px-4 md:px-6  py-10">
         <div className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12">
           <div className="w-full md:w-1/3 flex justify-center md:justify-start">
@@ -45,11 +45,11 @@ const TestimonialSection = () => {
             />
           </div>
           <div className="w-full md:w-2/3 flex flex-col justify-center space-y-4 text-center md:text-left">
-            <h1 className=" text-red-600 text-xl uppercase font-bold ">
+            <h1 className=" text-red-600 text-xl uppercase font-medium ">
               Testimonial
             </h1>
 
-            <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+            <h1 className="text-3xl font-medium tracking-tighter sm:text-4xl md:text-5xl">
               What Our Customers Say About Us
             </h1>
             <p className="max-w-[600px] text-zinc-500 md:text-xl dark:text-zinc-400">

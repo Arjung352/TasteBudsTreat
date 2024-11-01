@@ -6,7 +6,7 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 function Footer() {
   return (
     <div>
-      <hr className=" border border-black" />
+      <hr className=" border border-gray-400" />
       <div className="flex justify-between my-10 font-WorkSans mx-8">
         <div>
           <img
@@ -46,12 +46,12 @@ function Footer() {
       </div>
       <div className="flex justify-between items-center relative">
         <div className="flex gap-6 mx-8 mb-5">
-          <div className="p-2 bg-green-600 rounded-full hover:scale-105 transition-all ease-in-out shadow-xl">
+          <div className="p-2 bg-green-500 rounded-full hover:scale-105 transition-all ease-in-out shadow-xl">
             <a href="mailto:tastebudstreat29@gmail.com" className="text-white">
               <MailOutlineIcon />
             </a>
           </div>
-          <div className="p-2 bg-green-600 rounded-full hover:scale-105 transition-all ease-in-out shadow-xl">
+          <div className="p-2 bg-green-500 rounded-full hover:scale-105 transition-all ease-in-out shadow-xl">
             <a
               href="https://github.com/Arjung352/TasteBudsTreat"
               className="text-white"
@@ -59,7 +59,7 @@ function Footer() {
               <GitHubIcon />
             </a>
           </div>
-          <div className="p-2 bg-green-600 rounded-full hover:scale-105 transition-all ease-in-out shadow-xl">
+          <div className="p-2 bg-green-500 rounded-full hover:scale-105 transition-all ease-in-out shadow-xl">
             <a
               href="https://www.instagram.com/tastebudstreat29"
               className="text-white"

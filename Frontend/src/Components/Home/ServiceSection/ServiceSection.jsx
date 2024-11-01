@@ -8,13 +8,13 @@ import {
 
 const ServicesSection = () => {
   return (
-    <div className="flex flex-col justify-center items-center  font-WorkSans mb-10">
+    <div className="flex flex-col justify-center items-center  font-WorkSans my-20">
       <div className="max-w-6xl w-full mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="flex flex-col justify-center">
-          <h3 className="text-red-600 text-xl uppercase font-bold mb-2">
+          <h3 className="text-red-600 text-xl uppercase font-medium mb-2">
             Our Story & Services
           </h3>
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <h1 className="text-3xl md:text-4xl font-medium text-gray-900 mb-4">
             Our Culinary Journey And Services
           </h1>
           <p className="text-gray-600 mb-6">
@@ -22,7 +22,7 @@ const ServicesSection = () => {
             offer exceptional services, blending culinary artistry with warm
             hospitality.
           </p>
-          <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full w-32">
+          <button className="bg-green-500 transition-all duration-300 hover:bg-olive text-white font-bold py-2 px-4 rounded-full w-32">
             Explore
           </button>
         </div>
