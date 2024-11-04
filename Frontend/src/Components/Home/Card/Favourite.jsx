@@ -28,7 +28,7 @@ function Favourite() {
           </p>
         </div>
       </div>
-      <Slider {...settings} className=" flex ">
+      <Slider {...settings}>
         {name.map((value, index) => (
           <ActionAreaCard
             key={index}

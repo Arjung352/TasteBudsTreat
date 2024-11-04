@@ -13,7 +13,7 @@ function Home() {
     recipie("/Recipies");
   };
   const redirectRegister = () => {
-    register("/Register");
+    register("/about");
   };
   return (
     <div className=" flex justify-center">
