@@ -3,6 +3,7 @@ const app = express();
 const cors = require("cors");
 const nodemailer = require("nodemailer");
 require("dotenv").config();
+const mongoose = require("mongoose");
 
 // Middleware
 app.use(cors());
@@ -47,7 +48,14 @@ app.post("/send", (req, res) => {
   });
 });
 
-// Start server
-app.listen(process.env.PORT || 3000, () => {
-  console.log(`Server is listening on port ${process.env.PORT || 3000}`);
-});
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log("Database Connected sucessfully");
+    app.listen(process.env.PORT, () => {
+      console.log(`Backend listning at port ${process.env.PORT}`);
+    });
+  })
+  .catch(() => {
+    console.log("error connecting to database");
+  });
