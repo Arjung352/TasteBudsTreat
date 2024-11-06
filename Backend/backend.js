@@ -4,9 +4,12 @@ const cors = require("cors");
 const nodemailer = require("nodemailer");
 require("dotenv").config();
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const restaurantRoutes = require("./routes/restaurant");
 
 // Middleware
 app.use(cors());
+app.use(bodyParser.json());
 app.use(express.json()); // Using express.json() instead of bodyParser.json()
 
 // Home route
@@ -15,6 +18,9 @@ app.get("/", (req, res) => {
     message: "Hey There!",
   });
 });
+
+// Restro Route
+app.use("/api/restaurant", restaurantRoutes);
 
 // Email route
 app.post("/send", (req, res) => {
