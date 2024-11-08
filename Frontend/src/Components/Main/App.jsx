@@ -8,7 +8,7 @@ import Cart from "../Cart/Cart";
 import Error from "./Error";
 import ContactUs from "../ContactUs/ContactUs";
 import Register_Restaurant from "../Admin/Restaurant/Register_Restaurant";
-
+import MenuForm from "../Admin/Restaurant/Menu";
 function App() {
   return (
     <>
@@ -23,6 +23,10 @@ function App() {
             <Route
               path="Admin/register_restaurant"
               element={<Register_Restaurant />}
+            />
+            <Route
+              path="Admin/menu"
+              element={<MenuForm />}
             />
             <Route path="*" element={<Error />} />
           </Route>

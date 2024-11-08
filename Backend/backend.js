@@ -6,11 +6,12 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const restaurantRoutes = require("./routes/restaurant");
+const restromenu =require("./routes/menu")
 
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.json()); // Using express.json() instead of bodyParser.json()
+app.use(express.json()); 
 
 // Home route
 app.get("/", (req, res) => {
@@ -21,6 +22,9 @@ app.get("/", (req, res) => {
 
 // Restro Route
 app.use("/api/restaurant", restaurantRoutes);
+
+// Menu Route
+app.use("/api/restaurant/menu", restromenu);
 
 // Email route
 app.post("/send", (req, res) => {
@@ -55,7 +59,7 @@ app.post("/send", (req, res) => {
 });
 
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(process.env.MONGO_URI) 
   .then(() => {
     console.log("Database Connected sucessfully");
     app.listen(process.env.PORT, () => {
@@ -65,3 +69,4 @@ mongoose
   .catch(() => {
     console.log("error connecting to database");
   });
+  
