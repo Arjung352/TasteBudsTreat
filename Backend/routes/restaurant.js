@@ -49,8 +49,8 @@ router.post("/register", upload.single("img"), async (req, res) => {
     // Create a new restaurant document in the database
     const newRestaurant = new Restaurant({
       title: req.body.title,
-      desc: req.body.desc,  // Address (desc) field
-      image: imageUrl,      // Store Cloudinary image URL
+      desc: req.body.desc, // Address (desc) field
+      image: imageUrl, // Store Cloudinary image URL
       username: req.body.username,
       rating: req.body.rating,
     });
@@ -64,5 +64,13 @@ router.post("/register", upload.single("img"), async (req, res) => {
     res.status(500).json({ message: "Failed to register restaurant" });
   }
 });
-
+// Route to get all info regarding to the Restaurents
+router.get("/get-all", async (req, res) => {
+  try {
+    let All_restaurant = await Restaurant.find({});
+    res.status(200).json({ data: All_restaurant });
+  } catch (error) {
+    res.status(400).json({ message: error });
+  }
+});
 module.exports = router;

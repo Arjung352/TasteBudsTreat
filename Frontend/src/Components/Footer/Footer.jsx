@@ -10,7 +10,7 @@ function Footer() {
       <div className="flex justify-between my-10 font-WorkSans mx-8">
         <div>
           <img
-            src="src\Components\Navbar\taste_buds_logo_-_green-removebg-preview.png"
+            src="https://res.cloudinary.com/dmxlqw5ix/image/upload/v1731066887/qxhi70lws9tx5ssy8ff3.png"
             className="h-16 "
           />
           <p className="mt-8 w-4/6 font- text-lg text-gray-600">

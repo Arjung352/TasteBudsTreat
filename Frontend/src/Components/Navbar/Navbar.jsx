@@ -13,7 +13,7 @@ function Navbar() {
     <>
       <div className="flex font-WorkSans items-center justify-center text-black backdrop-blur-3xl	 relative">
         <img
-          src="src\Components\Navbar\taste_buds_logo_-_green-removebg-preview.png"
+          src="https://res.cloudinary.com/dmxlqw5ix/image/upload/v1731066887/qxhi70lws9tx5ssy8ff3.png"
           className=" h-20 "
         />
         <div className="flex w-screen justify-center ml-20">
@@ -53,7 +53,7 @@ function Navbar() {
           <span className="flex items-center">
             <NavLink to="/Cart">
               <img
-                src="src\Components\Navbar\google-gemini-icon.png"
+                src="https://res.cloudinary.com/dmxlqw5ix/image/upload/v1731066991/roipdopnwiti34gyxiq9.png"
                 fontSize="large"
                 className="hover:text-darkOlive h-7 w-7 "
               />
