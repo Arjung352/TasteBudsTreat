@@ -16,56 +16,68 @@ cloudinary.config({
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-// Route to fetch all restaurant names
-router.get("/restaurants", async (req, res) => {
-  try {
-    const restaurants = await Restaurant.find({}, "title");
-    res.status(200).json(restaurants);
-  } catch (error) {
-    console.error("Error fetching restaurants:", error);
-    res.status(500).json({ message: "Failed to fetch restaurants" });
-  }
-});
-
 // Route to add a new menu item
-router.post("/add-menu", upload.single("img"), async (req, res) => {
+router.post("/menu", upload.single("img"), async (req, res) => {
   try {
     let imageUrl = null;
 
+    // If an image is uploaded, upload it to Cloudinary
     if (req.file) {
       const stream = streamifier.createReadStream(req.file.buffer);
+
       const uploadResult = await new Promise((resolve, reject) => {
         const cloudinaryUpload = cloudinary.uploader.upload_stream(
-          { folder: "menu-items", resource_type: "auto" },
+          {
+            folder: "restaurants",
+            resource_type: "auto",
+          },
           (error, result) => {
-            if (error) reject(error);
-            else resolve(result);
+            if (error) {
+              reject(error);
+            } else {
+              resolve(result);
+            }
           }
         );
+
         stream.pipe(cloudinaryUpload);
       });
+
       imageUrl = uploadResult.secure_url;
+    } else {
+      imageUrl =
+        "https://cdn1.iconfinder.com/data/icons/ui-icon-part-3/128/image-512.png";
     }
 
-    const { restaurantId, restaurantName, dishName, category, foodType, price, rating, description } = req.body;
+    const { title, restaurantId, category, foodType, price } = req.body;
 
-    const newMenuItem = new Menu({
-      restaurantId,
-      restaurantName,
-      dishName,
-      category,
-      foodType,
+    // Create a new dish document
+    const newDish = new Menu({
+      dishName: title,
+      restaurantId: restaurantId,
       image: imageUrl,
-      price,
-      rating,
-      description,
+      category: category,
+      foodType: foodType,
+      price: price,
     });
 
-    await newMenuItem.save();
-    res.status(200).json({ message: "Menu item added successfully!" });
+    const restaurant = await Restaurant.findById(restaurantId);
+
+    // Ensure the restaurant exists before saving the dish
+    if (!restaurant) {
+      return res.status(404).json({ message: "Restaurant not found" });
+    }
+
+    const uploadDish = await newDish.save();
+
+    // Add a reference of the dish to the restaurant document
+    restaurant.dish.push(uploadDish._id);
+    await restaurant.save();
+
+    res.status(200).json({ message: "Dish Uploaded successfully" });
   } catch (error) {
-    console.error("Error adding menu item:", error);
-    res.status(500).json({ message: "Failed to add menu item" });
+    console.error("Error registering restaurant:", error);
+    res.status(500).json({ message: "Failed to Upload Dish" });
   }
 });
 

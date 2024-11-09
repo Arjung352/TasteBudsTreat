@@ -44,21 +44,26 @@ router.post("/register", upload.single("img"), async (req, res) => {
       });
 
       imageUrl = uploadResult.secure_url; // Get the image URL from Cloudinary
+    } else {
+      imageUrl =
+        "https://cdn1.iconfinder.com/data/icons/ui-icon-part-3/128/image-512.png";
     }
-
+    const { title, desc, rating } = req.body;
     // Create a new restaurant document in the database
     const newRestaurant = new Restaurant({
-      title: req.body.title,
-      desc: req.body.desc, // Address (desc) field
+      title: title,
+      desc: desc, // Address (desc) field
       image: imageUrl, // Store Cloudinary image URL
-      username: req.body.username,
-      rating: req.body.rating,
+      rating: rating,
     });
-
+    const restaurant = await Restaurant.findOne({ title });
+    if (!restaurant) {
+      await newRestaurant.save();
+      res.status(200).json({ message: "Restaurant registered successfully!" });
+    } else {
+      res.status(400).json({ message: "Restaurant Allready exists" });
+    }
     // Save the new restaurant to the database
-    await newRestaurant.save();
-
-    res.status(200).json({ message: "Restaurant registered successfully!" });
   } catch (error) {
     console.error("Error registering restaurant:", error);
     res.status(500).json({ message: "Failed to register restaurant" });

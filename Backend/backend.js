@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
 app.use("/api/restaurant", restaurantRoutes);
 
 // Menu Route
-app.use("/api/restaurant/menu", restromenu);
+app.use("/api/upload", restromenu);
 
 // Email route
 app.post("/send", (req, res) => {

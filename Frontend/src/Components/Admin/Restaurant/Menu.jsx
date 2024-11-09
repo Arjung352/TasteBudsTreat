@@ -52,7 +52,7 @@ function MenuForm() {
     setLoad(false);
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/restaurant/upload-dish", // Adjusted API endpoint for dish upload
+        "http://localhost:5000/api/upload/menu", // Adjusted API endpoint for dish upload
         formData,
         {
           headers: {
