@@ -25,7 +25,7 @@ function Navbar() {
               <NavLink to="/About">About</NavLink>
             </li>
             <li className="mr-8 mt-1 hover:text-darkOlive">
-              <NavLink to="/Recipies">Menu</NavLink>
+              <NavLink to="/Menu">Menu</NavLink>
             </li>
             <li className="mr-6 mt-1 hover:text-darkOlive">
               <NavLink to="/Contact-Us">Contact-Us</NavLink>

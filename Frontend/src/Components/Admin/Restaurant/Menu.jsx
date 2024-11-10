@@ -6,7 +6,6 @@ import { TailSpin } from "react-loader-spinner";
 import Footer from "../../Footer/Footer";
 
 function MenuForm() {
-  const redirect = useNavigate();
   const [load, setLoad] = useState(true);
   const [title, setTitle] = useState("");
   const [image, setImage] = useState(null);
@@ -52,7 +51,7 @@ function MenuForm() {
     setLoad(false);
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/upload/menu", // Adjusted API endpoint for dish upload
+        "http://localhost:5000/api/upload/menu",
         formData,
         {
           headers: {

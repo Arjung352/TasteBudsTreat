@@ -80,5 +80,13 @@ router.post("/menu", upload.single("img"), async (req, res) => {
     res.status(500).json({ message: "Failed to Upload Dish" });
   }
 });
-
+// Get all dishish
+router.get("/all-Dish", async (req, res) => {
+  try {
+    let allDish = await Menu.find({});
+    res.status(200).json({ data: allDish });
+  } catch (error) {
+    res.status(400).json({ message: error });
+  }
+});
 module.exports = router;

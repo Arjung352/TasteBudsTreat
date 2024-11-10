@@ -8,7 +8,7 @@ import "slick-carousel/slick/slick-theme.css";
 function Favourite() {
   var settings = {
     accessibility: true,
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 3,

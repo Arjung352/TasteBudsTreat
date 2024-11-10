@@ -10,7 +10,7 @@ function Home() {
   const recipie = useNavigate();
   const register = useNavigate();
   const redirect = () => {
-    recipie("/Recipies");
+    recipie("/menu");
   };
   const redirectRegister = () => {
     register("/about");

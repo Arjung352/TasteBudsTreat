@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import Home from "../Home/Home";
-import Recipies from "../Recipies/Recipies";
+import Menu from "../Menu/Menu";
 import About from "../AboutMe/About";
 import Cart from "../Cart/Cart";
 import Error from "./Error";
@@ -16,7 +16,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Navbar />}>
             <Route index element={<Home />} />
-            <Route path="Recipies" element={<Recipies />} />
+            <Route path="Menu" element={<Menu />} />
             <Route path="About" element={<About />} />
             <Route path="Cart" element={<Cart />} />
             <Route path="Contact-Us" element={<ContactUs />} />
@@ -24,10 +24,7 @@ function App() {
               path="Admin/register_restaurant"
               element={<Register_Restaurant />}
             />
-            <Route
-              path="Admin/menu"
-              element={<MenuForm />}
-            />
+            <Route path="Admin/menu" element={<MenuForm />} />
             <Route path="*" element={<Error />} />
           </Route>
         </Routes>
