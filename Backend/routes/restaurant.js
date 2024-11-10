@@ -69,13 +69,18 @@ router.post("/register", upload.single("img"), async (req, res) => {
     res.status(500).json({ message: "Failed to register restaurant" });
   }
 });
-// Route to get all info regarding to the Restaurents
+
+// Route to get all restaurants
 router.get("/get-all", async (req, res) => {
   try {
-    let All_restaurant = await Restaurant.find({});
-    res.status(200).json({ data: All_restaurant });
+    const allRestaurants = await Restaurant.find({});
+    res.status(200).json({ data: allRestaurants });
   } catch (error) {
-    res.status(400).json({ message: error });
+    console.error("Error fetching restaurants:", error);
+    res.status(500).json({ message: "Failed to fetch restaurants" });
   }
 });
+
 module.exports = router;
+
+

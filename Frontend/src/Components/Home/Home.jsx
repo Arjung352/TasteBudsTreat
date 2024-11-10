@@ -4,6 +4,7 @@ import Favourite from "./Card/Favourite";
 import Testimonials from "./Testimonials/Testimonials";
 import ServicesSection from "./ServiceSection/ServiceSection";
 import PopularCatagories from "./PopularCatagories/PopularCatagories";
+import Restaurant from "./Restaurant/Restaurant";
 import Footer from "../Footer/Footer";
 import "./home.css";
 function Home() {
@@ -47,6 +48,7 @@ function Home() {
         </div>
         <PopularCatagories />
         <Favourite />
+        <Restaurant />
         <Testimonials />
         <ServicesSection />
         <Footer />

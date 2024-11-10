@@ -58,6 +58,8 @@ app.post("/send", (req, res) => {
   });
 });
 
+
+
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
@@ -69,3 +71,4 @@ mongoose
   .catch(() => {
     console.log("error connecting to database");
   });
+

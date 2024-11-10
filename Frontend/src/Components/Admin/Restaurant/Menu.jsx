@@ -74,7 +74,7 @@ function MenuForm() {
     const fetchRestaurants = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/restaurant/get-all"
+          "http://localhost:5000/api/restaurant"
         );
         console.log("Fetched restaurants:", response.data.data);
         setRestaurants(response.data.data);
