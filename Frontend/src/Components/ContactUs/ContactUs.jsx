@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -32,24 +31,27 @@ function ContactUs() {
         toast.error("Failed to send message.");
       });
   };
+
   return (
     <div>
       <div>
-        <div className=" h-64 relative mt-3">
-          <div>
+        <div className="relative mt-3">
+          <div className="h-64 md:h-80 lg:h-96">
             <img
               src="https://b.zmtcdn.com/webFrontend/8015dbe54fd3659cc0366c1cc77f664c1601890512.jpeg?output-format=webp"
-              className="w-full h-full object-cover absolute"
+              className="w-full h-full object-cover absolute top-0 left-0"
+              alt="Background"
             />
           </div>
-          <div className="h-full relative w-full">
-            <p className="text-white font-WorkSans absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-5xl text-center">
+          <div className="absolute inset-0 flex items-center justify-center text-center">
+            <p className="text-white font-WorkSans text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold">
               We Would Love To Hear From You!
             </p>
           </div>
         </div>
-        <div className="flex justify-center flex-col items-center">
-          <div className=" shadow rounded-lg p-8 relative w-1/2 shadow-white mb-8">
+
+        <div className="flex justify-center flex-col items-center px-4 md:px-8 mt-8">
+          <div className="w-full max-w-2xl shadow-lg rounded-lg p-8 relative bg-white">
             <form className="relative z-10" onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label
@@ -65,7 +67,7 @@ function ContactUs() {
                   value={formData.name}
                   onChange={handleInputChange}
                   required
-                  className="w-full text-black font-bold  px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full text-black font-bold px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
               <div className="mb-4">
@@ -98,28 +100,31 @@ function ContactUs() {
                   rows="5"
                   value={formData.message}
                   onChange={handleInputChange}
-                  className="w-full text-black font-bold  px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full text-black font-bold px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
                 ></textarea>
               </div>
               <div>
                 <button
                   type="submit"
-                  className=" w-1/4 bg-green-500 text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition duration-300"
+                  className="w-full sm:w-1/3 bg-green-500 text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition duration-300"
                 >
                   Send Message
                 </button>
               </div>
             </form>
           </div>
+
           <FAQ />
         </div>
       </div>
+
       <div className="flex justify-center mt-7">
-        <div className="w-4/5">
+        <div className="w-full max-w-7xl px-4 md:px-8">
           <Footer />
         </div>
       </div>
+
       <ToastContainer />
     </div>
   );

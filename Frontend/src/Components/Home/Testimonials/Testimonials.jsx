@@ -3,25 +3,32 @@ import { Star } from "lucide-react";
 
 const testimonials = [
   {
-    name: "John Doe",
-    comment:
-      "The food was absolutely delicious! I'll definitely be coming back.",
-    image:
-      "https://th.bing.com/th/id/OIP.MPqbmG0BodFiNA9UmO3n2AHaHa?w=157&h=180&c=7&r=0&o=5&pid=1.7",
+    name: "Amit Sharma",
+    comment: "The food was absolutely delicious! I'll definitely be coming back.",
+    image: "https://th.bing.com/th/id/OIP.MPqbmG0BodFiNA9UmO3n2AHaHa?w=157&h=180&c=7&r=0&o=5&pid=1.7",
   },
   {
-    name: "Jane Smith",
+    name: "Priya Verma",
     comment: "Great atmosphere and excellent service. Highly recommended!",
-    image:
-      "https://th.bing.com/th/id/OIP.MPqbmG0BodFiNA9UmO3n2AHaHa?w=157&h=180&c=7&r=0&o=5&pid=1.7",
+    image: "https://th.bing.com/th/id/OIP.MPqbmG0BodFiNA9UmO3n2AHaHa?w=157&h=180&c=7&r=0&o=5&pid=1.7",
   },
   {
-    name: "Mike Johnson",
+    name: "Rajesh Kumar",
     comment: "The chef's special was out of this world. A must-try restaurant!",
-    image:
-      "https://th.bing.com/th/id/OIP.MPqbmG0BodFiNA9UmO3n2AHaHa?w=157&h=180&c=7&r=0&o=5&pid=1.7",
+    image: "https://th.bing.com/th/id/OIP.MPqbmG0BodFiNA9UmO3n2AHaHa?w=157&h=180&c=7&r=0&o=5&pid=1.7",
+  },
+  {
+    name: "Anjali Gupta",
+    comment: "Amazing food and wonderful service. Worth every penny!",
+    image: "https://th.bing.com/th/id/OIP.MPqbmG0BodFiNA9UmO3n2AHaHa?w=157&h=180&c=7&r=0&o=5&pid=1.7",
+  },
+  {
+    name: "Vikram Singh",
+    comment: "Best meal I've had in a long time! Will be back for more.",
+    image: "https://th.bing.com/th/id/OIP.MPqbmG0BodFiNA9UmO3n2AHaHa?w=157&h=180&c=7&r=0&o=5&pid=1.7",
   },
 ];
+
 
 const TestimonialSection = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
