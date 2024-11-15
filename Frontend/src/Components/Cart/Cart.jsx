@@ -1,36 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import { Grid } from "@mui/material";
-
-const dishData = [
-  {
-    id: 1,
-    img: "https://static01.nyt.com/images/2021/02/14/dining/carbonara-horizontal/carbonara-horizontal-threeByTwoMediumAt2X-v2.jpg",
-    name: "Spaghetti Carbonara",
-    price: 12,
-    quantity: 1,
-  },
-  {
-    id: 2,
-    img: "https://th.bing.com/th/id/OIP.8No7LgYczYc66dDgftC_BwHaE8?w=291&h=194&c=7&r=0&o=5&pid=1.7",
-    name: "Margherita Pizza",
-    price: 10,
-    quantity: 1,
-  },
-];
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 function Cart() {
-  const [cartItems, setCartItems] = useState(dishData);
+  const [cartItems, setCartItems] = useState([]);
+  const { id } = useParams();
 
-  // quantity change
-  const handleQuantityChange = (id, delta) => {
+  const handleQuantityChange = (_id, delta) => {
     setCartItems((prevItems) =>
       prevItems.map((item) =>
-        item.id === id
+        item._id === _id
           ? {
               ...item,
               quantity: Math.min(10, Math.max(1, item.quantity + delta)),
@@ -40,18 +25,34 @@ function Cart() {
     );
   };
 
-  // item removal
-  const handleRemoveItem = (id) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+  const handleRemoveItem = (_id) => {
+    setCartItems((prevItems) => prevItems.filter((item) => item._id !== _id));
   };
 
-  // Calculate total price
   const calculateTotalPrice = () =>
     cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/api/cart/dish/${id}`
+        );
+        console.log("API Response:", response.data);
+
+        const dish = response.data;
+        setCartItems([{ ...dish, quantity: 1 }]);
+      } catch (error) {
+        console.error("Error fetching cart item:", error);
+        setCartItems([]);
+      }
+    };
+    fetch();
+  }, [id]);
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-gray-100">
-      <div className="my-12 w-full max-w-5xl rounded-lg shadow-2xl bg-white/80 backdrop-blur-lg p-8">
+    <div className="flex flex-col items-center justify-center mt-20 p-6">
+      <div className="my-12 w-full max-w-5xl rounded-xl shadow-2xl backdrop-filter backdrop-blur-md bg-opacity-5 border border-gray-100 bg-gray-400  p-8">
         <p className="text-4xl font-bold mb-8 text-center text-gray-800">
           Shopping Cart
         </p>
@@ -78,56 +79,50 @@ function Cart() {
           <Grid
             container
             spacing={4}
-            key={item.id}
+            key={item._id}
             className="items-center border-b py-4"
           >
-            {/* Remove btn */}
             <Grid item xs={2} className="flex justify-center">
-              <IconButton onClick={() => handleRemoveItem(item.id)}>
+              <IconButton onClick={() => handleRemoveItem(item._id)}>
                 <CloseIcon className="text-gray-500 hover:text-red-600" />
               </IconButton>
             </Grid>
 
-            {/* Product Info */}
             <Grid item xs={4} className="flex items-center">
               <img
-                src={item.img}
-                alt={item.name}
+                src={item.image}
+                alt={item.dishName}
                 className="w-20 h-20 rounded-lg object-cover mr-4"
               />
-              <span className="font-medium text-gray-800">{item.name}</span>
+              <span className="font-medium text-gray-800">{item.dishName}</span>
             </Grid>
 
-            {/* Price */}
             <Grid item xs={2} className="text-center font-medium text-gray-800">
               ${item.price.toFixed(2)}
             </Grid>
 
-            {/* Quantity Controls */}
             <Grid item xs={2} className="flex justify-center items-center">
               <IconButton
-                onClick={() => handleQuantityChange(item.id, -1)}
+                onClick={() => handleQuantityChange(item._id, -1)}
                 disabled={item.quantity === 1}
               >
                 <RemoveIcon className="text-gray-500" />
               </IconButton>
               <span className="mx-2 font-semibold">{item.quantity}</span>
               <IconButton
-                onClick={() => handleQuantityChange(item.id, 1)}
+                onClick={() => handleQuantityChange(item._id, 1)}
                 disabled={item.quantity === 10}
               >
                 <AddIcon className="text-gray-500" />
               </IconButton>
             </Grid>
 
-            {/* Total Price */}
             <Grid item xs={2} className="text-center font-medium text-gray-800">
               ${(item.price * item.quantity).toFixed(2)}
             </Grid>
           </Grid>
         ))}
 
-        {/* Checkout Button and Total Price */}
         <div className="text-right mt-8">
           <p className="text-xl font-bold mb-4">
             Total: ${calculateTotalPrice().toFixed(2)}

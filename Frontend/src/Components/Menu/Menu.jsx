@@ -5,6 +5,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Footer from "../Footer/Footer";
+import { Link } from "react-router-dom";
 
 function Menu() {
   const settings = {
@@ -111,7 +112,7 @@ function Menu() {
 
           <Slider {...settings}>
             {food.map((value, index) => (
-              <div
+              <button
                 key={index}
                 className=" relative cursor-pointer mt-8 flex flex-col items-center hover:scale-105 transition-all ease-in-out"
               >
@@ -120,7 +121,7 @@ function Menu() {
                   src={value.image}
                 />
                 <p className="w-32 text-center mt-3">{value.dishName}</p>
-              </div>
+              </button>
             ))}
           </Slider>
         </div>
@@ -131,8 +132,9 @@ function Menu() {
           </p>
           <Slider {...settings}>
             {restaurants.map((value, index) => (
-              <div
+              <button
                 key={index}
+                // onClick={setSelectedRestaurant(value.title)}
                 className=" relative cursor-pointer mt-8 flex flex-col items-center hover:scale-105 transition-all ease-in-out"
               >
                 <img
@@ -140,7 +142,7 @@ function Menu() {
                   src={value.image}
                 />
                 <p className="w-32 text-center mt-3">{value.title}</p>
-              </div>
+              </button>
             ))}
           </Slider>
         </div>
@@ -153,11 +155,11 @@ function Menu() {
           {filteredFood.map((value, index) => (
             <div
               key={index}
-              className="flex flex-col items-center rounded-2xl duration-300 hover:scale-105 transition-all ease-in-out mb-6"
+              className=" flex flex-col items-center rounded-2xl duration-300 hover:scale-105 transition-all ease-in-out mb-6"
             >
               <img
                 src={value.image}
-                className="max-h-full max-w-full rounded-xl m-auto block"
+                className="max-h-full max-w-full  rounded-xl m-auto block"
               />
               <div className="self-start px-3">
                 <p className="mt-4 text-xl font-medium">{value.dishName}</p>
@@ -169,10 +171,17 @@ function Menu() {
                 <p>₹{value.price}</p>
                 <p>{value.category}</p>
               </div>
+              <div className="mt-5 w-full rounded-xl">
+                <Link
+                  to={`/cart/${value._id}`}
+                  className="cursor-pointer block text-center py-2 shadow-md w-full text-lg rounded-xl backdrop-filter backdrop-blur-md bg-opacity-15 hover:bg-gray-300 transition-all ease-in-out duration-300 "
+                >
+                  Order Now!
+                </Link>
+              </div>
             </div>
           ))}
         </div>
-
         <Footer />
       </div>
     </div>

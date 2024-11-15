@@ -72,7 +72,7 @@ function Footer() {
             </a>
           </div>
         </div>
-        <p className="absolute left-[29rem] top-2 text-gray-600">
+        <p className="absolute left-[33rem] top-2 text-gray-600">
           &copy; 2024 All Rights Reserved | TasteBudsTreat
         </p>
         <div></div>

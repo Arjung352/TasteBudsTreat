@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const restaurantRoutes = require("./routes/restaurant");
 const restromenu = require("./routes/menu");
+const Cart = require("./routes/cart");
 
 // Middleware
 app.use(cors());
@@ -25,6 +26,9 @@ app.use("/api/restaurant", restaurantRoutes);
 
 // Menu Route
 app.use("/api/upload", restromenu);
+
+// Cart Route
+app.use("/api/cart", Cart);
 
 // Email route
 app.post("/send", (req, res) => {
