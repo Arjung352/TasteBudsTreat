@@ -10,8 +10,10 @@ const FAQ = () => {
 
   return (
     <section className="features">
-      <h1 className="text-center text-5xl font-WorkSans my-4">FAQ</h1>
-      <div className="feature my-8 ">
+      <h1 className="text-center text-5xl font-WorkSans my-4 " id="FAQ">
+        FAQ
+      </h1>
+      <div className="feature my-8 backdrop-filter backdrop-blur-md bg-opacity-15 border border-gray-100 bg-gray-300 ">
         {faqData.map((item, index) => (
           <div key={index}>
             <button
@@ -35,54 +37,55 @@ const FAQ = () => {
 // Data for FAQs
 const faqData = [
   {
-    question: "What is Geek Appointment?",
+    question: "Who are the developers of TasteBudsTreat?",
     answer:
-      "Geek Appointment is a web platform designed for students to book appointments with faculty members of the Department of Computer Science & Engineering at Sant Longowal Institute of Engineering & Technology, Longowal. Our goal is to streamline communication between students and faculty, making it easier to seek guidance and support.",
+      "TasteBudsTreat has been developed by a talented team of BCA 3rd-year students from SGTBIMIT, affiliated with GGSIPU. The project is the result of the collaborative efforts of Ansh Bansal, Adarsh Sharma, and Arjun Gupta, who are passionate about leveraging modern technologies to create an innovative and secure food delivery service.",
   },
   {
-    question: "How do I book an appointment?",
+    question:
+      "What is TasteBudsTreat and how does it enhance the food delivery experience?",
     answer:
-      "To book an appointment, simply visit our website, select the faculty member you wish to meet, choose a suitable time slot from their available schedule, and submit your request. You will receive a confirmation once your appointment is approved.",
+      "TasteBudsTreat is an advanced food delivery service that leverages AI to personalize recipe recommendations based on your tastes and preferences. By utilizing Gemini AI, the platform ensures every meal recommendation is unique, diverse, and tailored to your needs, providing a more exciting dining experience.",
   },
   {
-    question: "Who are the developers of this project?",
+    question: "How does the AI-driven recipe recommendation work?",
     answer:
-      "The Geek Appointment project has been developed by a dedicated team of students: Ansh Bansal, Arjun Gupta, Adarsh Sharma, and Aakansha. Their combined efforts have brought this innovative solution to life.",
+      "TasteBudsTreat uses Gemini AI to analyze your preferences and suggest custom recipes tailored to your taste. The AI takes into account factors such as your past orders, dietary restrictions, and flavor preferences to generate personalized meal ideas.",
   },
   {
-    question: "Is there a limit to how many appointments I can book?",
+    question: "How secure is my data on TasteBudsTreat?",
     answer:
-      "Currently, students can book up to three appointments per week to ensure everyone has a fair opportunity to connect with faculty. If you require more time, please discuss it directly with the faculty member.",
+      "We prioritize your privacy and data security by implementing Clerk authentication for safe user logins and Razorpay for secure payment processing. Additionally, OAuth is used for secure admin access, ensuring your information is protected at all times.",
   },
   {
-    question: "What if I need to cancel my appointment?",
+    question: "How do I log in to TasteBudsTreat?",
     answer:
-      "If you need to cancel your appointment, please do so at least 24 hours in advance. You can easily cancel your appointment through the website, and the faculty member will be notified automatically.",
+      "You can log in securely using Clerk authentication, which allows for a smooth, safe login process. Once logged in, you can access personalized meal recommendations, track orders, and enjoy a seamless experience.",
   },
   {
-    question: "Are the appointments held in person or online?",
+    question: "What is the process for providing feedback on my experience?",
     answer:
-      "Appointments can be held either in person at the faculty's office or online via video conferencing, depending on the preference of the faculty member and the student. You can specify your preference when booking.",
+      "We use Nodemailer to manage customer feedback. After your meal, you'll have the opportunity to provide feedback on your experience, which helps us continuously improve our service quality and customer satisfaction.",
   },
   {
-    question: "How can I contact support if I have issues?",
+    question: "Is TasteBudsTreat available on mobile devices?",
     answer:
-      "If you encounter any issues while using the Geek Appointment platform, you can reach our support team via the contact form on the website or through our official email. We aim to respond to all inquiries promptly.",
+      "Yes! The platform is fully responsive, ensuring a smooth and visually appealing experience across all devices. Whether you’re on a phone, tablet, or desktop, the user interface adapts for an optimal viewing experience.",
   },
   {
-    question: "Is there a mobile version of Geek Appointment?",
+    question: "How can I pay for my orders?",
     answer:
-      "Yes, Geek Appointment is optimized for mobile devices, allowing you to book appointments conveniently from your smartphone or tablet.",
+      "Payments are securely processed through Razorpay, ensuring your payment details are handled safely. The platform supports a variety of payment methods for your convenience.",
   },
   {
-    question: "What should I do if my preferred time slot is unavailable?",
+    question: "Does TasteBudsTreat offer any social media engagement?",
     answer:
-      "If your preferred time slot is unavailable, we recommend checking other available slots or contacting the faculty member directly to discuss alternative times.",
+      "Yes! We actively engage with our audience on Instagram, sharing updates, promotions, and food recommendations to keep our community engaged and informed.",
   },
   {
-    question: "Is my personal information safe on Geek Appointment?",
+    question: "What technologies are used to build TasteBudsTreat?",
     answer:
-      "Absolutely. We prioritize your privacy and security. All personal information is securely stored and only accessible by authorized personnel for appointment-related purposes.",
+      "TasteBudsTreat is built with modern technologies including Gemini AI for personalized recommendations, Clerk for user authentication, Razorpay for secure payments, MUI and Tailwind CSS for a responsive and attractive UI, and Nodemailer for managing feedback. These technologies work together to provide a seamless and secure food delivery experience.",
   },
 ];
 

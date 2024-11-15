@@ -20,17 +20,21 @@ function Footer() {
         <div>
           <p className="font-bold text-xl">Usefull Links</p>
           <div className="text-lg text-gray-600 flex flex-col gap-3">
-            <a className="mt-3">About Us</a>
+            <a className="mt-3" href="/About">
+              About Us
+            </a>
             <a>Blogs</a>
-            <a>FAQ</a>
+            <a href="/Contact-Us#FAQ">FAQ</a>
           </div>
         </div>
         <div>
           <a className="font-bold text-xl">Main Menu</a>
           <div className="text-lg text-gray-600 flex flex-col gap-3">
-            <a className="mt-3">Home</a>
-            <a>Offers</a>
-            <a>Menus</a>
+            <a className="mt-3" href="/">
+              Home
+            </a>
+            <a href="/#Popular">Popular</a>
+            <a href="/menu">Menus</a>
           </div>
         </div>
         <div>
@@ -39,7 +43,7 @@ function Footer() {
             <a href="mailto:tastebudstreat29@gmail.com" className="mt-3">
               Tastebudstreat29@gmail.com
             </a>
-            <a href="tel:9999882574">9999882574</a>
+            <a href="https://www.instagram.com/tastebudstreat29/">Instagram</a>
             <a>Social Media</a>
           </div>
         </div>

@@ -9,7 +9,7 @@ function ActionAreaCard(prop) {
   };
   return (
     <div>
-      <div className="p-8 px-8 shadow-md flex flex-col items-center bg-white rounded-2xl hover:scale-105 transition-all ease-in-out mb-6">
+      <div className="p-8 px-8 backdrop-filter backdrop-blur-md bg-opacity-15 border border-gray-100 bg-gray-300 shadow-md flex flex-col items-center rounded-2xl hover:scale-105 transition-all ease-in-out mb-6">
         <img
           src={prop.img}
           className=" aspect-square rounded-full h-32 w-32 shadow-md shadow-black"

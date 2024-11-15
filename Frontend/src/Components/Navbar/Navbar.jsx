@@ -11,7 +11,7 @@ import {
 function Navbar() {
   return (
     <>
-      <div className="flex font-WorkSans items-center justify-center text-black backdrop-blur-3xl	 relative">
+      <div className="flex font-WorkSans items-center justify-center text-black	 relative">
         <img
           src="https://res.cloudinary.com/dmxlqw5ix/image/upload/v1731066887/qxhi70lws9tx5ssy8ff3.png"
           className=" h-20 "

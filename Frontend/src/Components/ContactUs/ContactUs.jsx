@@ -49,7 +49,7 @@ function ContactUs() {
           </div>
         </div>
         <div className="flex justify-center flex-col items-center">
-          <div className=" shadow rounded-lg p-8 relative w-1/2 shadow-white mb-8">
+          <div className="backdrop-filter backdrop-blur-md bg-opacity-15 border bg-gray-300 mt-10 shadow rounded-xl p-8 relative w-1/2 shadow-white mb-8">
             <form className="relative z-10" onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label
@@ -105,7 +105,7 @@ function ContactUs() {
               <div>
                 <button
                   type="submit"
-                  className=" w-1/4 bg-green-500 text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition duration-300"
+                  className=" w-1/4 bg-green-500 text-white py-3 rounded-xl font-semibold hover:bg-green-600 transition duration-300"
                 >
                   Send Message
                 </button>

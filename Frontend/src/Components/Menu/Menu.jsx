@@ -4,12 +4,10 @@ import TuneIcon from "@mui/icons-material/Tune";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import dish from "../Home/Card/name";
 import Footer from "../Footer/Footer";
-import StarIcon from "@mui/icons-material/Star";
 
 function Menu() {
-  var settings = {
+  const settings = {
     accessibility: true,
     dots: false,
     infinite: true,
@@ -17,34 +15,45 @@ function Menu() {
     slidesToShow: 5,
     slidesToScroll: 1,
   };
+
   const [restaurants, setRestaurants] = useState([]);
   const [selectedRestaurant, setSelectedRestaurant] = useState("");
   const [foodType, setFoodType] = useState("");
-  const [category, setCategory] = useState("");
-  const [foodCategory, setFoodCategory] = useState([]);
+  const [foodCategory, setFoodCategory] = useState("");
+  const [food, setFood] = useState([]);
+
   useEffect(() => {
     const fetchRestaurants = async () => {
       try {
-        const restaurant = await axios.get(
+        const restaurantResponse = await axios.get(
           "http://localhost:5000/api/restaurant/get-all"
         );
-        console.log("Fetched restaurants:", restaurant.data.data);
-        setRestaurants(restaurant.data.data);
-        const Dish = await axios.get(
+        setRestaurants(restaurantResponse.data.data);
+
+        const foodResponse = await axios.get(
           "http://localhost:5000/api/upload/all-Dish"
         );
-        console.log("Fetched Dishish", Dish.data.data);
-        setFoodCategory(Dish.data.data);
+        setFood(foodResponse.data.data);
       } catch (error) {
-        console.error("Error fetching restaurants:", error);
+        console.error("Error fetching data:", error);
       }
     };
+
     fetchRestaurants();
   }, []);
+
+  // Filtered food based on selections
+  const filteredFood = food.filter(
+    (item) =>
+      (!selectedRestaurant || item.restaurantId === selectedRestaurant) &&
+      (!foodType || item.foodType === foodType) &&
+      (!foodCategory || item.category === foodCategory)
+  );
+
   return (
     <div className="flex justify-center">
       <div className="w-4/5 font-WorkSans">
-        <div className=" flex gap-7 mt-10 items-center text-gray-500">
+        <div className="flex gap-7 mt-10 items-center text-gray-500">
           <p className="p-2 bg-white border-gray-300 border rounded-xl">
             Filters <TuneIcon />
           </p>
@@ -54,11 +63,9 @@ function Menu() {
               name="Restaurant"
               value={selectedRestaurant}
               onChange={(e) => setSelectedRestaurant(e.target.value)}
-              className="p-2  border border-gray-300 rounded-xl focus:outline-none"
+              className="p-2 border border-gray-300 rounded-xl focus:outline-none"
             >
-              <option value="" disabled>
-                Select a restaurant
-              </option>
+              <option value="">All Restaurants</option>
               {restaurants.map((rest) => (
                 <option key={rest._id} value={rest._id}>
                   {rest.title}
@@ -68,31 +75,26 @@ function Menu() {
           ) : (
             <p>No restaurants found</p>
           )}
-          {/* Setting food type */}
           <select
-            id="Restaurant"
-            name="Restaurant"
+            id="FoodType"
+            name="FoodType"
             value={foodType}
             onChange={(e) => setFoodType(e.target.value)}
-            className="p-2  border border-gray-300 rounded-xl focus:outline-none w-56"
+            className="p-2 border border-gray-300 rounded-xl focus:outline-none w-56"
           >
-            <option value="" disabled>
-              Select The Food Type
-            </option>
-            <option value={"Vegetarian"}>Vegetarian</option>
-            <option value={"Non - Vegetarian"}>Non-Vegetarian</option>
+            <option value="">All Food Types</option>
+            <option value="Vegetarian">Vegetarian</option>
+            <option value="Non - Vegetarian">Non-Vegetarian</option>
           </select>
           <select
-            id="Restaurant"
-            name="Restaurant"
-            value={foodType}
-            onChange={(e) => setFoodType(e.target.value)}
-            className="p-2  border border-gray-300 rounded-xl focus:outline-none "
+            id="FoodCategory"
+            name="FoodCategory"
+            value={foodCategory}
+            onChange={(e) => setFoodCategory(e.target.value)}
+            className="p-2 border border-gray-300 rounded-xl focus:outline-none"
           >
-            <option value="" disabled>
-              Select The Food category
-            </option>
-            {[...new Set(foodCategory.map((dish) => dish.category))].map(
+            <option value="">All Categories</option>
+            {[...new Set(food.map((dish) => dish.category))].map(
               (uniqueCategory, index) => (
                 <option value={uniqueCategory} key={index}>
                   {uniqueCategory}
@@ -108,16 +110,16 @@ function Menu() {
           </p>
 
           <Slider {...settings}>
-            {dish.map((value, index) => (
+            {food.map((value, index) => (
               <div
                 key={index}
                 className=" relative cursor-pointer mt-8 flex flex-col items-center hover:scale-105 transition-all ease-in-out"
               >
                 <img
                   className="aspect-square rounded-full h-32 w-32 shadow-md shadow-black"
-                  src={value.img}
+                  src={value.image}
                 />
-                <p className="w-32 text-center mt-3">{value.name}</p>
+                <p className="w-32 text-center mt-3">{value.dishName}</p>
               </div>
             ))}
           </Slider>
@@ -142,37 +144,39 @@ function Menu() {
             ))}
           </Slider>
         </div>
-        {/* Dishish Near You */}
         <div className="mt-10 flex flex-col items-center">
-          <p className="text-2xl font-medium  font-WorkSans self-start mb-10">
+          <p className="text-2xl font-medium font-WorkSans self-start">
             Dishish Near You!
           </p>
         </div>
-        <div className="grid grid-cols-3 gap-x-10 mb-10 gap-y-10">
-          {dish.map((value, index) => (
+        <div className="grid grid-cols-4 gap-x-10 mb-10 gap-y-10">
+          {filteredFood.map((value, index) => (
             <div
               key={index}
-              className=" flex flex-col items-center rounded-2xl duration-300 hover:scale-105 transition-all ease-in-out mb-6"
+              className="flex flex-col items-center rounded-2xl duration-300 hover:scale-105 transition-all ease-in-out mb-6"
             >
-              <img src={value.img} className=" h-64 w-80 rounded-xl" />
-              <div className="self-start px-10">
-                <p className="mt-4 text-xl font-medium">{value.name}</p>
+              <img
+                src={value.image}
+                className="max-h-full max-w-full rounded-xl m-auto block"
+              />
+              <div className="self-start px-3">
+                <p className="mt-4 text-xl font-medium">{value.dishName}</p>
                 <p className="mt-2 text-sm font-sans uppercase">
-                  {value.about}
+                  {value.foodType}
                 </p>
               </div>
-              <div className="flex justify-between w-full mt-2 px-10">
-                <p>₹12000</p>
-                <p>
-                  <StarIcon /> (4.9)
-                </p>
+              <div className="flex justify-between w-full mt-2 px-3">
+                <p>₹{value.price}</p>
+                <p>{value.category}</p>
               </div>
             </div>
           ))}
         </div>
+
         <Footer />
       </div>
     </div>
   );
 }
+
 export default Menu;

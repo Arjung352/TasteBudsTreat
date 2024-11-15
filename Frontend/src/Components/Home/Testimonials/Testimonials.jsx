@@ -73,7 +73,7 @@ const TestimonialSection = () => {
             >
               {testimonials.map((testimonial, index) => (
                 <div key={index} className="w-full flex-shrink-0 px-4">
-                  <div className="bg-white rounded-lg shadow-md p-6 flex flex-col items-center">
+                  <div className="backdrop-filter backdrop-blur-md bg-opacity-15 border border-gray-100 rounded-xl bg-gray-300 shadow-lg p-6 flex flex-col items-center">
                     <img
                       src={testimonial.image}
                       alt={testimonial.name}
