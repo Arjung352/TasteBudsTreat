@@ -5,9 +5,9 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Footer from "../Footer/Footer";
-import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-quill/dist/quill.snow.css";
+
 function Menu() {
   const settings = {
     accessibility: true,
@@ -23,6 +23,8 @@ function Menu() {
   const [foodType, setFoodType] = useState("");
   const [foodCategory, setFoodCategory] = useState("");
   const [food, setFood] = useState([]);
+  const [modalRestaurant, setModalRestaurant] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchRestaurants = async () => {
@@ -52,6 +54,7 @@ function Menu() {
       (!foodCategory || item.category === foodCategory)
   );
 
+  
   const addingToCart = async (productId, price, dishName, img) => {
     try {
       const data = {
@@ -62,26 +65,28 @@ function Menu() {
         UserName: localStorage.getItem("UserName"),
       };
 
-      const response = await axios.post(
-        "http://localhost:5000/api/cart/AddToCart",
-        data
-      );
+      await axios.post("http://localhost:5000/api/cart/AddToCart", data);
       toast.success("Item Added To Cart");
-      console.log(response.data);
     } catch (error) {
       toast.error("Error Adding To Cart!");
-
-      console.error(
-        "Error adding to cart:",
-        error.response?.data || error.message
-      );
+      console.error("Error adding to cart:", error.response?.data || error.message);
     }
+  };
+
+  const handleRestaurantClick = (restaurant) => {
+    setModalRestaurant(restaurant);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setModalRestaurant(null);
   };
 
   return (
     <div className="flex justify-center">
       <div className="w-4/5 font-WorkSans">
-        <div className="flex gap-7 mt-10 items-center text-gray-500">
+      <div className="flex gap-7 mt-10 items-center text-gray-500">
           <p className="p-2 bg-white border-gray-300 border rounded-xl">
             Filters <TuneIcon />
           </p>
@@ -131,8 +136,8 @@ function Menu() {
             )}
           </select>
         </div>
-        {/* Ispiration for your first order */}
-        <div className="mt-10 flex flex-col items-center">
+              {/* Ispiration for your first order */}
+              <div className="mt-10 flex flex-col items-center">
           <p className="text-2xl font-medium font-WorkSans self-start">
             Inspiration For Your First Order
           </p>
@@ -154,23 +159,23 @@ function Menu() {
             ))}
           </Slider>
         </div>
+
+
         {/* Top Brands For You */}
         <div className="mt-10 flex flex-col items-center">
-          <p className="text-2xl font-medium font-WorkSans self-start">
-            Top Brands For You
-          </p>
+          <p className="text-2xl font-medium font-WorkSans self-start">Top Brands For You</p>
           <Slider {...settings}>
-            {restaurants.map((value, index) => (
+            {restaurants.map((restaurant, index) => (
               <button
                 key={index}
-                // onClick={setSelectedRestaurant(value.title)}
-                className=" relative cursor-pointer mt-8 flex flex-col items-center hover:scale-105 transition-all ease-in-out"
+                onClick={() => handleRestaurantClick(restaurant)}
+                className="relative cursor-pointer mt-8 flex flex-col items-center hover:scale-105 transition-all ease-in-out"
               >
                 <img
                   className="aspect-square rounded-full h-32 w-32 shadow-md shadow-black"
-                  src={value.image}
+                  src={restaurant.image}
                 />
-                <p className="w-32 text-center mt-3">{value.title}</p>
+                <p className="w-32 text-center mt-3">{restaurant.title}</p>
               </button>
             ))}
           </Slider>
@@ -218,11 +223,70 @@ function Menu() {
             </div>
           ))}
         </div>
+
+        {/* Modal for Restaurant Details */}
+        {showModal && modalRestaurant && (
+          <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50">
+            <div className="bg-white rounded-xl shadow-lg p-8 w-3/4 max-h-[90vh] overflow-auto">
+            <button
+                onClick={handleCloseModal}
+                className="relative top-4 right text-red font-bold text-3xl"
+              >
+                ✖
+              </button>
+              <div className="flex flex-col items-center">
+                <img
+                  src={modalRestaurant.image}
+                  className="h-48 w-48 rounded-full shadow-md"
+                />
+                <p className="text-3xl font-bold mt-4">{modalRestaurant.title}</p>
+                <p className="text-lg text-gray-600 mt-2">{modalRestaurant.address}</p>
+                <p className="text-lg mt-2">Rating: {modalRestaurant.rating}⭐</p>
+                <p className="text-lg mt-2">
+                  Dishes Available:{" "}
+                  {food.filter((dish) => dish.restaurantId === modalRestaurant._id).length}
+                </p>
+              </div>
+
+
+              {/* Render dishes offered by the selected restaurant */}
+              <div className="grid grid-cols-3 gap-8 mt-8">
+                {food
+                  .filter((dish) => dish.restaurantId === modalRestaurant._id)
+                  .map((dish, index) => (
+                    <div
+                      key={index}
+                      className="shadow-md flex flex-col items-center rounded-2xl duration-300 hover:scale-105 transition-all ease-in-out"
+                    >
+                      <img
+                        src={dish.image}
+                        className="max-h-40 max-w-full rounded-xl m-auto"
+                      />
+                      <div className="px-3">
+                        <p className="mt-4 text-xl font-medium">{dish.dishName}</p>
+                        <p className="mt-2 text-sm uppercase">{dish.foodType}</p>
+                      </div>
+                      <div className="flex justify-between w-full mt-2 px-3">
+                        <p>₹{dish.price}</p>
+                        <p>{dish.category}</p>
+                      </div>
+                      <button
+                        onClick={() =>
+                          addingToCart(dish._id, dish.price, dish.dishName, dish.image)
+                        }
+                        className="py-2 mt-4 w-full text-lg rounded-xl bg-gray-200 hover:bg-gray-300 transition-all"
+                      >
+                        Add To Cart
+                      </button>
+                    </div>
+                  ))}
+              </div>
+            </div>
+          </div>
+        )}
         <Footer />
       </div>
-      <div>
-        <ToastContainer />
-      </div>
+      <ToastContainer />
     </div>
   );
 }
