@@ -54,7 +54,6 @@ function Menu() {
       (!foodCategory || item.category === foodCategory)
   );
 
-  
   const addingToCart = async (productId, price, dishName, img) => {
     try {
       const data = {
@@ -69,7 +68,10 @@ function Menu() {
       toast.success("Item Added To Cart");
     } catch (error) {
       toast.error("Error Adding To Cart!");
-      console.error("Error adding to cart:", error.response?.data || error.message);
+      console.error(
+        "Error adding to cart:",
+        error.response?.data || error.message
+      );
     }
   };
 
@@ -86,7 +88,7 @@ function Menu() {
   return (
     <div className="flex justify-center">
       <div className="w-4/5 font-WorkSans">
-      <div className="flex gap-7 mt-10 items-center text-gray-500">
+        <div className="flex gap-7 mt-10 items-center text-gray-500">
           <p className="p-2 bg-white border-gray-300 border rounded-xl">
             Filters <TuneIcon />
           </p>
@@ -136,8 +138,8 @@ function Menu() {
             )}
           </select>
         </div>
-              {/* Ispiration for your first order */}
-              <div className="mt-10 flex flex-col items-center">
+        {/* Ispiration for your first order */}
+        <div className="mt-10 flex flex-col items-center">
           <p className="text-2xl font-medium font-WorkSans self-start">
             Inspiration For Your First Order
           </p>
@@ -160,10 +162,11 @@ function Menu() {
           </Slider>
         </div>
 
-
         {/* Top Brands For You */}
         <div className="mt-10 flex flex-col items-center">
-          <p className="text-2xl font-medium font-WorkSans self-start">Top Brands For You</p>
+          <p className="text-2xl font-medium font-WorkSans self-start">
+            Top Brands For You
+          </p>
           <Slider {...settings}>
             {restaurants.map((restaurant, index) => (
               <button
@@ -227,10 +230,10 @@ function Menu() {
         {/* Modal for Restaurant Details */}
         {showModal && modalRestaurant && (
           <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50">
-            <div className="bg-white rounded-xl shadow-lg p-8 w-3/4 max-h-[90vh] overflow-auto">
-            <button
+            <div className="backdrop-filter backdrop-blur-md bg-opacity-75 bg-white relative rounded-xl shadow-lg p-8 w-3/4 max-h-[90vh] overflow-auto">
+              <button
                 onClick={handleCloseModal}
-                className="relative top-4 right text-red font-bold text-3xl"
+                className="absolute top-6 right-10 text-red font-bold text-3xl"
               >
                 ✖
               </button>
@@ -239,15 +242,24 @@ function Menu() {
                   src={modalRestaurant.image}
                   className="h-48 w-48 rounded-full shadow-md"
                 />
-                <p className="text-3xl font-bold mt-4">{modalRestaurant.title}</p>
-                <p className="text-lg text-gray-600 mt-2">{modalRestaurant.address}</p>
-                <p className="text-lg mt-2">Rating: {modalRestaurant.rating}⭐</p>
+                <p className="text-3xl font-bold mt-4">
+                  {modalRestaurant.title}
+                </p>
+                <p className="text-lg text-gray-600 mt-2">
+                  {modalRestaurant.address}
+                </p>
+                <p className="text-lg mt-2">
+                  Rating: {modalRestaurant.rating}⭐
+                </p>
                 <p className="text-lg mt-2">
                   Dishes Available:{" "}
-                  {food.filter((dish) => dish.restaurantId === modalRestaurant._id).length}
+                  {
+                    food.filter(
+                      (dish) => dish.restaurantId === modalRestaurant._id
+                    ).length
+                  }
                 </p>
               </div>
-
 
               {/* Render dishes offered by the selected restaurant */}
               <div className="grid grid-cols-3 gap-8 mt-8">
@@ -256,23 +268,32 @@ function Menu() {
                   .map((dish, index) => (
                     <div
                       key={index}
-                      className="shadow-md flex flex-col items-center rounded-2xl duration-300 hover:scale-105 transition-all ease-in-out"
+                      className="backdrop-filter pt-4 backdrop-blur-md bg-opacity-80 bg-gray-300 shadow-md flex flex-col items-center rounded-2xl duration-300 hover:scale-105 transition-all ease-in-out"
                     >
                       <img
                         src={dish.image}
                         className="max-h-40 max-w-full rounded-xl m-auto"
                       />
-                      <div className="px-3">
-                        <p className="mt-4 text-xl font-medium">{dish.dishName}</p>
-                        <p className="mt-2 text-sm uppercase">{dish.foodType}</p>
+                      <div className="px-3 flex flex-col items-center">
+                        <p className="mt-4 text-xl font-medium">
+                          {dish.dishName}
+                        </p>
+                        <p className="mt-2 text-lg uppercase">
+                          {dish.foodType}
+                        </p>
                       </div>
-                      <div className="flex justify-between w-full mt-2 px-3">
-                        <p>₹{dish.price}</p>
-                        <p>{dish.category}</p>
+                      <div className="flex justify-between w-full mt-4 px-3">
+                        <p className="text-lg">₹{dish.price}</p>
+                        <p className="text-lg">{dish.category}</p>
                       </div>
                       <button
                         onClick={() =>
-                          addingToCart(dish._id, dish.price, dish.dishName, dish.image)
+                          addingToCart(
+                            dish._id,
+                            dish.price,
+                            dish.dishName,
+                            dish.image
+                          )
                         }
                         className="py-2 mt-4 w-full text-lg rounded-xl bg-gray-200 hover:bg-gray-300 transition-all"
                       >
