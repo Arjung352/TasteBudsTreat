@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { NavLink, Outlet } from "react-router-dom";
 import {
@@ -7,8 +7,15 @@ import {
   SignInButton,
   UserButton,
 } from "@clerk/clerk-react";
+import { useUser } from "@clerk/clerk-react";
 
 function Navbar() {
+  const { user } = useUser();
+  useEffect(() => {
+    if (user?.fullName) {
+      localStorage.setItem("UserName", user.fullName);
+    }
+  }, [user]);
   return (
     <>
       <div className="flex font-WorkSans items-center justify-center text-black	 relative">
@@ -45,7 +52,7 @@ function Navbar() {
               <UserButton />
             </SignedIn>
             <SignedIn>
-              <NavLink to="/Cart">
+              <NavLink to="/Cart" className="flex items-center">
                 <ShoppingCartIcon className="hover:text-darkOlive" />
               </NavLink>
             </SignedIn>

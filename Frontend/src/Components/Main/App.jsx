@@ -18,7 +18,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="Menu" element={<Menu />} />
             <Route path="About" element={<About />} />
-            <Route path="Cart/:id" element={<Cart />} />
+            <Route path="Cart" element={<Cart />} />
             <Route path="Contact-Us" element={<ContactUs />} />
             <Route
               path="Admin/register_restaurant"

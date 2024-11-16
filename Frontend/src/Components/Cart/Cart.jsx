@@ -7,6 +7,8 @@ import IconButton from "@mui/material/IconButton";
 import { Grid } from "@mui/material";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-quill/dist/quill.snow.css";
 
 function Cart() {
   const [cartItems, setCartItems] = useState([]);
@@ -25,29 +27,54 @@ function Cart() {
     );
   };
 
-  const handleRemoveItem = (_id) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item._id !== _id));
+  const handleRemoveItem = async (_id) => {
+    try {
+      await axios.delete("http://localhost:5000/api/cart/delete", {
+        data: { _id }, // Include _id in the request body
+      });
+      toast.success("Item Deleted Successfully");
+      setCartItems((prevItems) => prevItems.filter((item) => item._id !== _id));
+    } catch (error) {
+      toast.error("Error deleting item");
+      console.error(error);
+    }
   };
 
   const calculateTotalPrice = () =>
     cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
-
+  // for using order now option and ordering only 1 dish
   useEffect(() => {
-    const fetch = async () => {
+    const fetchCart = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/api/cart/dish/${id}`
-        );
-        console.log("API Response:", response.data);
+        const username = localStorage.getItem("UserName");
 
-        const dish = response.data;
-        setCartItems([{ ...dish, quantity: 1 }]);
+        if (!username) {
+          console.error("No username found in localStorage");
+          return;
+        }
+
+        const response = await axios.get(
+          "http://localhost:5000/api/cart/show-cart",
+          {
+            headers: {
+              username: username,
+            },
+          }
+        );
+
+        console.log("Cart Items API Response:", response.data);
+
+        setCartItems(response.data.data || []);
       } catch (error) {
-        console.error("Error fetching cart item:", error);
+        console.error(
+          "Error fetching cart items:",
+          error.response?.data || error.message
+        );
         setCartItems([]);
       }
     };
-    fetch();
+
+    fetchCart();
   }, [id]);
 
   return (
@@ -74,67 +101,103 @@ function Cart() {
             Total
           </Grid>
         </Grid>
-
-        {cartItems.map((item) => (
-          <Grid
-            container
-            spacing={4}
-            key={item._id}
-            className="items-center border-b py-4"
-          >
-            <Grid item xs={2} className="flex justify-center">
-              <IconButton onClick={() => handleRemoveItem(item._id)}>
-                <CloseIcon className="text-gray-500 hover:text-red-600" />
-              </IconButton>
-            </Grid>
-
-            <Grid item xs={4} className="flex items-center">
-              <img
-                src={item.image}
-                alt={item.dishName}
-                className="w-20 h-20 rounded-lg object-cover mr-4"
-              />
-              <span className="font-medium text-gray-800">{item.dishName}</span>
-            </Grid>
-
-            <Grid item xs={2} className="text-center font-medium text-gray-800">
-              ${item.price.toFixed(2)}
-            </Grid>
-
-            <Grid item xs={2} className="flex justify-center items-center">
-              <IconButton
-                onClick={() => handleQuantityChange(item._id, -1)}
-                disabled={item.quantity === 1}
+        {cartItems.length === 0 ? (
+          <div className="text-center py-8 flex flex-col items-center">
+            <p className="text-2xl font-medium text-gray-500">
+              Your cart is empty.
+            </p>
+            <img
+              src="https://cdni.iconscout.com/illustration/premium/thumb/empty-cart-illustration-download-in-svg-png-gif-file-formats--shopping-ecommerce-simple-error-state-pack-user-interface-illustrations-6024626.png"
+              alt="Cart Empty"
+              className=" h-44 w-44"
+            />
+          </div>
+        ) : (
+          <>
+            {cartItems.map((item) => (
+              <Grid
+                container
+                spacing={4}
+                key={item._id}
+                className="items-center border-b py-4"
               >
-                <RemoveIcon className="text-gray-500" />
-              </IconButton>
-              <span className="mx-2 font-semibold">{item.quantity}</span>
-              <IconButton
-                onClick={() => handleQuantityChange(item._id, 1)}
-                disabled={item.quantity === 10}
+                {/* Remove Item */}
+                <Grid item xs={2} className="flex justify-center">
+                  <IconButton onClick={() => handleRemoveItem(item._id)}>
+                    <CloseIcon className="text-gray-500 hover:text-red-600" />
+                  </IconButton>
+                </Grid>
+
+                {/* Item Image and Name */}
+                <Grid item xs={4} className="flex items-center">
+                  <img
+                    src={item.image}
+                    alt={item.dishName || "Dish"}
+                    className="w-20 h-20 rounded-lg object-cover mr-4"
+                  />
+                  <span className="font-medium text-gray-800">
+                    {item.dishName || "Unnamed Dish"}
+                  </span>
+                </Grid>
+
+                {/* Price Per Unit */}
+                <Grid
+                  item
+                  xs={2}
+                  className="text-center font-medium text-gray-800"
+                >
+                  ₹{item.price?.toFixed(2) || "0.00"}
+                </Grid>
+
+                {/* Quantity Adjuster */}
+                <Grid item xs={2} className="flex justify-center items-center">
+                  <IconButton
+                    onClick={() => handleQuantityChange(item._id, -1)}
+                    disabled={item.quantity <= 1}
+                  >
+                    <RemoveIcon className="text-gray-500" />
+                  </IconButton>
+                  <span className="mx-2 font-semibold">
+                    {item.quantity || 1}
+                  </span>
+                  <IconButton
+                    onClick={() => handleQuantityChange(item._id, 1)}
+                    disabled={item.quantity >= 10}
+                  >
+                    <AddIcon className="text-gray-500" />
+                  </IconButton>
+                </Grid>
+
+                {/* Total Price for Item */}
+                <Grid
+                  item
+                  xs={2}
+                  className="text-center font-medium text-gray-800"
+                >
+                  ₹{(item.price * item.quantity)?.toFixed(2) || "0.00"}
+                </Grid>
+              </Grid>
+            ))}
+
+            {/* Total Price and Checkout Button */}
+            <div className="text-right mt-8">
+              <p className="text-xl font-bold mb-4">
+                Total: ₹{calculateTotalPrice()?.toFixed(2) || "0.00"}
+              </p>
+              <Button
+                variant="contained"
+                color="primary"
+                className="px-6 py-3 font-semibold"
+                // onClick={handleCheckout}
               >
-                <AddIcon className="text-gray-500" />
-              </IconButton>
-            </Grid>
-
-            <Grid item xs={2} className="text-center font-medium text-gray-800">
-              ${(item.price * item.quantity).toFixed(2)}
-            </Grid>
-          </Grid>
-        ))}
-
-        <div className="text-right mt-8">
-          <p className="text-xl font-bold mb-4">
-            Total: ${calculateTotalPrice().toFixed(2)}
-          </p>
-          <Button
-            variant="contained"
-            color="primary"
-            className="px-6 py-3 font-semibold"
-          >
-            Checkout
-          </Button>
-        </div>
+                Checkout
+              </Button>
+            </div>
+          </>
+        )}
+      </div>
+      <div>
+        <ToastContainer />
       </div>
     </div>
   );

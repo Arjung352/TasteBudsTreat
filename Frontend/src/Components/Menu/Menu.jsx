@@ -6,7 +6,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Footer from "../Footer/Footer";
 import { Link } from "react-router-dom";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-quill/dist/quill.snow.css";
 function Menu() {
   const settings = {
     accessibility: true,
@@ -50,6 +51,32 @@ function Menu() {
       (!foodType || item.foodType === foodType) &&
       (!foodCategory || item.category === foodCategory)
   );
+
+  const addingToCart = async (productId, price, dishName, img) => {
+    try {
+      const data = {
+        productId,
+        price,
+        dishName,
+        img,
+        UserName: localStorage.getItem("UserName"),
+      };
+
+      const response = await axios.post(
+        "http://localhost:5000/api/cart/AddToCart",
+        data
+      );
+      toast.success("Item Added To Cart");
+      console.log(response.data);
+    } catch (error) {
+      toast.error("Error Adding To Cart!");
+
+      console.error(
+        "Error adding to cart:",
+        error.response?.data || error.message
+      );
+    }
+  };
 
   return (
     <div className="flex justify-center">
@@ -112,16 +139,18 @@ function Menu() {
 
           <Slider {...settings}>
             {food.map((value, index) => (
-              <button
+              <a
+                href="#Menu"
                 key={index}
-                className=" relative cursor-pointer mt-8 flex flex-col items-center hover:scale-105 transition-all ease-in-out"
+                to={`/cart/${value._id}`}
+                className="  relative cursor-pointer mt-8 flex flex-col items-center hover:scale-105 transition-all ease-in-out"
               >
                 <img
                   className="aspect-square rounded-full h-32 w-32 shadow-md shadow-black"
                   src={value.image}
                 />
                 <p className="w-32 text-center mt-3">{value.dishName}</p>
-              </button>
+              </a>
             ))}
           </Slider>
         </div>
@@ -146,7 +175,7 @@ function Menu() {
             ))}
           </Slider>
         </div>
-        <div className="mt-10 flex flex-col items-center">
+        <div id="Menu" className="mt-10 flex flex-col items-center">
           <p className="text-2xl font-medium font-WorkSans self-start">
             Dishish Near You!
           </p>
@@ -155,7 +184,7 @@ function Menu() {
           {filteredFood.map((value, index) => (
             <div
               key={index}
-              className=" flex flex-col items-center rounded-2xl duration-300 hover:scale-105 transition-all ease-in-out mb-6"
+              className=" shadow-md flex flex-col items-center rounded-2xl duration-300 hover:scale-105 transition-all ease-in-out mb-6"
             >
               <img
                 src={value.image}
@@ -171,18 +200,28 @@ function Menu() {
                 <p>₹{value.price}</p>
                 <p>{value.category}</p>
               </div>
-              <div className="mt-5 w-full rounded-xl">
-                <Link
-                  to={`/cart/${value._id}`}
-                  className="cursor-pointer block text-center py-2 shadow-md w-full text-lg rounded-xl backdrop-filter backdrop-blur-md bg-opacity-15 hover:bg-gray-300 transition-all ease-in-out duration-300 "
+              <div className="mt-5 gap-10 flex w-full rounded-xl">
+                <button
+                  onClick={() => {
+                    addingToCart(
+                      value._id,
+                      value.price,
+                      value.dishName,
+                      value.image
+                    );
+                  }}
+                  className=" py-2 text-center  shadow-md w-full text-lg rounded-xl backdrop-filter backdrop-blur-md bg-opacity-15 bg-gray-300 hover:bg-gray-300 transition-all ease-in-out duration-300 "
                 >
-                  Order Now!
-                </Link>
+                  Add To Cart
+                </button>
               </div>
             </div>
           ))}
         </div>
         <Footer />
+      </div>
+      <div>
+        <ToastContainer />
       </div>
     </div>
   );

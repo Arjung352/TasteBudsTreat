@@ -52,8 +52,8 @@ router.post("/register", upload.single("img"), async (req, res) => {
     // Create a new restaurant document in the database
     const newRestaurant = new Restaurant({
       title: title,
-      desc: desc, // Address (desc) field
-      image: imageUrl, // Store Cloudinary image URL
+      desc: desc,
+      image: imageUrl,
       rating: rating,
     });
     const restaurant = await Restaurant.findOne({ title });
