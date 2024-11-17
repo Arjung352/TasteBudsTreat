@@ -8,11 +8,85 @@ const bodyParser = require("body-parser");
 const restaurantRoutes = require("./routes/restaurant");
 const restromenu = require("./routes/menu");
 const Cart = require("./routes/cart");
+const razorpay=require("razorpay");
+const crypto = require("crypto");
 
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
+
+// Razorpay Instance
+const instance = new razorpay({
+  key_id: process.env.KEY,
+  key_secret: process.env.SECRET,
+});
+
+// Razorpay Payment Schema
+const paymentschema = new mongoose.Schema(
+  {
+    razorpay_order_id: {
+      type: String,
+      required: true,
+    },
+    razorpay_payment_id: {
+      type: String,
+      required: true,
+    },
+    razorpay_signature: {
+      type: String,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
+
+const Payment = mongoose.model("Payment", paymentschema);
+
+// Checkout route
+app.post("/checkout", async (req, res) => {
+  const { amount } = req.body;
+
+  try {
+    const options = {
+      amount: amount * 100, // amount in paise
+      currency: "INR",
+      receipt: "order_rcptid_11",
+    };
+
+    const order = await instance.orders.create(options);
+
+    res.json({ order });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to create order" });
+  }
+});
+
+// Payment Verification Route
+app.post("/paymentverification", async (req, res) => {
+  const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+
+  const generated_signature = crypto
+    .createHmac("sha256", process.env.SECRET)
+    .update(`${razorpay_order_id}|${razorpay_payment_id}`)
+    .digest("hex");
+
+  if (generated_signature === razorpay_signature) {
+    const payment = new Payment({
+      razorpay_order_id,
+      razorpay_payment_id,
+      razorpay_signature,
+    });
+
+    await payment.save();
+
+    res.json({ success: true });
+  } else {
+    res.json({ success: false });
+  }
+});
+
+
 
 // Home route
 app.get("/", (req, res) => {

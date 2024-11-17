@@ -14,6 +14,7 @@ function Cart() {
   const [cartItems, setCartItems] = useState([]);
   const { id } = useParams();
 
+  // Handle quantity changes
   const handleQuantityChange = (_id, delta) => {
     setCartItems((prevItems) =>
       prevItems.map((item) =>
@@ -27,10 +28,11 @@ function Cart() {
     );
   };
 
+  // Remove an item from the cart
   const handleRemoveItem = async (_id) => {
     try {
       await axios.delete("http://localhost:5000/api/cart/delete", {
-        data: { _id }, // Include _id in the request body
+        data: { _id },
       });
       toast.success("Item Deleted Successfully");
       setCartItems((prevItems) => prevItems.filter((item) => item._id !== _id));
@@ -40,9 +42,11 @@ function Cart() {
     }
   };
 
+  // Calculate total price
   const calculateTotalPrice = () =>
     cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  // for using order now option and ordering only 1 dish
+
+  // Fetch cart items
   useEffect(() => {
     const fetchCart = async () => {
       try {
@@ -62,14 +66,9 @@ function Cart() {
           }
         );
 
-        console.log("Cart Items API Response:", response.data);
-
         setCartItems(response.data.data || []);
       } catch (error) {
-        console.error(
-          "Error fetching cart items:",
-          error.response?.data || error.message
-        );
+        console.error("Error fetching cart items:", error);
         setCartItems([]);
       }
     };
@@ -77,9 +76,60 @@ function Cart() {
     fetchCart();
   }, [id]);
 
+  // Checkout handler
+  const handleCheckout = async () => {
+    try {
+      const { data } = await axios.post("http://localhost:5000/checkout", {
+        amount: calculateTotalPrice(),
+      });
+
+      const options = {
+        key: "rzp_test_o97y5FAmkmAX8b", // Your Razorpay key
+        amount: data.order.amount,
+        currency: "INR",
+        name: "TasteBudsTreat",
+        description: "Payment for your delicious food!",
+        order_id: data.order.id,
+        handler: function (response) {
+          axios
+            .post("http://localhost:5000/paymentverification", {
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+            })
+            .then((res) => {
+              if (res.data.success) {
+                toast.success("Payment Successful!");
+              } else {
+                toast.error("Payment Verification Failed.");
+              }
+            })
+            .catch((error) => {
+              console.error("Payment verification error:", error);
+              toast.error("Payment verification failed. Please try again.");
+            });
+        },
+        prefill: {
+          name: "Customer Name",
+          email: "customer@example.com",
+          contact: "+919876543210",
+        },
+        theme: {
+          color: "#F37254",
+        },
+      };
+
+      const rzp1 = new window.Razorpay(options);
+      rzp1.open();
+    } catch (error) {
+      console.error("Checkout Error:", error);
+      toast.error("Something went wrong while initiating checkout.");
+    }
+  };
+
   return (
     <div className="flex flex-col items-center justify-center mt-20 p-6">
-      <div className="my-12 w-full max-w-5xl rounded-xl shadow-2xl backdrop-filter backdrop-blur-md bg-opacity-5 border border-gray-100 bg-gray-400  p-8">
+      <div className="my-12 w-full max-w-5xl rounded-xl shadow-2xl backdrop-filter backdrop-blur-md bg-opacity-5 border border-gray-100 bg-gray-400 p-8">
         <p className="text-4xl font-bold mb-8 text-center text-gray-800">
           Shopping Cart
         </p>
@@ -109,7 +159,7 @@ function Cart() {
             <img
               src="https://cdni.iconscout.com/illustration/premium/thumb/empty-cart-illustration-download-in-svg-png-gif-file-formats--shopping-ecommerce-simple-error-state-pack-user-interface-illustrations-6024626.png"
               alt="Cart Empty"
-              className=" h-44 w-44"
+              className="h-44 w-44"
             />
           </div>
         ) : (
@@ -141,11 +191,7 @@ function Cart() {
                 </Grid>
 
                 {/* Price Per Unit */}
-                <Grid
-                  item
-                  xs={2}
-                  className="text-center font-medium text-gray-800"
-                >
+                <Grid item xs={2} className="text-center font-medium text-gray-800">
                   ₹{item.price?.toFixed(2) || "0.00"}
                 </Grid>
 
@@ -157,9 +203,7 @@ function Cart() {
                   >
                     <RemoveIcon className="text-gray-500" />
                   </IconButton>
-                  <span className="mx-2 font-semibold">
-                    {item.quantity || 1}
-                  </span>
+                  <span className="mx-2 font-semibold">{item.quantity || 1}</span>
                   <IconButton
                     onClick={() => handleQuantityChange(item._id, 1)}
                     disabled={item.quantity >= 10}
@@ -168,37 +212,33 @@ function Cart() {
                   </IconButton>
                 </Grid>
 
-                {/* Total Price for Item */}
-                <Grid
-                  item
-                  xs={2}
-                  className="text-center font-medium text-gray-800"
-                >
-                  ₹{(item.price * item.quantity)?.toFixed(2) || "0.00"}
+                {/* Total Price */}
+                <Grid item xs={2} className="text-center font-medium text-gray-800">
+                  ₹{(item.price * item.quantity).toFixed(2) || "0.00"}
                 </Grid>
               </Grid>
             ))}
-
-            {/* Total Price and Checkout Button */}
-            <div className="text-right mt-8">
-              <p className="text-xl font-bold mb-4">
-                Total: ₹{calculateTotalPrice()?.toFixed(2) || "0.00"}
-              </p>
-              <Button
-                variant="contained"
-                color="primary"
-                className="px-6 py-3 font-semibold"
-                // onClick={handleCheckout}
-              >
-                Checkout
-              </Button>
-            </div>
           </>
         )}
+
+        {/* Checkout Button */}
+        {cartItems.length > 0 && (
+          <div className="flex justify-between mt-8">
+            <p className="text-2xl font-semibold text-gray-800">
+              Total: ₹{calculateTotalPrice().toFixed(2)}
+            </p>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleCheckout}
+            >
+              Checkout
+            </Button>
+          </div>
+        )}
       </div>
-      <div>
-        <ToastContainer />
-      </div>
+
+      <ToastContainer />
     </div>
   );
 }
