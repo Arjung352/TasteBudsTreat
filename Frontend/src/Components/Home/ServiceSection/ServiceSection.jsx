@@ -5,8 +5,12 @@ import {
   CreditCardIcon,
   GiftIcon,
 } from "@heroicons/react/24/outline";
-
+import { useNavigate } from "react-router-dom";
 const ServicesSection = () => {
+  const redirecting = useNavigate();
+  const redirect = () => {
+    redirecting("/contact-us");
+  };
   return (
     <div className="flex flex-col justify-center items-center  font-WorkSans my-20">
       <div className="max-w-6xl w-full mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -22,8 +26,11 @@ const ServicesSection = () => {
             offer exceptional services, blending culinary artistry with warm
             hospitality.
           </p>
-          <button className="bg-green-500 transition-all duration-300 hover:bg-olive text-white font-bold py-2 px-4 rounded-full w-32">
-            Explore
+          <button
+            onClick={redirect}
+            className="bg-green-500 max-md:self-center transition-all duration-300 hover:bg-olive text-lg text-white font-bold py-2 px-4 rounded-full w-40"
+          >
+            Contact-us
           </button>
         </div>
 

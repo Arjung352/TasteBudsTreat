@@ -60,3 +60,6 @@ body {
 .out {
   height: 80vh;
 }
+#root {
+  overflow-x: hidden;
+}

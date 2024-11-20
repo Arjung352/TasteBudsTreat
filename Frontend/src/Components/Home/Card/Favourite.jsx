@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import name from "./name";
 import ActionAreaCard from "./Card";
 import Slider from "react-slick";
@@ -6,19 +6,40 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 function Favourite() {
-  var settings = {
+  const [slidesToShow, setSlidesToShow] = useState(3);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      if (width < 1000) {
+        setSlidesToShow(1);
+      } else if (width < 1300) {
+        setSlidesToShow(2);
+      } else {
+        setSlidesToShow(3);
+      }
+      console.log(width);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const settings = {
     accessibility: true,
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: slidesToShow,
     slidesToScroll: 1,
   };
   return (
-    <div className=" font-WorkSans flex flex-col items-center my-8 mt-20 mx-8">
-      <div className=" self-start mx-16">
+    <div className="font-WorkSans flex flex-col items-center my-8 mt-20 mx-8">
+      <div className="self-start mx-16 max-md:m-0">
         <div>
-          <p className=" uppercase text-red-600 text-xl font-medium mb-5">
+          <p className="uppercase text-red-600 text-xl font-medium mb-5">
             special dishes
           </p>
         </div>
@@ -35,6 +56,7 @@ function Favourite() {
             img={value.img}
             about={value.about}
             name={value.name}
+            price={value.price}
           />
         ))}
       </Slider>

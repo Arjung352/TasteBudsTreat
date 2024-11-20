@@ -34,8 +34,8 @@ const TestimonialSection = () => {
   }, []);
 
   return (
-    <section className="w-full mt-20 font-WorkSans">
-      <div className="container mx-auto px-4 md:px-6  py-10">
+    <section className="w-full mt-20 max-md:mt-5 font-WorkSans">
+      <div className="container mx-auto px-4 md:px-6 max-md:py-4  py-10">
         <div className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12">
           <div className="w-full md:w-1/3 flex justify-center md:justify-start">
             <img

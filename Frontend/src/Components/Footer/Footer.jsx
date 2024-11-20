@@ -2,53 +2,59 @@ import React from "react";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import InstagramIcon from "@mui/icons-material/Instagram";
-
+import { Link } from "react-router-dom";
 function Footer() {
   return (
     <div>
       <hr className=" border border-gray-400" />
-      <div className="flex justify-between my-10 font-WorkSans mx-8">
-        <div>
+      <div className="flex justify-between my-10 font-WorkSans mx-8 max-md:flex-col max-md:gap-5">
+        <div className="flex flex-col items-center justify-center text-center max-md:flex-col max-md:items-center max-md:justify-center">
           <img
             src="https://res.cloudinary.com/dmxlqw5ix/image/upload/v1731066887/qxhi70lws9tx5ssy8ff3.png"
-            className="h-16 "
+            className="h-16"
+            alt="Logo"
           />
-          <p className="mt-8 w-4/6 font- text-lg text-gray-600">
+          <p className="mt-8 w-4/6 text-lg text-gray-600">
             Dish Will Be For You where You Want It To Be!
           </p>
         </div>
+
         <div>
           <p className="font-bold text-xl">Usefull Links</p>
           <div className="text-lg text-gray-600 flex flex-col gap-3">
-            <a className="mt-3" href="/About">
+            <Link className="mt-3" to="/About">
               About Us
-            </a>
-            <a>Blogs</a>
-            <a href="/Contact-Us#FAQ">FAQ</a>
+            </Link>
+            <Link to="https://blogingdotblog.netlify.app/" target="_blank">
+              Blogs
+            </Link>
+            <Link to="/Contact-Us#FAQ">FAQ</Link>
           </div>
         </div>
         <div>
-          <a className="font-bold text-xl">Main Menu</a>
+          <Link className="font-bold text-xl">Main Menu</Link>
           <div className="text-lg text-gray-600 flex flex-col gap-3">
-            <a className="mt-3" href="/">
+            <Link className="mt-3" to="/">
               Home
-            </a>
-            <a href="/#Popular">Popular</a>
-            <a href="/menu">Menus</a>
+            </Link>
+            <Link to="/#Popular">Popular</Link>
+            <Link to="/menu">Menu</Link>
           </div>
         </div>
         <div>
-          <a className="font-bold text-xl">Contact-Us</a>
+          <Link className="font-bold text-xl">Contact-Us</Link>
           <div className="text-lg text-gray-600 flex flex-col gap-3">
-            <a href="mailto:tastebudstreat29@gmail.com" className="mt-3">
+            <Link to="mailto:tastebudstreat29@gmail.com" className="mt-3">
               Tastebudstreat29@gmail.com
-            </a>
-            <a href="https://www.instagram.com/tastebudstreat29/">Instagram</a>
-            <a>Social Media</a>
+            </Link>
+            <Link to="https://www.instagram.com/tastebudstreat29/">
+              Instagram
+            </Link>
+            <Link>Social Media</Link>
           </div>
         </div>
       </div>
-      <div className="flex justify-between items-center relative">
+      <div className=" relative flex justify-between items-center max-md:flex-col">
         <div className="flex gap-6 mx-8 mb-5">
           <div className="p-2 bg-green-500 rounded-full hover:scale-105 transition-all ease-in-out shadow-xl">
             <a href="mailto:tastebudstreat29@gmail.com" className="text-white">
@@ -72,7 +78,7 @@ function Footer() {
             </a>
           </div>
         </div>
-        <p className="absolute left-[33rem] top-2 text-gray-600">
+        <p className=" max-md:text-center md:absolute md:left-[33rem] md:top-2 text-gray-600">
           &copy; 2024 All Rights Reserved | TasteBudsTreat
         </p>
         <div></div>
