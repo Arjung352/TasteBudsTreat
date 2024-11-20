@@ -41,7 +41,7 @@ function Home() {
           <div className=" flex items-center justify-center">
             <img
               className="h-fit w-auto"
-              src="\public\images\salad-with-fresh-vegetables-plate-top-view_169016-29107-removebg-preview.png"
+              src=".\images\salad-with-fresh-vegetables-plate-top-view_169016-29107-removebg-preview.png"
             />
           </div>
         </div>

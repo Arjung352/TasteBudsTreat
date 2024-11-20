@@ -22,7 +22,7 @@ function PopularCatagories() {
           className="p-12 max-md:p-6 backdrop-filter backdrop-blur-md bg-opacity-5 border border-gray-100 bg-gray-400 px-16 shadow-md  rounded-2xl hover:scale-105 transition-all ease-in-out"
         >
           <img
-            src="\public\images\Popular\burger.png"
+            src=".\images\image\burger.png"
             className=" aspect-square rounded-full h-32 w-32 bg-green-300 p-3"
           />
           <p className=" text-center mt-4 text-2xl font-bold">Main Dish</p>
@@ -33,7 +33,7 @@ function PopularCatagories() {
           className="p-12 max-md:p-6 backdrop-filter backdrop-blur-md bg-opacity-5 border border-gray-100 bg-gray-400 px-16 shadow-md  rounded-2xl hover:scale-105 transition-all ease-in-out"
         >
           <img
-            src="\public\images\Popular\sandwich.png"
+            src=".\images\image\sandwich.png"
             className=" aspect-square rounded-full h-32 w-32 bg-green-300 p-3"
           />
           <p className=" text-center mt-4 text-2xl font-bold">Break Fast</p>
@@ -44,7 +44,7 @@ function PopularCatagories() {
           className="p-12 max-md:p-6 backdrop-filter backdrop-blur-md bg-opacity-5 border border-gray-100 bg-gray-400 px-16 shadow-md  rounded-2xl hover:scale-105 transition-all ease-in-out"
         >
           <img
-            src="\public\images\Popular\dessert.png"
+            src=".\images\image\dessert.png"
             className=" aspect-square rounded-full h-32 w-32 bg-green-300 p-3"
           />
           <p className=" text-center mt-4 text-2xl font-bold">Dessert</p>
@@ -55,7 +55,7 @@ function PopularCatagories() {
           className="p-12 max-md:p-6 backdrop-filter backdrop-blur-md bg-opacity-5 border border-gray-100 bg-gray-400 px-16 shadow-md  rounded-2xl hover:scale-105 transition-all ease-in-out"
         >
           <img
-            src="\public\images\Popular\thali.png"
+            src=".\images\image\thali.png"
             className=" aspect-square rounded-full h-32 w-32 bg-green-300 p-3"
           />
           <p className=" text-center mt-4 text-2xl font-bold">Browse All</p>
