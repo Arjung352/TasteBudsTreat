@@ -10,15 +10,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-quill/dist/quill.snow.css";
 
 function Menu() {
-  const settings = {
-    accessibility: true,
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 5,
-    slidesToScroll: 1,
-  };
-
   const [restaurants, setRestaurants] = useState([]);
   const [selectedRestaurant, setSelectedRestaurant] = useState("");
   const [foodType, setFoodType] = useState("");
@@ -27,10 +18,29 @@ function Menu() {
   const [modalRestaurant, setModalRestaurant] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
+  const [slidesToShow, setSlidesToShow] = useState(5);
+
   // Pagination state
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 8; // Number of items to display per page
+  const width = window.innerWidth;
+  let itemsPerPage = 8; // Number of items to display per page
+  if (width < 768) {
+    itemsPerPage = 5;
+  }
   useEffect(() => {
+    const width = window.innerWidth;
+    const handleResize = () => {
+      if (width < 1000) {
+        setSlidesToShow(1);
+      } else if (width < 1300) {
+        setSlidesToShow(4);
+      } else {
+        setSlidesToShow(5);
+      }
+      console.log(width);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
     const fetchRestaurants = async () => {
       try {
         const restaurantResponse = await axios.get(
@@ -48,6 +58,9 @@ function Menu() {
     };
 
     fetchRestaurants();
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   // Filtered food based on selections
@@ -85,6 +98,14 @@ function Menu() {
     }
   };
 
+  const settings = {
+    accessibility: true,
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: slidesToShow,
+    slidesToScroll: 1,
+  };
   // Pagination logic
   const offset = currentPage * itemsPerPage;
   const currentItems = filteredFood.slice(offset, offset + itemsPerPage);
@@ -105,7 +126,7 @@ function Menu() {
   return (
     <div className="flex justify-center">
       <div className="w-4/5 font-WorkSans">
-        <div className="flex gap-7 mt-10 items-center text-gray-500">
+        <div className="flex max-md:flex-col max-md:items-start gap-7 mt-10 items-center text-gray-500">
           <p className="p-2 bg-white border-gray-300 border rounded-xl">
             Filters <TuneIcon />
           </p>
@@ -115,7 +136,7 @@ function Menu() {
               name="Restaurant"
               value={selectedRestaurant}
               onChange={(e) => setSelectedRestaurant(e.target.value)}
-              className="p-2 border border-gray-300 rounded-xl focus:outline-none"
+              className="p-2 border  border-gray-300 rounded-xl focus:outline-none"
             >
               <option value="">All Restaurants</option>
               {restaurants.map((rest) => (
@@ -166,14 +187,15 @@ function Menu() {
               <a
                 href="#Menu"
                 key={index}
-                to={`/cart/${value._id}`}
-                className="  relative cursor-pointer mt-8 flex flex-col items-center hover:scale-105 transition-all ease-in-out"
+                className=" justify-center relative cursor-pointer mt-8 flex flex-col items-center hover:scale-105 transition-all ease-in-out"
               >
-                <img
-                  className="aspect-square rounded-full h-32 w-32 shadow-md shadow-black"
-                  src={value.image}
-                />
-                <p className="w-32 text-center mt-3">{value.dishName}</p>
+                <div className="flex-col items-center justify-center">
+                  <img
+                    className="aspect-square rounded-full h-32 w-32 shadow-md shadow-black"
+                    src={value.image}
+                  />
+                  <p className="w-32 text-center mt-3">{value.dishName}</p>
+                </div>
               </a>
             ))}
           </Slider>
@@ -206,7 +228,7 @@ function Menu() {
             Dishish Near You!
           </p>
         </div>
-        <div className="grid grid-cols-4 gap-x-10 mb-10 gap-y-10">
+        <div className="grid grid-cols-4 max-md:grid-cols-1 gap-x-10 mb-10 gap-y-10">
           {currentItems.map((value, index) => (
             <div
               key={index}
