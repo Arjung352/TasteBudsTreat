@@ -67,6 +67,9 @@ function Menu() {
       await axios.post("http://localhost:5000/api/cart/AddToCart", data);
       toast.success("Item Added To Cart");
     } catch (error) {
+      if (!localStorage.getItem("UserName")) {
+        return toast.error("Please Login Or SignIn First");
+      }
       toast.error("Error Adding To Cart!");
       console.error(
         "Error adding to cart:",

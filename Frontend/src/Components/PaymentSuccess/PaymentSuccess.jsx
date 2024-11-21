@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const PaymentSuccess = () => {
   const navigate = useNavigate();
@@ -7,15 +7,19 @@ const PaymentSuccess = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCountdown((prev) => (prev > 0 ? prev - 1 : 0));
+      setCountdown((prev) => {
+        if (prev > 1) {
+          return prev - 1;
+        } else {
+          clearInterval(timer); // Stop the timer when countdown reaches 1
+          navigate("/"); // Redirect when countdown is 0
+          return 0;
+        }
+      });
     }, 1000);
 
-    if (countdown === 0) {
-      navigate('/');
-    }
-
-    return () => clearInterval(timer);
-  }, [countdown, navigate]);
+    return () => clearInterval(timer); // Clean up interval on component unmount
+  }, [navigate]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen px-6 text-center">
@@ -33,12 +37,13 @@ const PaymentSuccess = () => {
       />
 
       <p className="text-gray-600 mb-4">
-        Redirecting to the homepage in <span className="font-bold">{countdown}</span> seconds...
+        Redirecting to the homepage in{" "}
+        <span className="font-bold">{countdown}</span> seconds...
       </p>
 
       <button
-        onClick={() => navigate('/')}
-        className="px-6 py-3 mt-4 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition duration-300"
+        onClick={() => navigate("/")}
+        className="px-6 py-3 mt-4 text-white bg-blue-600 rounded-xl hover:bg-blue-700 transition duration-300"
       >
         Go to Homepage
       </button>

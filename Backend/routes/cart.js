@@ -65,5 +65,20 @@ router.delete("/delete", async (req, res) => {
       .json({ message: "An error occurred while deleting the dish" });
   }
 });
+router.delete("/clear", async (req, res) => {
+  try {
+    const username = req.headers.username;
+
+    if (!username) {
+      return res.status(400).json({ message: "Username is required" });
+    }
+
+    await Cart.deleteMany({ username });
+    res.status(200).json({ message: "Cart cleared successfully" });
+  } catch (error) {
+    console.error("Error clearing cart:", error);
+    res.status(500).json({ message: "Failed to clear cart" });
+  }
+});
 
 module.exports = router;

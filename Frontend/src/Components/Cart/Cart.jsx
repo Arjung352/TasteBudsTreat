@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -9,9 +10,11 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-quill/dist/quill.snow.css";
+import PaymentSuccess from "../PaymentSuccess/PaymentSuccess";
 
 function Cart() {
   const [cartItems, setCartItems] = useState([]);
+  const [paymentSuccess, setPaymentSuccess] = useState(false); // State to show PaymentSuccess
   const { id } = useParams();
 
   // Handle quantity changes
@@ -77,6 +80,7 @@ function Cart() {
   }, [id]);
 
   // Checkout handler
+  // Checkout handler
   const handleCheckout = async () => {
     try {
       const { data } = await axios.post("http://localhost:5000/checkout", {
@@ -97,9 +101,24 @@ function Cart() {
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,
             })
-            .then((res) => {
+            .then(async (res) => {
               if (res.data.success) {
                 toast.success("Payment Successful!");
+
+                // Clear cart from database
+                try {
+                  await axios.delete("http://localhost:5000/api/cart/clear", {
+                    headers: {
+                      username: localStorage.getItem("UserName"),
+                    },
+                  });
+
+                  setCartItems([]);
+                  setPaymentSuccess(true); // Show PaymentSuccess page
+                } catch (clearError) {
+                  toast.error("Failed to clear cart. Please try again.");
+                  console.error("Error clearing cart:", clearError);
+                }
               } else {
                 toast.error("Payment Verification Failed.");
               }
@@ -126,6 +145,11 @@ function Cart() {
       toast.error("Something went wrong while initiating checkout.");
     }
   };
+
+  // Render PaymentSuccess if payment is successful
+  if (paymentSuccess) {
+    return <PaymentSuccess />;
+  }
 
   return (
     <div className="flex flex-col items-center justify-center mt-20 p-6">
@@ -191,7 +215,11 @@ function Cart() {
                 </Grid>
 
                 {/* Price Per Unit */}
-                <Grid item xs={2} className="text-center font-medium text-gray-800">
+                <Grid
+                  item
+                  xs={2}
+                  className="text-center font-medium text-gray-800"
+                >
                   ₹{item.price?.toFixed(2) || "0.00"}
                 </Grid>
 
@@ -203,7 +231,9 @@ function Cart() {
                   >
                     <RemoveIcon className="text-gray-500" />
                   </IconButton>
-                  <span className="mx-2 font-semibold">{item.quantity || 1}</span>
+                  <span className="mx-2 font-semibold">
+                    {item.quantity || 1}
+                  </span>
                   <IconButton
                     onClick={() => handleQuantityChange(item._id, 1)}
                     disabled={item.quantity >= 10}
@@ -213,7 +243,11 @@ function Cart() {
                 </Grid>
 
                 {/* Total Price */}
-                <Grid item xs={2} className="text-center font-medium text-gray-800">
+                <Grid
+                  item
+                  xs={2}
+                  className="text-center font-medium text-gray-800"
+                >
                   ₹{(item.price * item.quantity).toFixed(2) || "0.00"}
                 </Grid>
               </Grid>
