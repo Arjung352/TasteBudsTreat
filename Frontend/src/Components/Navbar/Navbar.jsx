@@ -88,8 +88,8 @@ function Navbar() {
 
       {/* Overlay Menu */}
       <div
-        className={`absolute top-16 left-0 w-full bg-black/60 text-white z-30 flex flex-col items-center py-4 md:hidden  transform ${
-          isMenuOpen ? "-translate-x-0" : "translate-x-full"
+        className={`absolute top-16 left-0 w-full overflow-hidden bg-black/60 text-white z-30 flex flex-col items-center py-4 md:hidden  transform ${
+          isMenuOpen ? "-translate-x-0" : "translate-x-full hidden"
         } transition-transform duration-300 ease-in-out`}
       >
         <ul className="text-white text-xl flex flex-col justify-center items-center font-medium font-work space-y-4">

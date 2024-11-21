@@ -6,7 +6,7 @@ const profiles = [
     name: "Arjun Gupta",
     description:
       "I’m a third-year Computer Applications student with a strong passion for Full Stack Development. I specialize in turning creative ideas into dynamic web experiences, balancing both design and performance. Beyond coding, I’m an enthusiastic and quick learner with a strong drive to continuously enhance my skills.",
-    imgSrc: "./images/myself/adarsh.jpg",
+    imgSrc: "./images/myself/arjun.png",
   },
   {
     name: "Ansh Bansal",
