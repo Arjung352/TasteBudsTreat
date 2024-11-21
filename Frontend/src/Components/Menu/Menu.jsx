@@ -8,6 +8,7 @@ import Footer from "../Footer/Footer";
 import ReactPaginate from "react-paginate"; // Import pagination component
 import { ToastContainer, toast } from "react-toastify";
 import "react-quill/dist/quill.snow.css";
+import "react-toastify/dist/ReactToastify.css";
 
 function Menu() {
   const [restaurants, setRestaurants] = useState([]);

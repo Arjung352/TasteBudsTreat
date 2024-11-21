@@ -11,7 +11,7 @@ function About() {
   return (
     <div className="flex flex-col items-center">
       <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row gap-8 py-8">
+        <div className="flex flex-col lg:flex-row max-md:pt-0 py-8">
           <div className="lg:hidden w-full mb-8">
             <Myself />
           </div>
