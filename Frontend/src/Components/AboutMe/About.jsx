@@ -11,8 +11,8 @@ function About() {
   return (
     <div className="flex justify-center">
       <div className="w-4/5">
-        <div className="min-h-screen text-black flex justify-center items-center p-8 mb-10">
-          <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-[70%_30%] gap-10">
+        <div className="min-h-screen text-black flex  p-8 mb-10">
+          <div className="flex max-w-[60%] md:grid-cols-[70%_30%] gap-10">
             {/* Left Column: Content */}
             <div className="space-y-10">
               <div className=" backdrop-filter bg-gray-400 backdrop-blur-md bg-opacity-10 border border-gray-100 rounded-xl shadow-lg p-8 transition duration-500 ">
@@ -40,9 +40,6 @@ function About() {
               </div>
 
               {/* Myself Component will appear here on small screens */}
-              <div className="block md:hidden">
-                <Myself />
-              </div>
 
               <div className=" backdrop-filter bg-gray-400 backdrop-blur-md bg-opacity-10 border border-gray-100 rounded-xl shadow-lg p-8 transition duration-500 ">
                 <h1 className="text-3xl  mb-6 text-green-500 text-left">
@@ -109,9 +106,9 @@ function About() {
             </div>
 
             {/* Right Column: Myself Component on large screens */}
-            <div className="hidden md:flex md:justify-end md:items-start h-screen">
-              <Myself />
-            </div>
+          </div>
+          <div className="hidden w-full  md:flex md:justify-end md:items-start h-screen">
+            <Myself />
           </div>
         </div>
         <Footer />
