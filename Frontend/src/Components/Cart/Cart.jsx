@@ -80,7 +80,6 @@ function Cart() {
   }, [id]);
 
   // Checkout handler
-  // Checkout handler
   const handleCheckout = async () => {
     try {
       const { data } = await axios.post("http://localhost:5000/checkout", {

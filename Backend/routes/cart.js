@@ -67,17 +67,27 @@ router.delete("/delete", async (req, res) => {
 });
 router.delete("/clear", async (req, res) => {
   try {
-    const username = req.headers.username;
+    const Username = req.headers.username;
 
-    if (!username) {
+    // Validate username
+    if (!Username) {
       return res.status(400).json({ message: "Username is required" });
     }
 
-    await Cart.deleteMany({ username });
-    res.status(200).json({ message: "Cart cleared successfully" });
+    // Delete cart items for the user
+    const result = await Cart.deleteMany({ Username });
+
+    // Check if anything was actually deleted
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: "No cart items found to delete" });
+    }
+
+    res
+      .status(200)
+      .json({ success: true, message: "Cart cleared successfully" });
   } catch (error) {
     console.error("Error clearing cart:", error);
-    res.status(500).json({ message: "Failed to clear cart" });
+    res.status(500).json({ success: false, message: "Failed to clear cart" });
   }
 });
 
