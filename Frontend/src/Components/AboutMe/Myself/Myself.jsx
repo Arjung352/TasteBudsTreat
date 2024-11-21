@@ -42,7 +42,7 @@ function Myself() {
 
   return (
     <div id="content-container" className="outer h-3/4">
-      <section className="myself-container max-md:mt-0 max-md:w-11/12  mt-40 w-3/4 bg-gray-400 backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100">
+      <section className="myself-container max-md:mt-0 max-md:w-11/12  mt-40 w-4/5 bg-gray-400 backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100">
         <img
           src={profiles[currentIndex].imgSrc}
           alt={profiles[currentIndex].name}

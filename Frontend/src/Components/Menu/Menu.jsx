@@ -5,6 +5,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Footer from "../Footer/Footer";
+import ReactPaginate from "react-paginate"; // Import pagination component
 import { ToastContainer, toast } from "react-toastify";
 import "react-quill/dist/quill.snow.css";
 
@@ -26,6 +27,9 @@ function Menu() {
   const [modalRestaurant, setModalRestaurant] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 8; // Number of items to display per page
   useEffect(() => {
     const fetchRestaurants = async () => {
       try {
@@ -78,6 +82,14 @@ function Menu() {
     }
   };
 
+  // Pagination logic
+  const offset = currentPage * itemsPerPage;
+  const currentItems = filteredFood.slice(offset, offset + itemsPerPage);
+  const pageCount = Math.ceil(filteredFood.length / itemsPerPage);
+
+  const handlePageClick = (event) => {
+    setCurrentPage(event.selected);
+  };
   const handleRestaurantClick = (restaurant) => {
     setModalRestaurant(restaurant);
     setShowModal(true);
@@ -87,7 +99,6 @@ function Menu() {
     setShowModal(false);
     setModalRestaurant(null);
   };
-
   return (
     <div className="flex justify-center">
       <div className="w-4/5 font-WorkSans">
@@ -186,20 +197,21 @@ function Menu() {
             ))}
           </Slider>
         </div>
+        {/* Dishes Section */}
         <div id="Menu" className="mt-10 flex flex-col items-center">
           <p className="text-2xl font-medium font-WorkSans self-start">
             Dishish Near You!
           </p>
         </div>
         <div className="grid grid-cols-4 gap-x-10 mb-10 gap-y-10">
-          {filteredFood.map((value, index) => (
+          {currentItems.map((value, index) => (
             <div
               key={index}
-              className=" shadow-md flex flex-col items-center rounded-2xl duration-300 hover:scale-105 transition-all ease-in-out mb-6"
+              className="shadow-md flex flex-col items-center rounded-2xl duration-300 hover:scale-105 transition-all ease-in-out mb-6"
             >
               <img
                 src={value.image}
-                className="max-h-full max-w-full  rounded-xl m-auto block"
+                className="max-h-full max-w-full rounded-xl m-auto block"
               />
               <div className="self-start px-3">
                 <p className="mt-4 text-xl font-medium">{value.dishName}</p>
@@ -221,7 +233,7 @@ function Menu() {
                       value.image
                     );
                   }}
-                  className=" py-2 text-center  shadow-md w-full text-lg rounded-xl backdrop-filter backdrop-blur-md bg-opacity-15 bg-gray-300 hover:bg-gray-300 transition-all ease-in-out duration-300 "
+                  className="py-2 text-center shadow-md w-full text-lg rounded-xl backdrop-filter backdrop-blur-md bg-opacity-15 bg-gray-300 hover:bg-gray-300 transition-all ease-in-out duration-300"
                 >
                   Add To Cart
                 </button>
@@ -229,6 +241,22 @@ function Menu() {
             </div>
           ))}
         </div>
+
+        {/* Pagination Component */}
+        <ReactPaginate
+          previousLabel={"Previous"}
+          nextLabel={"Next"}
+          breakLabel={"..."}
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={3}
+          onPageChange={handlePageClick}
+          containerClassName={"flex justify-center mt-6"}
+          pageClassName={"px-3 py-2 border rounded-lg mx-1"}
+          activeClassName={"bg-gray-300"}
+          previousClassName={"px-3 py-2 border rounded-lg mx-1"}
+          nextClassName={"px-3 py-2 border rounded-lg mx-1"}
+        />
 
         {/* Modal for Restaurant Details */}
         {showModal && modalRestaurant && (
