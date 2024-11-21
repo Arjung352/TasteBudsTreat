@@ -9,6 +9,8 @@ import ReactPaginate from "react-paginate"; // Import pagination component
 import { ToastContainer, toast } from "react-toastify";
 import "react-quill/dist/quill.snow.css";
 import "react-toastify/dist/ReactToastify.css";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 function Menu() {
   const [restaurants, setRestaurants] = useState([]);
@@ -266,6 +268,27 @@ function Menu() {
               </div>
             </div>
           ))}
+          {currentItems && currentItems.length === 0 && (
+            <>
+              {" "}
+              <div>
+                <Skeleton className="mb-4 h-10  " />
+                <Skeleton count={5} />
+              </div>
+              <div className="max-sm:hidden">
+                <Skeleton className="mb-4 h-10" />
+                <Skeleton count={5} />
+              </div>
+              <div className="max-md:hidden">
+                <Skeleton className="mb-4 h-10" />
+                <Skeleton count={5} />
+              </div>
+              <div className="max-md:hidden">
+                <Skeleton className="mb-4 h-10" />
+                <Skeleton count={5} />
+              </div>
+            </>
+          )}
         </div>
 
         {/* Pagination Component */}
