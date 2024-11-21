@@ -1,34 +1,84 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
-import Home from "../Home/Home";
-import Menu from "../Menu/Menu";
-import About from "../AboutMe/About";
-import Cart from "../Cart/Cart";
 import Error from "./Error";
-import ContactUs from "../ContactUs/ContactUs";
-import Register_Restaurant from "../Admin/Restaurant/Register_Restaurant";
-import MenuForm from "../Admin/Restaurant/Menu";
+import { lazy, Suspense } from "react";
+import { TailSpin } from "react-loader-spinner";
+import axios from "axios";
+
+const Home = lazy(() => import("../Home/Home"));
+const Menu = lazy(() => import("../Menu/Menu"));
+const Cart = lazy(() => import("../Cart/Cart"));
+const About = lazy(() => import("../AboutMe/About"));
+const ContactUs = lazy(() => import("../ContactUs/ContactUs"));
+const Register_Restaurant = lazy(() =>
+  import("../Admin/Restaurant/Register_Restaurant")
+);
+const MenuForm = lazy(() => import("../Admin/Restaurant/Menu"));
 function App() {
+  const [load, loadingServer] = useState(false);
+  useEffect(() => {
+    const loadServer = (async () => {
+      await axios.get(
+        "https://taste-buds-treat-backend.vercel.app/api/restaurant/get-all"
+      );
+      loadingServer(true);
+    })();
+  });
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Navbar />}>
-            <Route index element={<Home />} />
-            <Route path="Menu" element={<Menu />} />
-            <Route path="About" element={<About />} />
-            <Route path="Cart" element={<Cart />} />
-            <Route path="Contact-Us" element={<ContactUs />} />
-            <Route
-              path="Admin/register_restaurant"
-              element={<Register_Restaurant />}
-            />
-            <Route path="Admin/menu" element={<MenuForm />} />
-            <Route path="*" element={<Error />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      {load ? (
+        <Suspense
+          fallback={
+            <div className="w-full h-screen flex justify-center items-center">
+              <TailSpin
+                height="80"
+                width="80"
+                color="#3f66dd"
+                ariaLabel="tail-spin-loading"
+                radius="1"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+              />
+            </div>
+          }
+        >
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Navbar />}>
+                <Route index element={<Home />} />
+                <Route path="Menu" element={<Menu />} />
+                <Route path="About" element={<About />} />
+                <Route path="Cart" element={<Cart />} />
+                <Route path="Contact-Us" element={<ContactUs />} />
+                <Route
+                  path="Admin/register_restaurant"
+                  element={<Register_Restaurant />}
+                />
+                <Route path="Admin/menu" element={<MenuForm />} />
+                <Route path="*" element={<Error />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </Suspense>
+      ) : (
+        <div className="w-full h-screen flex gap-4 flex-col justify-center items-center">
+          <TailSpin
+            height="80"
+            width="80"
+            color="#3f66dd"
+            ariaLabel="tail-spin-loading"
+            radius="1"
+            wrapperStyle={{}}
+            wrapperClass=""
+            visible={true}
+          />
+          <p className="font-salsa">
+            Starting the Server Please have patience!
+          </p>
+        </div>
+      )}
     </>
   );
 }
