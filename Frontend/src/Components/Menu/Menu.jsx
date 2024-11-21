@@ -34,12 +34,12 @@ function Menu() {
     const fetchRestaurants = async () => {
       try {
         const restaurantResponse = await axios.get(
-          "http://localhost:5000/api/restaurant/get-all"
+          "https://taste-buds-treat-backend.vercel.app/api/restaurant/get-all"
         );
         setRestaurants(restaurantResponse.data.data);
 
         const foodResponse = await axios.get(
-          "http://localhost:5000/api/upload/all-Dish"
+          "https://taste-buds-treat-backend.vercel.app/api/upload/all-Dish"
         );
         setFood(foodResponse.data.data);
       } catch (error) {
@@ -68,7 +68,10 @@ function Menu() {
         UserName: localStorage.getItem("UserName"),
       };
 
-      await axios.post("http://localhost:5000/api/cart/AddToCart", data);
+      await axios.post(
+        "https://taste-buds-treat-backend.vercel.app/api/cart/AddToCart",
+        data
+      );
       toast.success("Item Added To Cart");
     } catch (error) {
       if (!localStorage.getItem("UserName")) {

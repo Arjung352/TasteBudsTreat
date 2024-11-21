@@ -34,9 +34,12 @@ function Cart() {
   // Remove an item from the cart
   const handleRemoveItem = async (_id) => {
     try {
-      await axios.delete("http://localhost:5000/api/cart/delete", {
-        data: { _id },
-      });
+      await axios.delete(
+        "https://taste-buds-treat-backend.vercel.app/api/cart/delete",
+        {
+          data: { _id },
+        }
+      );
       toast.success("Item Deleted Successfully");
       setCartItems((prevItems) => prevItems.filter((item) => item._id !== _id));
     } catch (error) {
@@ -61,7 +64,7 @@ function Cart() {
         }
 
         const response = await axios.get(
-          "http://localhost:5000/api/cart/show-cart",
+          "https://taste-buds-treat-backend.vercel.app/api/cart/show-cart",
           {
             headers: {
               username: username,
@@ -82,9 +85,12 @@ function Cart() {
   // Checkout handler
   const handleCheckout = async () => {
     try {
-      const { data } = await axios.post("http://localhost:5000/checkout", {
-        amount: calculateTotalPrice(),
-      });
+      const { data } = await axios.post(
+        "https://taste-buds-treat-backend.vercel.app/checkout",
+        {
+          amount: calculateTotalPrice(),
+        }
+      );
 
       const options = {
         key: "rzp_test_o97y5FAmkmAX8b", // Your Razorpay key
@@ -95,22 +101,28 @@ function Cart() {
         order_id: data.order.id,
         handler: function (response) {
           axios
-            .post("http://localhost:5000/paymentverification", {
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_signature: response.razorpay_signature,
-            })
+            .post(
+              "https://taste-buds-treat-backend.vercel.app/paymentverification",
+              {
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+              }
+            )
             .then(async (res) => {
               if (res.data.success) {
                 toast.success("Payment Successful!");
 
                 // Clear cart from database
                 try {
-                  await axios.delete("http://localhost:5000/api/cart/clear", {
-                    headers: {
-                      username: localStorage.getItem("UserName"),
-                    },
-                  });
+                  await axios.delete(
+                    "https://taste-buds-treat-backend.vercel.app/api/cart/clear",
+                    {
+                      headers: {
+                        username: localStorage.getItem("UserName"),
+                      },
+                    }
+                  );
 
                   setCartItems([]);
                   setPaymentSuccess(true); // Show PaymentSuccess page

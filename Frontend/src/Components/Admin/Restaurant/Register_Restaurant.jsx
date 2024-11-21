@@ -44,7 +44,7 @@ function Register_Restaurant() {
     setLoad(false);
     try {
       await axios.post(
-        "http://localhost:5000/api/restaurant/register",
+        "https://taste-buds-treat-backend.vercel.app/api/restaurant/register",
         formData,
         {
           headers: {

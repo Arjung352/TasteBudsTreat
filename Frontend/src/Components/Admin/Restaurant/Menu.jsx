@@ -51,7 +51,7 @@ function MenuForm() {
     setLoad(false);
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/upload/menu",
+        "https://taste-buds-treat-backend.vercel.app/api/upload/menu",
         formData,
         {
           headers: {
@@ -73,7 +73,7 @@ function MenuForm() {
     const fetchRestaurants = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/restaurant/get-all"
+          "https://taste-buds-treat-backend.vercel.app/api/restaurant/get-all"
         );
         console.log("Fetched restaurants:", response.data.data);
         setRestaurants(response.data.data);

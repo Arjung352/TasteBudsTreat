@@ -21,7 +21,7 @@ function ContactUs() {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:5000/send", formData)
+      .post("https://taste-buds-treat-backend.vercel.app/send", formData)
       .then((response) => {
         setStatus("Message Sent Successfully!");
         setFormData({ name: "", email: "", message: "" });
