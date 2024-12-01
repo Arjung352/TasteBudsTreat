@@ -25,7 +25,13 @@ function Navbar() {
 
   useEffect(() => {
     if (user?.fullName) {
+      // User is logged in, store the username in localStorage
       localStorage.setItem("UserName", user.fullName);
+      console.log("User logged in:", user.fullName);
+    } else {
+      // User is logged out, clear the username from localStorage
+      localStorage.removeItem("UserName");
+      console.log("User logged out, localStorage cleared");
     }
   }, [user]);
 
@@ -57,7 +63,6 @@ function Navbar() {
             </div>
             <div className="flex gap-8 mr-3 w-60">
               <SignedOut>
-                {localStorage.clear()}
                 <SignInButton mode="modal">
                   <button className=" max-md:text-sm max-md:py-1 max-md:w-[5.2rem] max-md:px-2 px-5 py-2 rounded-[20px] text-white bg-green-500 hover:bg-olive font-semibold shadow-md transition duration-300 transform hover:scale-105">
                     Sign In

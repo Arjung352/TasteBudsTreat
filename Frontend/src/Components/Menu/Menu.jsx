@@ -83,6 +83,7 @@ function Menu() {
         img,
         UserName: localStorage.getItem("UserName"),
       };
+      console.log("Putting UserName", localStorage.getItem("UserName"));
 
       await axios.post(
         "https://taste-buds-treat-backend.vercel.app/api/cart/AddToCart",
@@ -91,6 +92,10 @@ function Menu() {
       toast.success("Item Added To Cart");
     } catch (error) {
       if (!localStorage.getItem("UserName")) {
+        console.log(
+          "username when encountered error",
+          localStorage.getItem("UserName")
+        );
         return toast.error("Please Login Or SignIn First");
       }
       toast.error("Error Adding To Cart!");
