@@ -8,14 +8,32 @@ const bodyParser = require("body-parser");
 const restaurantRoutes = require("./routes/restaurant");
 const restromenu = require("./routes/menu");
 const Cart = require("./routes/cart");
-const razorpay=require("razorpay");
+const razorpay = require("razorpay");
 const crypto = require("crypto");
 
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
+// Routes
 
+// Restro Route
+app.use("/api/restaurant", restaurantRoutes);
+
+// Menu Route
+app.use("/api/upload", restromenu);
+
+// Cart Route
+app.use("/api/cart", Cart);
+
+// Home route
+app.get("/", (req, res) => {
+  res.json({
+    message: "Hey There!",
+  });
+});
+
+// RazerPay Logic
 // Razorpay Instance
 const instance = new razorpay({
   key_id: process.env.KEY,
@@ -64,7 +82,8 @@ app.post("/checkout", async (req, res) => {
 
 // Payment Verification Route
 app.post("/paymentverification", async (req, res) => {
-  const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+  const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
+    req.body;
 
   const generated_signature = crypto
     .createHmac("sha256", process.env.SECRET)
@@ -86,25 +105,7 @@ app.post("/paymentverification", async (req, res) => {
   }
 });
 
-
-
-// Home route
-app.get("/", (req, res) => {
-  res.json({
-    message: "Hey There!",
-  });
-});
-
-// Restro Route
-app.use("/api/restaurant", restaurantRoutes);
-
-// Menu Route
-app.use("/api/upload", restromenu);
-
-// Cart Route
-app.use("/api/cart", Cart);
-
-// Email route
+// Email route for feedback
 app.post("/send", (req, res) => {
   const { name, email, message } = req.body;
 
@@ -117,14 +118,45 @@ app.post("/send", (req, res) => {
   });
 
   const mailOptions = {
-    from: process.env.GMAIL_USER, // Ensure this is correct
-    to: process.env.GMAIL_USER, // Recipient email
+    from: process.env.GMAIL_USER,
+    to: process.env.GMAIL_USER,
     subject: `Message from ${name}`,
     text: message,
     html: `<p>You have a new message from your contact form:</p>
            <p><strong>Name: </strong> ${name}</p>
            <p><strong>Email: </strong> ${email}</p>
            <p><strong>Message: </strong> ${message}</p>`,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error("Error sending email:", error);
+      return res.status(500).json({ message: "Error sending email", error });
+    }
+    res.status(200).json({ message: "Email sent successfully", info });
+  });
+});
+// Email route for order comfirmation
+app.post("/orderConfirm", (req, res) => {
+  const { UserName, email, amount } = req.body;
+
+  const transporter = nodemailer.createTransport({
+    service: "Gmail",
+    auth: {
+      user: process.env.GMAIL_USER,
+      pass: process.env.GMAIL_PASS,
+    },
+  });
+
+  const mailOptions = {
+    from: process.env.GMAIL_USER,
+    to: email,
+    subject: `Order Confirmation `,
+    text: "order confirmation",
+    html: `<p><strong>Thank You For Purchasing From TasteBudsTreat</strong></p>
+           <p>You're order will be there in short time!</p>
+           <p>You're Total is ${amount}</p>
+           <p><strong>Regards TasteBudsTreat :)</p>`,
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
