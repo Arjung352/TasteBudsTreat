@@ -318,7 +318,7 @@ function Menu() {
             <div className="backdrop-filter backdrop-blur-md bg-opacity-75 bg-white relative rounded-xl shadow-lg p-8 w-3/4 max-h-[90vh] overflow-auto">
               <button
                 onClick={handleCloseModal}
-                className="absolute top-6 right-10 text-red font-bold text-3xl"
+                className="absolute top-6 right-10 max-md:text-xl max-md:right-6 text-red font-bold text-3xl"
               >
                 ✖
               </button>
@@ -347,7 +347,7 @@ function Menu() {
               </div>
 
               {/* Render dishes offered by the selected restaurant */}
-              <div className="grid grid-cols-3 gap-8 mt-8">
+              <div className="grid grid-cols-3 max-md:grid-cols-1 gap-8 mt-8">
                 {food
                   .filter((dish) => dish.restaurantId === modalRestaurant._id)
                   .map((dish, index) => (

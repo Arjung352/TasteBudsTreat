@@ -27,10 +27,11 @@ function Navbar() {
     if (user?.fullName) {
       // User is logged in, store the username in localStorage
       localStorage.setItem("UserName", user.fullName);
+      localStorage.setItem("email", user.emailAddresses);
       console.log("User logged in:", user.fullName);
     } else {
       // User is logged out, clear the username from localStorage
-      localStorage.removeItem("UserName");
+      localStorage.clear();
       console.log("User logged out, localStorage cleared");
     }
   }, [user]);

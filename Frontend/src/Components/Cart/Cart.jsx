@@ -112,7 +112,19 @@ function Cart() {
             .then(async (res) => {
               if (res.data.success) {
                 toast.success("Payment Successful!");
-
+                try {
+                  await axios.post(
+                    "https://taste-buds-treat-backend.vercel.app/orderConfirm",
+                    {
+                      UserName: localStorage.getItem("UserName"),
+                      amount: calculateTotalPrice(),
+                      email: localStorage.getItem("email"),
+                    }
+                  );
+                  console.log("Mail sent successfully!");
+                } catch (error) {
+                  console.error("error sending mail", error);
+                }
                 // Clear cart from database
                 try {
                   await axios.delete(
