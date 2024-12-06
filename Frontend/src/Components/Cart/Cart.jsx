@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import { Grid } from "@mui/material";
 import { useParams } from "react-router-dom";
@@ -312,6 +311,14 @@ function Cart() {
                       <AddIcon className="text-gray-500" />
                     </IconButton>
                   </div>
+                </Grid>
+                <Grid
+                  item
+                  xs={3}
+                  sm={2}
+                  className="text-center max-md:hidden font-medium text-gray-800"
+                >
+                  ₹{(item.price * item.quantity).toFixed(2) || "0.00"}
                 </Grid>
               </Grid>
             ))}
