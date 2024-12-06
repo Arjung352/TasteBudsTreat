@@ -174,6 +174,25 @@ function Cart() {
     return <PaymentSuccess />;
   }
 
+  // Clear cart
+  const clearCart = async () => {
+    try {
+      await axios.delete(
+        "https://taste-buds-treat-backend.vercel.app/api/cart/clear",
+        {
+          headers: {
+            username: localStorage.getItem("UserName"),
+          },
+        }
+      );
+
+      setCartItems([]);
+      toast.success("Cleared Cart");
+    } catch (error) {
+      console.log(error);
+      toast.error("Error Clearing the cart");
+    }
+  };
   return (
     <div className="flex flex-col max-md:mt-0 items-center justify-center mt-20 p-6">
       <div className="my-12 w-full max-w-5xl rounded-xl shadow-2xl backdrop-filter backdrop-blur-md bg-opacity-5 border border-gray-100 bg-gray-400 p-6 md:p-8">
@@ -257,31 +276,26 @@ function Cart() {
                   <img
                     src={item.image}
                     alt={item.dishName || "Dish"}
-                    className="w-16 h-16 md:w-20 md:h-20 rounded-lg object-cover mr-4"
+                    className="w-16 h-16 md:w-20 md:h-20 rounded-xl object-cover mr-4"
                   />
                   <span className="font-medium text-gray-800">
                     {item.dishName || "Unnamed Dish"}
                   </span>
                 </Grid>
 
-                {/* Price Per Unit (hidden on small devices) */}
+                {/* Price and Quantity on separate rows for small devices */}
                 <Grid
                   item
-                  xs={3}
-                  sm={2}
-                  className="text-center font-medium text-gray-800 hidden sm:flex"
+                  xs={12}
+                  sm={4}
+                  className="flex flex-col sm:flex-row justify-between items-center"
                 >
-                  ₹{item.price?.toFixed(2) || "0.00"}
-                </Grid>
-
-                {/* Quantity Adjuster moved to the right for small devices */}
-                <Grid
-                  item
-                  xs={3}
-                  sm={2}
-                  className="flex justify-end items-center"
-                >
-                  <div className="flex justify-center max-md:hidden items-center">
+                  {/* Price */}
+                  <div className="text-center font-medium text-gray-800 mb-2 sm:mb-0">
+                    ₹{item.price?.toFixed(2) || "0.00"}
+                  </div>
+                  {/* Quantity Adjuster */}
+                  <div className="flex justify-center items-center">
                     <IconButton
                       onClick={() => handleQuantityChange(item._id, -1)}
                       disabled={item.quantity <= 1}
@@ -299,16 +313,6 @@ function Cart() {
                     </IconButton>
                   </div>
                 </Grid>
-
-                {/* Total Price only */}
-                <Grid
-                  item
-                  xs={3}
-                  sm={2}
-                  className="text-center font-medium text-gray-800"
-                >
-                  ₹{(item.price * item.quantity).toFixed(2) || "0.00"}
-                </Grid>
               </Grid>
             ))}
           </>
@@ -320,14 +324,20 @@ function Cart() {
             <p className="text-xl md:text-2xl font-semibold text-gray-800">
               Total: ₹{calculateTotalPrice().toFixed(2)}
             </p>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleCheckout}
-              className="mt-4 md:mt-0"
-            >
-              Checkout
-            </Button>
+            <div className=" flex gap-16 max-md:w-full w-1/2 justify-end">
+              <button
+                onClick={clearCart}
+                className="mt-4 text-red-500 hover:shadow transition-all duration-200 hover:shadow-red-500 border px-4 rounded-xl border-red-500 md:mt-0 "
+              >
+                Clear Cart
+              </button>
+              <button
+                onClick={handleCheckout}
+                className="mt-4 text-white bg-green-400 hover:bg-green-600 hover:shadow-md transition-all duration-200 px-5 py-2 rounded-xl  md:mt-0"
+              >
+                Checkout
+              </button>
+            </div>
           </div>
         )}
       </div>

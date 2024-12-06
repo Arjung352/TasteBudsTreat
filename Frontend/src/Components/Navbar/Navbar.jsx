@@ -7,6 +7,7 @@ import LayersIcon from "@mui/icons-material/Layers";
 import PhoneIcon from "@mui/icons-material/Phone";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
+import axios from "axios";
 import {
   SignedIn,
   SignedOut,
@@ -17,7 +18,6 @@ import {
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -25,7 +25,6 @@ function Navbar() {
 
   useEffect(() => {
     if (user?.fullName) {
-      // User is logged in, store the username in localStorage
       localStorage.setItem("UserName", user.fullName);
       localStorage.setItem("email", user.emailAddresses);
       console.log("User logged in:", user.fullName);
@@ -72,7 +71,12 @@ function Navbar() {
               </SignedOut>
               <SignedIn>
                 <UserButton />
-                <NavLink to="/Cart" className="flex items-center">
+                <NavLink
+                  to="/Cart"
+                  className="flex items-center justify-center"
+                >
+                  {/* Display total items in the cart */}
+                  {/* <p className=" relative left-8 bottom-4 text-white bg-red-400 px-2  rounded-full text-sm"></p> */}
                   <ShoppingCartIcon className="hover:text-darkOlive" />
                 </NavLink>
               </SignedIn>
