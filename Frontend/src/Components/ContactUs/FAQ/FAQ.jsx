@@ -13,18 +13,22 @@ const FAQ = () => {
       <h1 className="text-center text-5xl font-WorkSans my-4 " id="FAQ">
         FAQ
       </h1>
-      <div className="feature my-8 backdrop-filter backdrop-blur-md bg-opacity-15 border border-gray-100 bg-gray-300 ">
+      <div className="feature my-8 backdrop-filter backdrop-blur-md bg-opacity-15 ">
         {faqData.map((item, index) => (
           <div key={index}>
             <button
               className={`accordion ${
                 activeIndex === index ? "active" : ""
-              } shadow-md`}
+              } shadow-md rounded-xl`}
               onClick={() => toggleAccordion(index)}
             >
               {item.question}
             </button>
-            <div className={`panel ${activeIndex === index ? "open" : ""}`}>
+            <div
+              className={`panel border-none m-2 ${
+                activeIndex === index ? "open" : ""
+              }`}
+            >
               <p>{item.answer}</p>
             </div>
           </div>
@@ -39,7 +43,7 @@ const faqData = [
   {
     question: "Who are the developers of TasteBudsTreat?",
     answer:
-      "TasteBudsTreat has been developed by a talented team of BCA 3rd-year students from SGTBIMIT, affiliated with GGSIPU. The project is the result of the collaborative efforts of Ansh Bansal, Adarsh Sharma, and Arjun Gupta, who are passionate about leveraging modern technologies to create an innovative and secure food delivery service.",
+      "TasteBudsTreat has been developed by Arjun Gupta a BCA 3rd-year student from SGTBIMIT, affiliated with GGSIPU.I am passionate about leveraging modern technologies to create an innovative and secure food delivery service.",
   },
   {
     question:

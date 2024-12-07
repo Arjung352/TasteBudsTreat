@@ -138,6 +138,7 @@ function Cart() {
                   );
 
                   setCartItems([]);
+                  dispatch(clearCart());
                   setPaymentSuccess(true); // Show PaymentSuccess page
                 } catch (clearError) {
                   toast.error("Failed to clear cart. Please try again.");
