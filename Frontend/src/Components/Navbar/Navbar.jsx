@@ -8,6 +8,8 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { updateTotalCartItems } from "../Redux/Slice/CartSlice";
 import {
   SignedIn,
   SignedOut,
@@ -15,25 +17,52 @@ import {
   UserButton,
   useUser,
 } from "@clerk/clerk-react";
+import { useSelector } from "react-redux";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const dispatch = useDispatch();
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
   const { user } = useUser();
 
   useEffect(() => {
+    const updatingCartItems = async () => {
+      try {
+        const username = localStorage.getItem("UserName");
+        const response = await axios.get(
+          "https://taste-buds-treat-backend.vercel.app/api/cart/show-cart",
+          {
+            headers: { username },
+          }
+        );
+        // Return the length of the items in the cart
+        return response.data.data.length;
+      } catch (error) {
+        console.error("Error fetching cart data:", error);
+        return 0; // Default to 0 in case of an error
+      }
+    };
+
     if (user?.fullName) {
       localStorage.setItem("UserName", user.fullName);
-      localStorage.setItem("email", user.emailAddresses);
+      localStorage.setItem("email", user.emailAddresses[0].emailAddress); // Ensure correct email address is stored
       console.log("User logged in:", user.fullName);
+
+      // Update total cart items after fetching
+      updatingCartItems().then((total) =>
+        dispatch(updateTotalCartItems(total))
+      );
     } else {
-      // User is logged out, clear the username from localStorage
-      localStorage.clear();
+      // Clear specific user-related items from local storage
+      localStorage.removeItem("UserName");
+      localStorage.removeItem("email");
       console.log("User logged out, localStorage cleared");
     }
-  }, [user]);
+  }, [user, dispatch]);
+
+  const totalItems = useSelector((state) => state.cart.TotalCartItems);
 
   return (
     <>
@@ -76,7 +105,10 @@ function Navbar() {
                   className="flex items-center justify-center"
                 >
                   {/* Display total items in the cart */}
-                  {/* <p className=" relative left-8 bottom-4 text-white bg-red-400 px-2  rounded-full text-sm"></p> */}
+                  <p className="relative left-8 bottom-4 text-white bg-red-400 px-2 rounded-full text-sm">
+                    {totalItems || 0}
+                  </p>
+
                   <ShoppingCartIcon className="hover:text-darkOlive" />
                 </NavLink>
               </SignedIn>
@@ -98,9 +130,9 @@ function Navbar() {
 
       {/* Overlay Menu */}
       <div
-        className={`absolute top-16 left-0 w-full overflow-hidden bg-black/60 text-white z-30 flex flex-col items-center py-4 md:hidden  transform ${
-          isMenuOpen ? "-translate-x-0" : "translate-x-full hidden"
-        } transition-transform duration-300 ease-in-out`}
+        className={`absolute top-16 left-0 w-full overflow-hidden bg-black/60 text-white z-30 flex flex-col items-center py-4 md:hidden transition-transform duration-300 ease-in-out ${
+          isMenuOpen ? "translate-x-0" : "translate-x-full"
+        }`}
       >
         <ul className="text-white text-xl flex flex-col justify-center items-center font-medium font-work space-y-4">
           <li>

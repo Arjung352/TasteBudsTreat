@@ -8,6 +8,10 @@
 .active {
   color: #2f820c;
 }
+.cl-rootBox {
+  position: relative;
+  left: 17px;
+}
 body {
   overflow-x: hidden;
   background-image: linear-gradient(

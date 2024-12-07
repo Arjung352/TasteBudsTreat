@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
+import { decrementCartTotal, clearCart } from "../Redux/Slice/CartSlice"; // Adjust the path as needed
 import RemoveIcon from "@mui/icons-material/Remove";
 import IconButton from "@mui/material/IconButton";
 import { Grid } from "@mui/material";
@@ -10,12 +11,12 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-quill/dist/quill.snow.css";
 import "react-toastify/dist/ReactToastify.css";
 import PaymentSuccess from "../PaymentSuccess/PaymentSuccess";
-
+import { useDispatch } from "react-redux";
 function Cart() {
   const [cartItems, setCartItems] = useState([]);
   const [paymentSuccess, setPaymentSuccess] = useState(false); // State to show PaymentSuccess
   const { id } = useParams();
-
+  const dispatch = useDispatch();
   // Handle quantity changes
   const handleQuantityChange = (_id, delta) => {
     setCartItems((prevItems) =>
@@ -40,6 +41,7 @@ function Cart() {
         }
       );
       toast.success("Item Deleted Successfully");
+      dispatch(decrementCartTotal(1));
       setCartItems((prevItems) => prevItems.filter((item) => item._id !== _id));
     } catch (error) {
       toast.error("Error deleting item");
@@ -174,7 +176,7 @@ function Cart() {
   }
 
   // Clear cart
-  const clearCart = async () => {
+  const clearingCart = async () => {
     try {
       await axios.delete(
         "https://taste-buds-treat-backend.vercel.app/api/cart/clear",
@@ -186,6 +188,7 @@ function Cart() {
       );
 
       setCartItems([]);
+      dispatch(clearCart());
       toast.success("Cleared Cart");
     } catch (error) {
       console.log(error);
@@ -333,7 +336,7 @@ function Cart() {
             </p>
             <div className=" flex gap-16 max-md:w-full w-1/2 justify-end">
               <button
-                onClick={clearCart}
+                onClick={clearingCart}
                 className="mt-4 text-red-500 hover:shadow transition-all duration-200 hover:shadow-red-500 border px-4 rounded-xl border-red-500 md:mt-0 "
               >
                 Clear Cart

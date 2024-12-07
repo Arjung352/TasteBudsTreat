@@ -5,12 +5,15 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Footer from "../Footer/Footer";
-import ReactPaginate from "react-paginate"; // Import pagination component
+import ReactPaginate from "react-paginate";
 import { ToastContainer, toast } from "react-toastify";
 import "react-quill/dist/quill.snow.css";
 import "react-toastify/dist/ReactToastify.css";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+// importing redux
+import { useDispatch } from "react-redux";
+import { updateTotalCartItems } from "../Redux/Slice/CartSlice";
 
 function Menu() {
   const [restaurants, setRestaurants] = useState([]);
@@ -20,7 +23,7 @@ function Menu() {
   const [food, setFood] = useState([]);
   const [modalRestaurant, setModalRestaurant] = useState(null);
   const [showModal, setShowModal] = useState(false);
-
+  const dispatch = useDispatch();
   const [slidesToShow, setSlidesToShow] = useState(5);
 
   // Pagination state
@@ -83,20 +86,29 @@ function Menu() {
         img,
         UserName: localStorage.getItem("UserName"),
       };
-      console.log("Putting UserName", localStorage.getItem("UserName"));
 
       await axios.post(
         "https://taste-buds-treat-backend.vercel.app/api/cart/AddToCart",
         data
       );
+
+      const username = localStorage.getItem("UserName");
+      const response = await axios.get(
+        "https://taste-buds-treat-backend.vercel.app/api/cart/show-cart",
+        {
+          headers: {
+            username: username,
+          },
+        }
+      );
+
+      const cartItemCount = response.data.data.length;
+      dispatch(updateTotalCartItems(cartItemCount));
+
       toast.success("Item Added To Cart");
     } catch (error) {
       if (!localStorage.getItem("UserName")) {
-        console.log(
-          "username when encountered error",
-          localStorage.getItem("UserName")
-        );
-        return toast.error("Please Login Or SignIn First");
+        return toast.error("Please Login Or Sign In First");
       }
       toast.error("Error Adding To Cart!");
       console.error(
