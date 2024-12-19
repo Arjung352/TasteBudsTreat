@@ -11,6 +11,8 @@ import "react-quill/dist/quill.snow.css";
 import "react-toastify/dist/ReactToastify.css";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { TailSpin } from "react-loader-spinner";
+
 // importing redux
 import { useDispatch } from "react-redux";
 import { updateTotalCartItems } from "../Redux/Slice/CartSlice";
@@ -25,7 +27,8 @@ function Menu() {
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   const [slidesToShow, setSlidesToShow] = useState(5);
-
+  // setting load on adding to cart
+  const [loadingStates, setLoadingStates] = useState({});
   // Pagination state
   const [currentPage, setCurrentPage] = useState(0);
   const width = window.innerWidth;
@@ -78,6 +81,10 @@ function Menu() {
   );
 
   const addingToCart = async (productId, price, dishName, img) => {
+    setLoadingStates((prevState) => ({
+      ...prevState,
+      [productId]: true,
+    }));
     try {
       const data = {
         productId,
@@ -104,7 +111,6 @@ function Menu() {
 
       const cartItemCount = response.data.data.length;
       dispatch(updateTotalCartItems(cartItemCount));
-
       toast.success("Item Added To Cart");
     } catch (error) {
       if (!localStorage.getItem("UserName")) {
@@ -116,6 +122,10 @@ function Menu() {
         error.response?.data || error.message
       );
     }
+    setLoadingStates((prevState) => ({
+      ...prevState,
+      [productId]: false,
+    }));
   };
 
   const settings = {
@@ -209,7 +219,7 @@ function Menu() {
                 key={index}
                 className=" justify-center relative cursor-pointer mt-8 flex flex-col items-center hover:scale-105 transition-all ease-in-out"
               >
-                <div className="flex-col items-center justify-center">
+                <div className="flex flex-col items-center justify-center">
                   <img
                     className="aspect-square rounded-full h-32 w-32 shadow-md shadow-black"
                     src={value.image}
@@ -231,13 +241,16 @@ function Menu() {
               <button
                 key={index}
                 onClick={() => handleRestaurantClick(restaurant)}
-                className="relative cursor-pointer mt-8 flex flex-col items-center hover:scale-105 transition-all ease-in-out"
+                className="justify-center relative cursor-pointer mt-8 flex flex-col items-center hover:scale-105 transition-all ease-in-out"
               >
-                <img
-                  className="aspect-square rounded-full h-32 w-32 shadow-md shadow-black"
-                  src={restaurant.image}
-                />
-                <p className="w-32 text-center mt-3">{restaurant.title}</p>
+                <div className="flex flex-col items-center justify-center">
+                  <img
+                    className="aspect-square rounded-full h-32 w-32 shadow-md shadow-black"
+                    src={restaurant.image}
+                    alt={restaurant.title}
+                  />
+                  <p className="w-32 text-center mt-3">{restaurant.title}</p>
+                </div>
               </button>
             ))}
           </Slider>
@@ -280,7 +293,19 @@ function Menu() {
                   }}
                   className="py-2 text-center shadow-md w-full text-lg rounded-xl backdrop-filter backdrop-blur-md bg-opacity-15 bg-gray-300 hover:bg-gray-300 transition-all ease-in-out duration-300"
                 >
-                  Add To Cart
+                  {loadingStates[value._id] ? (
+                    <TailSpin
+                      height="25"
+                      width="25"
+                      color="#23c55e"
+                      ariaLabel="tail-spin-loading"
+                      radius="2"
+                      wrapperStyle={{ display: "inline-block" }}
+                      visible={true}
+                    />
+                  ) : (
+                    "Add To Cart"
+                  )}
                 </button>
               </div>
             </div>
@@ -394,7 +419,19 @@ function Menu() {
                         }
                         className="py-2 mt-4 w-full text-lg rounded-xl bg-gray-200 hover:bg-gray-300 transition-all"
                       >
-                        Add To Cart
+                        {loadingStates[dish._id] ? (
+                          <TailSpin
+                            height="25"
+                            width="25"
+                            color="#23c55e"
+                            ariaLabel="tail-spin-loading"
+                            radius="2"
+                            wrapperStyle={{ display: "inline-block" }}
+                            visible={true}
+                          />
+                        ) : (
+                          "Add To Cart"
+                        )}
                       </button>
                     </div>
                   ))}

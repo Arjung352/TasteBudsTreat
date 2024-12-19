@@ -27,5 +27,5 @@
 }
 
 .panel.open {
-  max-height: 500px; /* Set to a height large enough to fit the content */
+  max-height: 500px;
 }

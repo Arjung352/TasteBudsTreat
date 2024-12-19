@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "../Footer/Footer";
 import FAQ from "./FAQ/FAQ";
+import { TailSpin } from "react-loader-spinner";
 
 function ContactUs() {
   const [formData, setFormData] = useState({
@@ -12,25 +13,25 @@ function ContactUs() {
     email: "",
     message: "",
   });
-  const [status, setStatus] = useState("");
+  const [messageStatus, setmessageStatus] = useState(false);
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    axios
+    setmessageStatus(true);
+    await axios
       .post("https://taste-buds-treat-backend.vercel.app/send", formData)
       .then((response) => {
-        setStatus("Message Sent Successfully!");
         setFormData({ name: "", email: "", message: "" });
         toast.success("Message Sent Successfully!");
       })
       .catch((error) => {
-        setStatus("Failed to send message.");
         toast.error("Failed to send message.");
       });
+    setmessageStatus(false);
   };
 
   return (
@@ -109,7 +110,19 @@ function ContactUs() {
                   type="submit"
                   className="w-full sm:w-1/2 md:w-1/4 bg-green-500 text-white py-3 rounded-xl font-semibold hover:bg-green-600 transition duration-300"
                 >
-                  Send Message
+                  {messageStatus ? (
+                    <TailSpin
+                      height="25"
+                      width="25"
+                      color="#ffffff"
+                      ariaLabel="tail-spin-loading"
+                      radius="2"
+                      wrapperStyle={{ display: "inline-block" }}
+                      visible={true}
+                    />
+                  ) : (
+                    "Send Message"
+                  )}
                 </button>
               </div>
             </form>

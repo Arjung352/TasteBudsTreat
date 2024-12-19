@@ -25,13 +25,13 @@ function Home() {
             </p>
             <div className=" max-md:flex z-10 text-lg max-md:justify-between max-md:w-full max-md:mt-6 font-WorkSans font-semibold">
               <button
-                className="button max-md:p-3 max-md:m-0 bg-green-500 w-2/5   hover:scale-105 transition-all duration-300 hover:bg-olive"
+                className="button max-md:px-4 max-md:py-2 px-8 py-2 max-md:m-0 bg-green-500 w-2/5   hover:scale-105 transition-all duration-300 hover:bg-olive"
                 onClick={redirect}
               >
                 Menu
               </button>
               <button
-                className="button max-md:p-3 max-md:m-0 bg-stone-300  hover:scale-105 transition-all duration-300 hover:bg-peach text-black ml-11"
+                className="button max-md:px-4 max-md:py-2 px-8 py-2 max-md:m-0 bg-stone-400  hover:scale-105 transition-all duration-300 hover:bg-stone-600 ml-11"
                 onClick={redirectRegister}
               >
                 Know-More

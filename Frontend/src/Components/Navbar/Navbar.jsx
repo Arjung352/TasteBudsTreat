@@ -77,16 +77,40 @@ function Navbar() {
             <div className="flex w-screen justify-center ml-20">
               <ul className=" flex max-md:hidden justify-end text-2xl nav font-normal gap-4">
                 <li className="mr-8 mt-1 hover:text-darkOlive">
-                  <NavLink to="/">Home</NavLink>
+                  <NavLink
+                    to="/"
+                    className=" gap-1 flex justify-center items-center"
+                  >
+                    <HomeIcon />
+                    Home
+                  </NavLink>
                 </li>
                 <li className="mr-8 mt-1 hover:text-darkOlive">
-                  <NavLink to="/About">About</NavLink>
+                  <NavLink
+                    to="/About"
+                    className=" gap-1 flex justify-center items-center"
+                  >
+                    <PersonIcon />
+                    About
+                  </NavLink>
                 </li>
                 <li className="mr-8 mt-1 hover:text-darkOlive">
-                  <NavLink to="/Menu">Menu</NavLink>
+                  <NavLink
+                    to="/Menu"
+                    className=" gap-1 flex justify-center items-center"
+                  >
+                    <LayersIcon />
+                    Menu
+                  </NavLink>
                 </li>
                 <li className="mr-6 mt-1 hover:text-darkOlive">
-                  <NavLink to="/Contact-Us">Contact-Us</NavLink>
+                  <NavLink
+                    to="/Contact-Us"
+                    className=" gap-1 flex justify-center items-center"
+                  >
+                    <PhoneIcon />
+                    Contact
+                  </NavLink>
                 </li>
               </ul>
             </div>
@@ -152,7 +176,7 @@ function Navbar() {
               onClick={toggleMenu}
             >
               <PersonIcon className="text-white" />
-              About-Us
+              About
             </NavLink>
           </li>
           <li>
@@ -172,7 +196,7 @@ function Navbar() {
               onClick={toggleMenu}
             >
               <PhoneIcon className="text-white" />
-              Contact-Us
+              Contact
             </NavLink>
           </li>
         </ul>

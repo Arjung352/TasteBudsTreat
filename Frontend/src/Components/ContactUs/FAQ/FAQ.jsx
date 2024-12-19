@@ -38,7 +38,7 @@ const FAQ = () => {
   );
 };
 
-// Data for FAQs
+// Data for FAQ
 const faqData = [
   {
     question: "Who are the developers of TasteBudsTreat?",
