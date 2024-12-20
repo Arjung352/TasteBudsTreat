@@ -7,7 +7,7 @@ function Footer() {
   return (
     <div>
       <hr className=" border border-gray-400" />
-      <div className="flex justify-between my-10 font-WorkSans mx-8 max-md:flex-col max-md:gap-5">
+      <div className="flex justify-between my-10 font-WorkSans max-md:mx-4 mx-8 max-md:flex-col max-md:gap-5">
         <div className="flex flex-col items-center justify-center text-center max-md:flex-col max-md:items-center max-md:justify-center">
           <img
             src="https://res.cloudinary.com/dmxlqw5ix/image/upload/v1731066887/qxhi70lws9tx5ssy8ff3.png"

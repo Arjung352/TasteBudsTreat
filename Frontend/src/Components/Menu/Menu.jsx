@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { TailSpin } from "react-loader-spinner";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 // importing redux
 import { useDispatch } from "react-redux";
@@ -114,6 +115,10 @@ function Menu() {
       toast.success("Item Added To Cart");
     } catch (error) {
       if (!localStorage.getItem("UserName")) {
+        setLoadingStates((prevState) => ({
+          ...prevState,
+          [productId]: false,
+        }));
         return toast.error("Please Login Or Sign In First");
       }
       toast.error("Error Adding To Cart!");
@@ -155,7 +160,7 @@ function Menu() {
   };
   return (
     <div className="flex justify-center">
-      <div className="w-4/5 font-WorkSans">
+      <div className="w-4/5 font-WorkSans max-md:w-3/4">
         <div className="flex max-md:flex-col max-md:items-start gap-7 mt-10 items-center text-gray-500">
           <p className="p-2 bg-white border-gray-300 border rounded-xl">
             Filters <TuneIcon />
@@ -265,11 +270,11 @@ function Menu() {
           {currentItems.map((value, index) => (
             <div
               key={index}
-              className="shadow-md flex flex-col items-center rounded-2xl duration-300 hover:scale-105 transition-all ease-in-out mb-6"
+              className=" shadow-lg backdrop-filter backdrop-blur-md bg-opacity-15 bg-gray-300 shadow-stone-400 flex flex-col items-center rounded-2xl duration-300 hover:scale-105 transition-all ease-in-out mb-6"
             >
               <img
                 src={value.image}
-                className="max-h-full max-w-full rounded-xl m-auto block"
+                className="max-h-full max-w-full rounded-t-xl m-auto block"
               />
               <div className="self-start px-3">
                 <p className="mt-4 text-xl font-medium">{value.dishName}</p>
@@ -291,7 +296,7 @@ function Menu() {
                       value.image
                     );
                   }}
-                  className="py-2 text-center shadow-md w-full text-lg rounded-xl backdrop-filter backdrop-blur-md bg-opacity-15 bg-gray-300 hover:bg-gray-300 transition-all ease-in-out duration-300"
+                  className="py-2 text-center shadow-md w-full bg-slate-200 text-base rounded-b-xl backdrop-filter backdrop-blur-md hover:text-green-600 bg-opacity-15 transition-all ease-in-out duration-300"
                 >
                   {loadingStates[value._id] ? (
                     <TailSpin
@@ -304,7 +309,9 @@ function Menu() {
                       visible={true}
                     />
                   ) : (
-                    "Add To Cart"
+                    <p>
+                      Add To Cart <ShoppingCartIcon color="success" />
+                    </p>
                   )}
                 </button>
               </div>
@@ -342,13 +349,18 @@ function Menu() {
           marginPagesDisplayed={2}
           pageRangeDisplayed={3}
           onPageChange={handlePageClick}
-          containerClassName={"flex justify-center mt-6"}
-          pageClassName={"px-3 py-2 border rounded-lg mx-1"}
+          containerClassName={"flex justify-center gap-1 mb-4 flex-wrap mt-6"}
+          pageClassName={
+            "px-3 py-2 shadow-stone-500 rounded-xl shadow-md  mx-1"
+          }
           activeClassName={"bg-gray-300"}
-          previousClassName={"px-3 py-2 border rounded-lg mx-1"}
-          nextClassName={"px-3 py-2 border rounded-lg mx-1"}
+          previousClassName={
+            "px-3 py-2 shadow-stone-500 rounded-xl shadow-md  mx-1"
+          }
+          nextClassName={
+            "px-3 py-2 shadow-stone-500 rounded-xl shadow-md  mx-1"
+          }
         />
-
         {/* Modal for Restaurant Details */}
         {showModal && modalRestaurant && (
           <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50">
@@ -397,10 +409,10 @@ function Menu() {
                         className="max-h-40 max-w-full rounded-xl m-auto"
                       />
                       <div className="px-3 flex flex-col items-center">
-                        <p className="mt-4 text-xl font-medium">
+                        <p className="mt-4 text-xl font-medium max-md:text-lg">
                           {dish.dishName}
                         </p>
-                        <p className="mt-2 text-lg uppercase">
+                        <p className="mt-2 text-lg max-md:text-base uppercase">
                           {dish.foodType}
                         </p>
                       </div>
@@ -417,7 +429,7 @@ function Menu() {
                             dish.image
                           )
                         }
-                        className="py-2 mt-4 w-full text-lg rounded-xl bg-gray-200 hover:bg-gray-300 transition-all"
+                        className="py-2 mt-4 w-full text-lg max-md:text-base rounded-xl bg-gray-200 hover:bg-gray-300 transition-all"
                       >
                         {loadingStates[dish._id] ? (
                           <TailSpin
