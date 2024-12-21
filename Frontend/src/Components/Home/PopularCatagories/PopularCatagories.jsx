@@ -16,7 +16,7 @@ function PopularCatagories() {
       <div className="text-5xl max-md:text-4xl font-medium mb-8">
         Popular Catagories
       </div>
-      <div className=" grid grid-cols-4 max-md:flex max-md:flex-col gap-8">
+      <div className="grid grid-cols-4 max-lg:grid-cols-2 max-xl:grid-cols-3 max-sm:grid-cols-1 gap-8">
         <div
           onClick={redirect}
           className="p-12 max-md:p-6 backdrop-filter backdrop-blur-md bg-opacity-5 border border-gray-100 bg-gray-400 px-16 shadow-md  rounded-2xl hover:scale-105 transition-all ease-in-out"

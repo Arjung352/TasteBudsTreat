@@ -40,8 +40,12 @@ function Menu() {
   useEffect(() => {
     const width = window.innerWidth;
     const handleResize = () => {
-      if (width < 1000) {
+      if (width < 550) {
         setSlidesToShow(1);
+      } else if (width < 800) {
+        setSlidesToShow(2);
+      } else if (width < 1000) {
+        setSlidesToShow(3);
       } else if (width < 1300) {
         setSlidesToShow(4);
       } else {
@@ -266,7 +270,7 @@ function Menu() {
             Dishish Near You!
           </p>
         </div>
-        <div className="grid grid-cols-4 max-md:grid-cols-1 gap-x-10 mb-10 gap-y-10">
+        <div className="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 gap-x-10 mb-10 gap-y-10">
           {currentItems.map((value, index) => (
             <div
               key={index}
@@ -402,11 +406,11 @@ function Menu() {
                   .map((dish, index) => (
                     <div
                       key={index}
-                      className="backdrop-filter pt-4 backdrop-blur-md bg-opacity-80 bg-gray-300 shadow-md flex flex-col items-center rounded-2xl duration-300 hover:scale-105 transition-all ease-in-out"
+                      className="shadow-lg backdrop-filter backdrop-blur-md bg-opacity-5 bg-gray-200 shadow-stone-400 flex flex-col items-center rounded-2xl duration-300 hover:scale-105 transition-all ease-in-out mb-6"
                     >
                       <img
                         src={dish.image}
-                        className="max-h-40 max-w-full rounded-xl m-auto"
+                        className="max-h-40 max-w-full rounded-t-xl m-auto block"
                       />
                       <div className="px-3 flex flex-col items-center">
                         <p className="mt-4 text-xl font-medium max-md:text-lg">
@@ -416,7 +420,7 @@ function Menu() {
                           {dish.foodType}
                         </p>
                       </div>
-                      <div className="flex justify-between w-full mt-4 px-3">
+                      <div className="flex justify-between max-sm:px-1 w-full mt-4 px-3">
                         <p className="text-lg">₹{dish.price}</p>
                         <p className="text-lg">{dish.category}</p>
                       </div>
@@ -429,7 +433,7 @@ function Menu() {
                             dish.image
                           )
                         }
-                        className="py-2 mt-4 w-full text-lg max-md:text-base rounded-xl bg-gray-200 hover:bg-gray-300 transition-all"
+                        className="py-2 mt-3 text-center shadow-md w-full bg-slate-200 text-base rounded-b-xl backdrop-filter backdrop-blur-md hover:text-green-600 bg-opacity-15 transition-all ease-in-out duration-300"
                       >
                         {loadingStates[dish._id] ? (
                           <TailSpin
@@ -442,7 +446,9 @@ function Menu() {
                             visible={true}
                           />
                         ) : (
-                          "Add To Cart"
+                          <p>
+                            Add To Cart <ShoppingCartIcon color="success" />
+                          </p>
                         )}
                       </button>
                     </div>
