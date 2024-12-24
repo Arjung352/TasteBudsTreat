@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Navbar from "../Navbar/Navbar";
 import Error from "./Error";
 import { lazy, Suspense } from "react";
 import { TailSpin } from "react-loader-spinner";
@@ -46,19 +45,17 @@ function App() {
         >
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<Navbar />}>
-                <Route index element={<Home />} />
-                <Route path="Menu" element={<Menu />} />
-                <Route path="About" element={<About />} />
-                <Route path="Cart" element={<Cart />} />
-                <Route path="Contact-Us" element={<ContactUs />} />
-                <Route
-                  path="Admin/register_restaurant"
-                  element={<Register_Restaurant />}
-                />
-                <Route path="Admin/menu" element={<MenuForm />} />
-                <Route path="*" element={<Error />} />
-              </Route>
+              <Route index element={<Home />} />
+              <Route path="/Menu" element={<Menu />} />
+              <Route path="/About" element={<About />} />
+              <Route path="/Cart" element={<Cart />} />
+              <Route path="/Contact-Us" element={<ContactUs />} />
+              <Route
+                path="/Admin/register_restaurant"
+                element={<Register_Restaurant />}
+              />
+              <Route path="/Admin/menu" element={<MenuForm />} />
+              <Route path="*" element={<Error />} />
             </Routes>
           </BrowserRouter>
         </Suspense>
