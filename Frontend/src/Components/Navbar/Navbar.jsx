@@ -23,7 +23,7 @@ import { useSelector } from "react-redux";
 
 function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(true);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const dispatch = useDispatch();
   const setToggle = () => {
     setDropdownOpen(!dropdownOpen);
@@ -193,7 +193,7 @@ function Navbar() {
 
       {/* Overlay Menu */}
       <div
-        className={`fixed h-svh top-0 right-0 max-xl:w-1/2 max-md:w-3/4 max-sm:w-full navbar-img text-white z-30 flex flex-col justify-between items-center  xl:hidden  transform ${
+        className={`fixed h-dvh top-0 right-0 max-xl:w-1/2 max-md:w-3/4 max-sm:w-full navbar-img text-white z-30 flex flex-col justify-between items-center  xl:hidden  transform ${
           isMenuOpen ? "-translate-x-0" : "translate-x-full"
         } transition-transform duration-300 ease-in-out`}
       >
