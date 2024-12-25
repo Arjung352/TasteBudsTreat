@@ -7,6 +7,7 @@ import axios from "axios";
 
 const Home = lazy(() => import("../Home/Home"));
 const Menu = lazy(() => import("../Menu/Menu"));
+const Admin = lazy(() => import("../Admin/Admin"));
 const Cart = lazy(() => import("../Cart/Cart"));
 const About = lazy(() => import("../AboutMe/About"));
 const ContactUs = lazy(() => import("../ContactUs/ContactUs"));
@@ -50,11 +51,12 @@ function App() {
               <Route path="/About" element={<About />} />
               <Route path="/Cart" element={<Cart />} />
               <Route path="/Contact-Us" element={<ContactUs />} />
+              <Route path="/Admin" element={<Admin />} />
               <Route
-                path="/Admin/register_restaurant"
+                path="/Register-restaurant"
                 element={<Register_Restaurant />}
               />
-              <Route path="/Admin/menu" element={<MenuForm />} />
+              <Route path="/Register-menu" element={<MenuForm />} />
               <Route path="*" element={<Error />} />
             </Routes>
           </BrowserRouter>

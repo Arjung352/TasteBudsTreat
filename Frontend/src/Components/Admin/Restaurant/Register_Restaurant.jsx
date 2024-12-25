@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css"; // Import CSS
 import axios from "axios";
 import { TailSpin } from "react-loader-spinner";
 import Footer from "../../Footer/Footer";
+import Navbar from "../../Navbar/Navbar";
 
 function Register_Restaurant() {
   const redirect = useNavigate();
@@ -63,106 +64,111 @@ function Register_Restaurant() {
   };
 
   return load ? (
-    <div className="flex justify-center">
-      <div className="w-4/5">
-        <div className="mb-16">
-          <p className="font-worksans text-4xl text-center font-medium pt-8">
-            Register Your Restaurant
-          </p>
-          <div className="flex h-full justify-center mb-8 mt-8">
-            <div className="w-2/4 flex justify-center max-sm:w-11/12 max-sm:mb-4">
-              <form
-                onSubmit={submit}
-                className="bg-white p-8 rounded-lg shadow-md border border-black font-worksans shadow-black w-full h-full"
-              >
-                <label className="block text-lg font-semibold mb-4">
-                  Restaurant Name
-                </label>
-                <input
-                  type="text"
-                  placeholder="Restaurant Name"
-                  className="w-full p-2 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  onChange={(e) => setTitle(e.target.value)}
-                  value={title}
-                  required
-                />
-
-                <label className="block text-lg font-semibold mb-4">
-                  Upload an Image
-                </label>
-                <div className="border-dashed border-2 border-gray-300 p-4 mb-4 rounded relative">
-                  <input
-                    type="file"
-                    name="coverimg"
-                    accept="image/*"
-                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                    onChange={handleCoverImg}
-                  />
-                  <div className="flex flex-col items-center justify-center">
-                    {previewUrl ? (
-                      <img
-                        src={previewUrl}
-                        alt="Selected Preview"
-                        className="h-32 w-32 object-cover rounded mb-2"
-                      />
-                    ) : (
-                      <svg
-                        className="w-12 h-12 text-gray-400"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M3 15a4 4 0 100-8 4 4 0 000 8zM3 15v2a4 4 0 004 4h10a4 4 0 004-4v-2M16 7l-4-4m0 0L8 7m4-4v12"
-                        />
-                      </svg>
-                    )}
-                    <p className="text-gray-500 mt-2">Attach your files here</p>
-                    <p className="text-blue-500">Browse files</p>
-                  </div>
-                </div>
-
-                <label className="block text-lg font-semibold mb-4">
-                  Address
-                </label>
-                <input
-                  type="text"
-                  placeholder="Restaurant Address"
-                  className="w-full p-2 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  onChange={(e) => setBody(e.target.value)}
-                  value={body}
-                  required
-                />
-
-                <label className="block text-lg font-semibold mb-4">
-                  Rating
-                </label>
-                <input
-                  type="number"
-                  placeholder="Restaurant Rating"
-                  className="w-full p-2 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  onChange={(e) => setRating(e.target.value)}
-                  value={rating}
-                  required
-                />
-
-                <button
-                  type="submit"
-                  className="w-full mt-4 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    <div>
+      <Navbar />
+      <div className="flex justify-center">
+        <div className="w-4/5">
+          <div className="mb-16">
+            <p className="font-worksans text-4xl text-center font-medium pt-8">
+              Register Your Restaurant
+            </p>
+            <div className="flex h-full justify-center mb-8 mt-8">
+              <div className="w-2/4 flex justify-center max-sm:w-11/12 max-sm:mb-4">
+                <form
+                  onSubmit={submit}
+                  className="bg-white p-8 rounded-lg shadow-md border border-black font-worksans shadow-black w-full h-full"
                 >
-                  Submit
-                </button>
-              </form>
+                  <label className="block text-lg font-semibold mb-4">
+                    Restaurant Name
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Restaurant Name"
+                    className="w-full p-2 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    onChange={(e) => setTitle(e.target.value)}
+                    value={title}
+                    required
+                  />
+
+                  <label className="block text-lg font-semibold mb-4">
+                    Upload an Image
+                  </label>
+                  <div className="border-dashed border-2 border-gray-300 p-4 mb-4 rounded relative">
+                    <input
+                      type="file"
+                      name="coverimg"
+                      accept="image/*"
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                      onChange={handleCoverImg}
+                    />
+                    <div className="flex flex-col items-center justify-center">
+                      {previewUrl ? (
+                        <img
+                          src={previewUrl}
+                          alt="Selected Preview"
+                          className="h-32 w-32 object-cover rounded mb-2"
+                        />
+                      ) : (
+                        <svg
+                          className="w-12 h-12 text-gray-400"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M3 15a4 4 0 100-8 4 4 0 000 8zM3 15v2a4 4 0 004 4h10a4 4 0 004-4v-2M16 7l-4-4m0 0L8 7m4-4v12"
+                          />
+                        </svg>
+                      )}
+                      <p className="text-gray-500 mt-2">
+                        Attach your files here
+                      </p>
+                      <p className="text-blue-500">Browse files</p>
+                    </div>
+                  </div>
+
+                  <label className="block text-lg font-semibold mb-4">
+                    Address
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Restaurant Address"
+                    className="w-full p-2 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    onChange={(e) => setBody(e.target.value)}
+                    value={body}
+                    required
+                  />
+
+                  <label className="block text-lg font-semibold mb-4">
+                    Rating
+                  </label>
+                  <input
+                    type="number"
+                    placeholder="Restaurant Rating"
+                    className="w-full p-2 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    onChange={(e) => setRating(e.target.value)}
+                    value={rating}
+                    required
+                  />
+
+                  <button
+                    type="submit"
+                    className="w-full mt-4 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    Submit
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
+          <Footer />
         </div>
-        <Footer />
+        <ToastContainer />
       </div>
-      <ToastContainer />
     </div>
   ) : (
     <div className="w-full bg-white h-screen flex justify-center items-center">

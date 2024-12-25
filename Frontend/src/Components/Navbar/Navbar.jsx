@@ -138,19 +138,19 @@ function Navbar() {
                     }`}
                   >
                     <NavLink
-                      to="/Dashboard"
+                      to="/admin"
                       className="block rounded-xl  text-lg px-4 py-2 text-black hover:bg-gray-200"
                     >
                       Dashboard
                     </NavLink>
                     <NavLink
-                      to="/RegisterRestaurant"
+                      to="/Register-restaurant"
                       className="block rounded-xl  text-lg px-4 py-2 text-black hover:bg-gray-200"
                     >
                       Register Restaurant
                     </NavLink>
                     <NavLink
-                      to="/RegisterDish"
+                      to="/Register-menu"
                       className="block rounded-xl  text-lg px-4 py-2 text-black hover:bg-gray-200"
                     >
                       Register Dish
@@ -162,7 +162,7 @@ function Navbar() {
             <div className="flex gap-8 mr-3 w-60">
               <SignedOut>
                 <SignInButton mode="modal">
-                  <button className=" max-md:text-sm max-md:py-1 max-md:w-[5.2rem] max-md:px-2 px-5 py-2 rounded-[20px] text-white bg-green-500 hover:bg-olive font-semibold shadow-md transition duration-300 transform hover:scale-105">
+                  <button className=" max-lg:text-sm max-lg:py-2 max-lg:w-[5.2rem] max-lg:px-2 px-5 py-2 rounded-[20px] text-white bg-green-500 hover:bg-olive font-semibold shadow-md transition duration-300 transform hover:scale-105">
                     Sign In
                   </button>
                 </SignInButton>
@@ -210,7 +210,7 @@ function Navbar() {
           />
         </div>
         <div className="flex mt-5 flex-col self-start mb-10 gap-32">
-          <ul className="text-black text-2xl text-[1.6rem] flex ml-10 flex-col justify-center items-start font-medium font-work gap-16">
+          <ul className="text-black text-xl text-[1.6rem] flex ml-10 flex-col justify-center items-start font-medium font-work gap-16">
             <li>
               <NavLink
                 to="/"
@@ -267,19 +267,19 @@ function Navbar() {
                 }`}
               >
                 <NavLink
-                  to="/Dashboard"
+                  to="/admin"
                   className="block rounded-xl  text-lg px-4 py-2 text-black hover:bg-gray-200"
                 >
                   Dashboard
                 </NavLink>
                 <NavLink
-                  to="/RegisterRestaurant"
+                  to="/Register-restaurant"
                   className="block rounded-xl  text-lg px-4 py-2 text-black hover:bg-gray-200"
                 >
                   Register Restaurant
                 </NavLink>
                 <NavLink
-                  to="/RegisterDish"
+                  to="/Register-menu"
                   className="block rounded-xl  text-lg px-4 py-2 text-black hover:bg-gray-200"
                 >
                   Register Dish
@@ -294,8 +294,8 @@ function Navbar() {
           </div>
           <SignedOut>
             <SignInButton mode="modal">
-              <div className="w-full flex justify-center">
-                <button className=" max-md:text-xl mb-10 w-3/4 px-5 py-5 rounded-[20px] text-white bg-green-500 hover:bg-olive font-semibold shadow-md transition duration-300 transform hover:scale-105">
+              <div className="w-full flex items-center justify-center">
+                <button className=" max-md:text-xl w-1/2 max-sm:py-3 max-sm:px-3 px-5 py-5 rounded-[20px] text-white bg-green-500 hover:bg-olive font-semibold shadow-md transition duration-300 transform hover:scale-105">
                   Sign In
                 </button>
               </div>
@@ -322,10 +322,7 @@ function Navbar() {
                   {totalItems || 0}
                 </p>
 
-                <ShoppingCartIcon
-                  fontSize="large"
-                  className="text-black hover:text-darkOlive"
-                />
+                <ShoppingCartIcon className="text-black hover:text-darkOlive" />
               </NavLink>
             </SignedIn>
           </div>
