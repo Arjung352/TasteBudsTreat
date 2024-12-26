@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import { TailSpin } from "react-loader-spinner";
@@ -42,12 +41,12 @@ function MenuForm() {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("price", price);
-    formData.append("restaurantId", selectedRestaurant); // Include selected restaurant ID
+    formData.append("restaurantId", selectedRestaurant);
     formData.append("category", category);
     formData.append("foodType", FoodType);
 
     if (image) {
-      formData.append("img", image); // Image file for upload to Cloudinary
+      formData.append("img", image);
     }
     setLoad(false);
     try {
@@ -91,14 +90,14 @@ function MenuForm() {
       <div className="flex justify-center">
         <div className="w-4/5">
           <div className="mb-16">
-            <p className="font-worksans text-4xl text-center font-medium pt-8">
+            <p className="font-worksans max-md:text-2xl text-4xl text-center font-medium pt-8">
               Enter The Dish That You Offer!
             </p>
             <div className="flex h-full justify-center mb-8 mt-8">
               <div className="w-2/4 flex justify-center max-sm:w-11/12 max-sm:mb-4">
                 <form
                   onSubmit={submit}
-                  className="bg-white p-8 rounded-lg shadow-md border border-black font-worksans shadow-black w-full h-full"
+                  className="backdrop-filter bg-gray-400 backdrop-blur-md bg-opacity-10 p-8 rounded-xl shadow-md border border-black font-worksans shadow-black w-full h-full"
                 >
                   <label className="block text-lg font-semibold mb-4">
                     Dish Name
@@ -218,7 +217,7 @@ function MenuForm() {
 
                   <button
                     type="submit"
-                    className="w-full mt-4 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full mt-4 bg-blue-600 text-white py-2 rounded-xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
                     Submit
                   </button>

@@ -68,6 +68,18 @@ function Navbar() {
     }
   }, [user, dispatch]);
 
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    // Cleanup function to reset overflow style when the component unmounts
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMenuOpen]);
   const totalItems = useSelector((state) => state.cart.TotalCartItems);
 
   return (
@@ -193,7 +205,7 @@ function Navbar() {
 
       {/* Overlay Menu */}
       <div
-        className={`fixed h-dvh top-0 right-0 max-xl:w-1/2 max-md:w-3/4 max-sm:w-full navbar-img text-white z-30 flex flex-col justify-between items-center  xl:hidden  transform ${
+        className={`fixed h-svh top-0  max-xl:w-1/2 max-md:w-3/4 max-sm:w-full navbar-img text-white z-30 flex flex-col justify-between items-center  xl:hidden  transform ${
           isMenuOpen ? "-translate-x-0" : "translate-x-full"
         } transition-transform duration-300 ease-in-out`}
       >
@@ -290,7 +302,7 @@ function Navbar() {
         </div>
         <div className=" self-start w-full relative">
           <div className="w-full flex justify-center">
-            <hr className="absolute -top-12 w-11/12 text-center border-2 border-gray-400" />
+            <hr className="absolute -top-10 w-11/12 text-center border-2 border-gray-400" />
           </div>
           <SignedOut>
             <SignInButton mode="modal">
@@ -318,7 +330,7 @@ function Navbar() {
               />
               <NavLink to="/Cart" className="flex items-center justify-start">
                 {/* Display total items in the cart */}
-                <p className="relative left-10 bottom-5 text-white bg-red-400 px-2 rounded-full text-sm">
+                <p className="relative left-9 bottom-4 text-white bg-red-400 px-2 rounded-full text-sm">
                   {totalItems || 0}
                 </p>
 

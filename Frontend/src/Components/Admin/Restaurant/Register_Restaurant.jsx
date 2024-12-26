@@ -11,7 +11,7 @@ function Register_Restaurant() {
   const redirect = useNavigate();
   const [load, setLoad] = useState(true);
   const [title, setTitle] = useState("");
-  const [body, setBody] = useState(""); // Address field
+  const [body, setBody] = useState("");
   const [image, setImage] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [rating, setRating] = useState("");
@@ -34,13 +34,13 @@ function Register_Restaurant() {
     e.preventDefault();
     const formData = new FormData();
     formData.append("title", title);
-    formData.append("desc", body); // Address
+    formData.append("desc", body);
     formData.append("rating", rating);
 
     if (image) {
-      formData.append("img", image); // Image file for upload
+      formData.append("img", image);
     }
-    formData.append("username", localStorage.getItem("username")); // Ensure username is set
+    formData.append("username", localStorage.getItem("username"));
 
     setLoad(false);
     try {
@@ -62,6 +62,9 @@ function Register_Restaurant() {
       toast.error("Failed to register restaurant. Please try again.");
     }
   };
+  const redirectToMenu = () => {
+    redirect("/Register-menu");
+  };
 
   return load ? (
     <div>
@@ -76,7 +79,7 @@ function Register_Restaurant() {
               <div className="w-2/4 flex justify-center max-sm:w-11/12 max-sm:mb-4">
                 <form
                   onSubmit={submit}
-                  className="bg-white p-8 rounded-lg shadow-md border border-black font-worksans shadow-black w-full h-full"
+                  className="backdrop-filter bg-gray-400 backdrop-blur-md bg-opacity-10 p-8 rounded-xl shadow-md border border-black font-worksans shadow-black w-full h-full"
                 >
                   <label className="block text-lg font-semibold mb-4">
                     Restaurant Name
@@ -157,10 +160,19 @@ function Register_Restaurant() {
 
                   <button
                     type="submit"
-                    className="w-full mt-4 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full mt-4 bg-blue-600 text-white py-2 rounded-xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
                     Submit
                   </button>
+                  <p className="text-center">
+                    Already registered the restaurant?
+                  </p>
+                  <p
+                    className=" text-center text-blue-600 underline decoration-slate-800"
+                    onClick={redirectToMenu}
+                  >
+                    Register Dish!
+                  </p>
                 </form>
               </div>
             </div>
