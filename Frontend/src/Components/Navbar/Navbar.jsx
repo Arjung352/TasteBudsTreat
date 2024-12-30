@@ -16,7 +16,6 @@ import {
   SignedIn,
   SignedOut,
   SignUpButton,
-  SignUpButton,
   UserButton,
   useUser,
 } from "@clerk/clerk-react";
@@ -176,7 +175,7 @@ function Navbar() {
               <SignedOut>
                 <SignUpButton mode="modal">
                   <button className=" max-lg:text-sm max-lg:py-2 max-lg:w-[5.2rem] max-lg:px-2 px-5 py-2 rounded-[20px] text-white bg-green-500 hover:bg-olive font-semibold shadow-md transition duration-300 transform hover:scale-105">
-                    Sign Up
+                    Sign In
                   </button>
                 </SignUpButton>
               </SignedOut>
@@ -309,7 +308,7 @@ function Navbar() {
             <SignUpButton mode="modal">
               <div className="w-full flex items-center justify-center">
                 <button className=" max-md:text-xl w-1/2 max-sm:py-3 max-sm:px-3 px-5 py-5 rounded-[20px] text-white bg-green-500 hover:bg-olive font-semibold shadow-md transition duration-300 transform hover:scale-105">
-                  Sign Up
+                  Sign In
                 </button>
               </div>
             </SignUpButton>
