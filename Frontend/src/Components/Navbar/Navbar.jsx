@@ -15,7 +15,8 @@ import { updateTotalCartItems } from "../Redux/Slice/CartSlice";
 import {
   SignedIn,
   SignedOut,
-  SignInButton,
+  SignUpButton,
+  SignUpButton,
   UserButton,
   useUser,
 } from "@clerk/clerk-react";
@@ -173,11 +174,11 @@ function Navbar() {
             </div>
             <div className="flex gap-8 mr-3 w-60">
               <SignedOut>
-                <SignInButton mode="modal">
+                <SignUpButton mode="modal">
                   <button className=" max-lg:text-sm max-lg:py-2 max-lg:w-[5.2rem] max-lg:px-2 px-5 py-2 rounded-[20px] text-white bg-green-500 hover:bg-olive font-semibold shadow-md transition duration-300 transform hover:scale-105">
-                    Sign In
+                    Sign Up
                   </button>
-                </SignInButton>
+                </SignUpButton>
               </SignedOut>
               <SignedIn>
                 <UserButton />
@@ -305,13 +306,13 @@ function Navbar() {
             <hr className="absolute -top-10 w-11/12 text-center border-2 border-gray-400" />
           </div>
           <SignedOut>
-            <SignInButton mode="modal">
+            <SignUpButton mode="modal">
               <div className="w-full flex items-center justify-center">
                 <button className=" max-md:text-xl w-1/2 max-sm:py-3 max-sm:px-3 px-5 py-5 rounded-[20px] text-white bg-green-500 hover:bg-olive font-semibold shadow-md transition duration-300 transform hover:scale-105">
-                  Sign In
+                  Sign Up
                 </button>
               </div>
-            </SignInButton>
+            </SignUpButton>
           </SignedOut>
           <div className="flex flex-col-reverse ml-6 mb-5 gap-10 self-start">
             <SignedIn>
