@@ -13,6 +13,9 @@ const userSchema = new mongoose.Schema(
         return this.emailId; // Using email as fallback for username
       },
     },
+    img: {
+      type: String,
+    },
     emailId: {
       type: String,
       required: true,

@@ -36,6 +36,7 @@ router.post(
         clerkUserId: userData.id,
         userName: userName,
         emailId: userData.email_addresses[0].email_address,
+        img: userData.image_url, // Storing the profile image URL
       });
 
       try {
