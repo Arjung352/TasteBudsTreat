@@ -8,12 +8,16 @@ const bodyParser = require("body-parser");
 const restaurantRoutes = require("./routes/restaurant");
 const restromenu = require("./routes/menu");
 const Cart = require("./routes/cart");
+const userRoute = require("./routes/user");
 const razorpay = require("razorpay");
 const crypto = require("crypto");
-
+const User = require("./Models/User");
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
+// User Route
+app.use("/api/user", userRoute);
+
 app.use(express.json());
 // Routes
 
@@ -63,20 +67,54 @@ const Payment = mongoose.model("Payment", paymentschema);
 
 // Checkout route
 app.post("/checkout", async (req, res) => {
-  const { amount } = req.body;
+  const { amount, userId } = req.body;
 
   try {
     const options = {
-      amount: amount * 100, // amount in paise
+      amount: amount * 100,
       currency: "INR",
-      receipt: "order_rcptid_11",
+      receipt: `order_rcptid_${Date.now()}`,
     };
+    // setting date of purchase
+    const timestamp = new Date();
+    const date = timestamp.toISOString().split("T")[0];
 
     const order = await instance.orders.create(options);
 
-    res.json({ order });
+    // Find the user and their cart
+    const user = await User.findById(userId).populate("cart");
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    if (!user.cart.length) {
+      return res.status(400).json({ error: "Cart is empty" });
+    }
+
+    // Prepare order details
+    const orderDetails = {
+      products: user.cart.map((item) => ({
+        productId: item.productId,
+        dishName: item.dishName,
+        image: item.image,
+        price: item.price,
+      })),
+      totalCost: amount * 100,
+      purchasedAt: date,
+    };
+
+    // Add order to user's orderHistory
+    user.orderHistory.push(orderDetails);
+
+    // Clear the user's cart and update totalSpend
+    user.totalSpend += orderDetails.totalCost;
+
+    // Save the updated user document
+    await user.save();
+
+    // Respond with the Razorpay order and success message
+    res.json({ order, message: "Checkout successful, order added to history" });
   } catch (error) {
-    res.status(500).json({ error: "Failed to create order" });
+    console.error(error);
+    res.status(500).json({ error: "Failed to complete checkout" });
   }
 });
 
@@ -84,7 +122,6 @@ app.post("/checkout", async (req, res) => {
 app.post("/paymentverification", async (req, res) => {
   const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
     req.body;
-
   const generated_signature = crypto
     .createHmac("sha256", process.env.SECRET)
     .update(`${razorpay_order_id}|${razorpay_payment_id}`)
