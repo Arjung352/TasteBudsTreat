@@ -35,7 +35,6 @@ const userSchema = new mongoose.Schema(
         ],
         totalCost: {
           type: Number,
-          required: true,
         },
         purchasedAt: {
           type: Date,
