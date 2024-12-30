@@ -27,15 +27,27 @@ router.post(
     if (event.type === "user.created") {
       const userData = event.data;
 
-      const userName =
-        userData.username ||
-        userData.first_name ||
-        userData.email_addresses[0].email_address;
+      // Log the event data for debugging purposes
+      console.log("Received user created event:", userData);
+
+      // Extract email safely
+      const userEmail =
+        userData.email_addresses && userData.email_addresses.length > 0
+          ? userData.email_addresses[0].email_address
+          : "default@example.com";
+
+      const userName = userData.username || userData.first_name || userEmail;
+
+      // Check if the user already exists
+      const existingUser = await User.findOne({ clerkUserId: userData.id });
+      if (existingUser) {
+        return res.status(200).json({ message: "User already exists" });
+      }
 
       const newUser = new User({
         clerkUserId: userData.id,
         userName: userName,
-        emailId: userData.email_addresses[0].email_address,
+        emailId: userEmail,
         img: userData.image_url, // Storing the profile image URL
       });
 
