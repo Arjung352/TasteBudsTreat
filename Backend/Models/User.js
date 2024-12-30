@@ -1,5 +1,3 @@
-const mongoose = require("mongoose");
-
 const userSchema = new mongoose.Schema(
   {
     clerkUserId: {
@@ -9,9 +7,13 @@ const userSchema = new mongoose.Schema(
     },
     userName: {
       type: String,
+      default: function () {
+        return this.emailId; // Using email as fallback for username
+      },
     },
     emailId: {
       type: String,
+      required: true,
     },
     totalSpend: {
       type: Number,
@@ -46,5 +48,3 @@ const userSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-
-module.exports = mongoose.model("User", userSchema);
