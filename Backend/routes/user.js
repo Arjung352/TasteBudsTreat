@@ -25,7 +25,7 @@ router.post(
         clerkUserId: event.data.id,
         userName:
           event.data.username || event.data.email_addresses[0].email_address,
-        email: event.data.email_addresses[0].email_address,
+        emailId: event.data.email_addresses[0].email_address,
       });
       await newUser.save();
     }
