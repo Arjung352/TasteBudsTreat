@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../Models/User");
 const bodyParser = require("body-parser");
-import { Webhook } from "svix";
+const { Webhook } = require("svix");
 
 router.post(
   "/clerk",
