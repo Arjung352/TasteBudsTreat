@@ -27,12 +27,14 @@ router.post(
     if (event.type === "user.created") {
       const userData = event.data;
 
+      const userName =
+        userData.username ||
+        userData.first_name ||
+        userData.email_addresses[0].email_address;
+
       const newUser = new User({
         clerkUserId: userData.id,
-        userName:
-          userData.username ||
-          userData.first_name ||
-          userData.email_addresses[0].email_address, // Using email or first name as fallback
+        userName: userName,
         emailId: userData.email_addresses[0].email_address,
       });
 
