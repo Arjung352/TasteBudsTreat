@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema(
     userName: {
       type: String,
       default: function () {
-        return this.emailId; // Using email as fallback for username
+        return this.emailId;
       },
     },
     img: {
@@ -24,12 +24,6 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    cart: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Cart",
-      },
-    ],
     orderHistory: [
       {
         products: [
@@ -46,6 +40,7 @@ const userSchema = new mongoose.Schema(
         purchasedAt: {
           type: Date,
         },
+        default: [],
       },
     ],
   },
