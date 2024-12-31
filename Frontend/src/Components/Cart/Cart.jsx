@@ -94,7 +94,7 @@ function Cart() {
         {
           amount: calculateTotalPrice(),
           userId: user.id,
-          username: user.username,
+          username: localStorage.getItem("UserName"),
         }
       );
 
