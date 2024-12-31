@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const Menu = require("../Models/Menu.js");
 const Cart = require("../Models/Cart.js");
 
 // For adding multiple dishish in a cart

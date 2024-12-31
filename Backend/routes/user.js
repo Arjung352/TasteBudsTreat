@@ -39,7 +39,11 @@ router.post(
       });
       await newUser.save();
     }
-    console.log("event Data->", evt.data);
+    if (evt.type === "user.deleted") {
+      const deletedUser = await userModel.findOneAndDelete({
+        clerkUserId: evt.data.id,
+      });
+    }
 
     return res.status(200).json({
       message: "Webhook received",
