@@ -14,10 +14,10 @@ const crypto = require("crypto");
 const User = require("./Models/User");
 // Middleware
 app.use(cors());
-app.use(bodyParser.json());
 // User Route
 app.use("/api/user", userRoute);
 
+app.use(bodyParser.json());
 app.use(express.json());
 // Routes
 
