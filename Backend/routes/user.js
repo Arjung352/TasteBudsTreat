@@ -8,7 +8,7 @@ router.post(
   "/clerk",
   bodyParser.raw({ type: "application/json" }),
   async (req, res) => {
-    const secret = process.env.CLERK_WEBHOOK_SECRET;
+    const secret = `whsec_hzMgfCz7T2bMFnUOhmsGS0DveFOu0sG7`;
 
     if (!secret) {
       throw new Error("Webhook secret needed!!");
