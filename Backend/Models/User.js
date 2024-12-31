@@ -17,29 +17,45 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    orderHistory: {
+      type: [
+        {
+          products: [
+            {
+              productId: {
+                type: String,
+                required: true,
+              },
+              dishName: {
+                type: String,
+                required: true,
+              },
+              image: {
+                type: String,
+                required: true,
+              },
+              price: {
+                type: Number,
+                required: true,
+              },
+            },
+          ],
+          totalCost: {
+            type: Number,
+            required: true,
+          },
+          purchasedAt: {
+            type: Date,
+            required: true,
+          },
+        },
+      ],
+      default: [],
+    },
     totalSpend: {
       type: Number,
       default: 0,
     },
-    orderHistory: [
-      {
-        products: [
-          {
-            productId: String,
-            dishName: String,
-            image: String,
-            price: Number,
-          },
-        ],
-        totalCost: {
-          type: Number,
-        },
-        purchasedAt: {
-          type: Date,
-        },
-        default: [],
-      },
-    ],
   },
   {
     timestamps: true,

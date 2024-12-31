@@ -76,23 +76,26 @@ app.post("/checkout", async (req, res) => {
       currency: "INR",
       receipt: `order_rcptid_${Date.now()}`,
     };
-    // setting date of purchase
     const timestamp = new Date();
     const date = timestamp.toISOString().split("T")[0];
 
     const order = await instance.orders.create(options);
 
-    // Find the user and their cart
-    const user = await CartModel.find({ Username: username });
-    const userModel = await User.find({ clerkUserId: userId });
+    // Fetch the user and their cart
+    const user = await CartModel.findOne({ Username: username });
+    const userModel = await User.findOne({ clerkUserId: userId });
 
-    if (!user)
-      return res.status(404).json({ error: "Item not found in the cart" });
-    if (!userModel) return res.status(404).json({ error: "User not found" });
+    // Check if user or userModel is not found
+    if (!user) {
+      return res.status(404).json({ error: "Cart not found" });
+    }
+    if (!userModel) {
+      return res.status(404).json({ error: "User not found" });
+    }
 
     // Prepare order details
     const orderDetails = {
-      products: user.map((item) => ({
+      products: (user.items || []).map((item) => ({
         productId: item.productId,
         dishName: item.dishName,
         image: item.image,
@@ -102,16 +105,17 @@ app.post("/checkout", async (req, res) => {
       purchasedAt: date,
     };
 
-    // Add order to user's orderHistory
+    // Initialize and update orderHistory
+    userModel.orderHistory = userModel.orderHistory || [];
     userModel.orderHistory.push(orderDetails);
 
-    // Clear the user's cart and update totalSpend
-    userModel.totalSpend += orderDetails.totalCost;
+    // Update totalSpend
+    userModel.totalSpend = (userModel.totalSpend || 0) + orderDetails.totalCost;
 
-    // Save the updated user document
+    // Save the user document
     await userModel.save();
 
-    // Respond with the Razorpay order and success message
+    // Respond with success message
     res.json({ order, message: "Checkout successful, order added to history" });
   } catch (error) {
     console.error(error);
