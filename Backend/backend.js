@@ -82,7 +82,7 @@ app.post("/checkout", async (req, res) => {
     const order = await instance.orders.create(options);
 
     // Fetch the user and their cart
-    const user = await CartModel.findOne({ Username: username });
+    const user = await CartModel.find({ Username: username });
     const userModel = await User.findOne({ clerkUserId: userId });
 
     // Check if user or userModel is not found
@@ -95,16 +95,16 @@ app.post("/checkout", async (req, res) => {
 
     // Prepare order details
     const orderDetails = {
-      products: (user.items || []).map((item) => ({
+      products: user.map((item) => ({
         productId: item.productId,
         dishName: item.dishName,
         image: item.image,
         price: item.price,
       })),
-      totalCost: amount * 100,
+      totalCost: amount,
       purchasedAt: date,
     };
-
+    console.log(user);
     // Initialize and update orderHistory
     userModel.orderHistory = userModel.orderHistory || [];
     userModel.orderHistory.push(orderDetails);
