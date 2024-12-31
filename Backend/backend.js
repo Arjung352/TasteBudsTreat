@@ -84,7 +84,7 @@ app.post("/checkout", async (req, res) => {
 
     // Find the user and their cart
     const user = await CartModel.find(username);
-    const userModel = await User.findById(userId);
+    const userModel = await User.find({ clerkUserId: userId });
 
     if (!user)
       return res.status(404).json({ error: "Item not found in the cart" });
