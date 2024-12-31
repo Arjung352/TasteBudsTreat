@@ -12,6 +12,7 @@ const userRoute = require("./routes/user");
 const razorpay = require("razorpay");
 const crypto = require("crypto");
 const User = require("./Models/User");
+const CartModel = require("./Models/Cart");
 // Middleware
 app.use(cors());
 // User Route
@@ -67,7 +68,7 @@ const Payment = mongoose.model("Payment", paymentschema);
 
 // Checkout route
 app.post("/checkout", async (req, res) => {
-  const { amount, userId } = req.body;
+  const { amount, userId, username } = req.body;
 
   try {
     const options = {
@@ -82,16 +83,16 @@ app.post("/checkout", async (req, res) => {
     const order = await instance.orders.create(options);
 
     // Find the user and their cart
-    const user = await User.findById(userId).populate("cart");
-    if (!user) return res.status(404).json({ error: "User not found" });
+    const user = await CartModel.find(username);
+    const userModel = await User.findById(userId);
 
-    if (!user.cart.length) {
-      return res.status(400).json({ error: "Cart is empty" });
-    }
+    if (!user)
+      return res.status(404).json({ error: "Item not found in the cart" });
+    if (!userModel) return res.status(404).json({ error: "User not found" });
 
     // Prepare order details
     const orderDetails = {
-      products: user.cart.map((item) => ({
+      products: user.map((item) => ({
         productId: item.productId,
         dishName: item.dishName,
         image: item.image,
@@ -102,13 +103,13 @@ app.post("/checkout", async (req, res) => {
     };
 
     // Add order to user's orderHistory
-    user.orderHistory.push(orderDetails);
+    userModel.orderHistory.push(orderDetails);
 
     // Clear the user's cart and update totalSpend
-    user.totalSpend += orderDetails.totalCost;
+    userModel.totalSpend += orderDetails.totalCost;
 
     // Save the updated user document
-    await user.save();
+    await userModel.save();
 
     // Respond with the Razorpay order and success message
     res.json({ order, message: "Checkout successful, order added to history" });

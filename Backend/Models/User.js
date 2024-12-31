@@ -9,9 +9,6 @@ const userSchema = new mongoose.Schema(
     },
     userName: {
       type: String,
-      default: function () {
-        return this.emailId;
-      },
     },
     img: {
       type: String,
