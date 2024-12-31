@@ -83,7 +83,7 @@ app.post("/checkout", async (req, res) => {
     const order = await instance.orders.create(options);
 
     // Find the user and their cart
-    const user = await CartModel.find(username);
+    const user = await CartModel.find({ Username: username });
     const userModel = await User.find({ clerkUserId: userId });
 
     if (!user)
