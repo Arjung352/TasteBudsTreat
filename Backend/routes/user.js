@@ -41,7 +41,7 @@ router.post(
     }
     if (evt.type === "user.deleted") {
       try {
-        const deletedUser = await userModel.findOneAndDelete({
+        const deletedUser = await User.findOneAndDelete({
           clerkUserId: evt.data.id,
         });
         res.status(200).json({ message: "User deleted successfully" });
