@@ -22,8 +22,10 @@ router.post(
     try {
       evt = wh.verify(payload, headers);
     } catch (err) {
-      res.status(400).json({
+      console.error("Verification Error:", err.message);
+      return res.status(400).json({
         message: "Webhook verification failed",
+        error: err.message,
       });
     }
 
