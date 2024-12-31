@@ -13,6 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 import PaymentSuccess from "../PaymentSuccess/PaymentSuccess";
 import { useDispatch } from "react-redux";
 import Navbar from "../Navbar/Navbar";
+import { useUser } from "@clerk/clerk-react";
 function Cart() {
   const [cartItems, setCartItems] = useState([]);
   const [paymentSuccess, setPaymentSuccess] = useState(false); // State to show PaymentSuccess
@@ -85,12 +86,15 @@ function Cart() {
   }, [id]);
 
   // Checkout handler
+  const { user } = useUser();
   const handleCheckout = async () => {
     try {
       const { data } = await axios.post(
         "https://taste-buds-treat-backend.vercel.app/checkout",
         {
           amount: calculateTotalPrice(),
+          userId: user.id,
+          username: user.username,
         }
       );
 
