@@ -1,29 +1,21 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../Models/User.js");
 const Cart = require("../Models/Cart.js");
 
 // For adding multiple dishish in a cart
 // Adding an item to the cart
 router.post("/AddToCart", async (req, res) => {
   try {
-    const { productId, UserName, dishName, img, price } = req.body;
+    const username = req.header;
+    const { productId, dishName, img, price } = req.body;
     const addCart = new Cart({
       productId: productId,
-      Username: UserName,
+      Username: username,
       dishName: dishName,
       image: img,
       price: price,
     });
     await addCart.save();
-
-    // Add to the user's cart in User schema
-    const user = await User.findOne({ userName: UserName });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    user.cart.push(addCart._id);
-    await user.save();
 
     res.status(200).json({ message: "Item Added to Cart" });
   } catch (error) {
@@ -34,7 +26,7 @@ router.post("/AddToCart", async (req, res) => {
 // Deleting a dish from the cart
 router.delete("/delete", async (req, res) => {
   try {
-    let { _id, UserName } = req.body;
+    let { _id } = req.body;
 
     if (!_id) {
       return res.status(400).json({ message: "Dish ID is required!" });
@@ -46,17 +38,6 @@ router.delete("/delete", async (req, res) => {
         .status(404)
         .json({ message: "Cannot find a dish with that ID!" });
     }
-
-    // Remove the item from the user's cart in User schema
-    const user = await User.findOne({ userName: UserName });
-    if (user) {
-      user.cart = user.cart.filter(
-        (cartItemId) => cartItemId.toString() !== _id
-      );
-      await user.save();
-    }
-
-    res.status(200).json({ message: "Deleted successfully" });
   } catch (error) {
     console.error("Error deleting dish:", error);
     res
@@ -75,24 +56,8 @@ router.delete("/clear", async (req, res) => {
       return res.status(400).json({ message: "Username is required" });
     }
 
-    // Find the user
-    const user = await User.findOne({ userName: Username });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
     // Delete cart items for the user
     const result = await Cart.deleteMany({ Username });
-
-    // Check if anything was actually deleted
-    if (result.deletedCount === 0) {
-      return res.status(404).json({ message: "No cart items found to delete" });
-    }
-
-    // Clear the user's cart in User schema
-    user.cart = [];
-    await user.save();
-
     res
       .status(200)
       .json({ success: true, message: "Cart cleared successfully" });

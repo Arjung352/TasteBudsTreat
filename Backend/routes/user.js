@@ -14,7 +14,7 @@ router.post(
       throw new Error("Webhook secret needed!!");
     }
 
-    const payload = req.body;
+    const payload = req.body.toString();
     const headers = req.headers;
 
     const wh = new Webhook(secret);
