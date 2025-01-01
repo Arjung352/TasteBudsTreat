@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const restaurantRoutes = require("./routes/restaurant");
 const restromenu = require("./routes/menu");
+const dashboardRoute = require("./routes/dashboard");
 const Cart = require("./routes/cart");
 const userRoute = require("./routes/user");
 const razorpay = require("razorpay");
@@ -30,6 +31,9 @@ app.use("/api/upload", restromenu);
 
 // Cart Route
 app.use("/api/cart", Cart);
+
+// Dashboard Route
+app.use("/api/dashboard", dashboardRoute);
 
 // Home route
 app.get("/", (req, res) => {
