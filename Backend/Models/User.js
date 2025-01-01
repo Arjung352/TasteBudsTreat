@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema(
     },
     userName: {
       type: String,
+      unique: true,
     },
     img: {
       type: String,
@@ -16,6 +17,7 @@ const userSchema = new mongoose.Schema(
     emailId: {
       type: String,
       required: true,
+      unique: true,
     },
     orderHistory: {
       type: [

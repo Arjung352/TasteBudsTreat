@@ -205,12 +205,16 @@ function Navbar() {
 
       {/* Overlay Menu */}
       <div
-        className={`fixed h-svh top-0  max-xl:w-1/2 max-md:w-3/4 max-sm:w-full navbar-img text-white z-30 flex flex-col justify-between items-center  xl:hidden  transform ${
-          isMenuOpen ? "-translate-x-0" : "translate-x-full"
-        } transition-transform duration-300 ease-in-out`}
+        className={`fixed h-svh top-0 
+              max-xl:w-1/3 max-lg:w-1/2 max-sm:w-full 
+              navbar-img text-white z-30 
+              flex flex-col justify-between items-center xl:hidden transform 
+              ${isMenuOpen ? "translate-x-0" : "translate-x-full"} 
+              right-0
+              transition-transform duration-300 ease-in-out`}
       >
         <div className=" flex justify-between w-full ml-7 mt-3">
-          {isMenuOpen === true && (
+          {isMenuOpen && (
             <button onClick={toggleMenu}>
               <CloseIcon className="text-black" fontSize="medium" />
             </button>
