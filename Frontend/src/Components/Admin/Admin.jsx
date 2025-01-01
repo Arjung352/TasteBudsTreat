@@ -23,7 +23,7 @@ function Admin() {
       try {
         // Fetching the user data
         const response = await axios.get(
-          "http://localhost:5000/api/dashboard/get-user"
+          "https://taste-buds-treat-backend.vercel.app/api/dashboard/get-user"
         );
         const data = response.data.data;
         data.forEach((user) => {
