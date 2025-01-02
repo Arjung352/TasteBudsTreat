@@ -6,9 +6,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Footer from "../Footer/Footer";
 import ReactPaginate from "react-paginate";
-import { ToastContainer, toast } from "react-toastify";
+import { toast, Toaster } from "react-hot-toast";
 import "react-quill/dist/quill.snow.css";
-import "react-toastify/dist/ReactToastify.css";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { TailSpin } from "react-loader-spinner";
@@ -462,7 +461,7 @@ function Menu() {
           )}
           <Footer />
         </div>
-        <ToastContainer />
+        <Toaster />
       </div>
     </div>
   );

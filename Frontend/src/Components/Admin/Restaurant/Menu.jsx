@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import { TailSpin } from "react-loader-spinner";
 import Footer from "../../Footer/Footer";
@@ -230,7 +230,7 @@ function MenuForm() {
           </div>
         </div>
         <div>
-          <ToastContainer />
+          <Toaster />
         </div>
       </div>
     </div>

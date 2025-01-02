@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; // Import CSS
+import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import { TailSpin } from "react-loader-spinner";
 import Footer from "../../Footer/Footer";
@@ -179,7 +178,7 @@ function Register_Restaurant() {
           </div>
           <Footer />
         </div>
-        <ToastContainer />
+        <Toaster />
       </div>
     </div>
   ) : (

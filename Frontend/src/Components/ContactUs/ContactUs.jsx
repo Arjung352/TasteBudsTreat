@@ -1,8 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import toast, { Toaster } from "react-hot-toast";
 import Footer from "../Footer/Footer";
 import FAQ from "./FAQ/FAQ";
 import { TailSpin } from "react-loader-spinner";
@@ -138,7 +137,7 @@ function ContactUs() {
             <Footer />
           </div>
         </div>
-        <ToastContainer />
+        <Toaster />
       </div>
     </div>
   );

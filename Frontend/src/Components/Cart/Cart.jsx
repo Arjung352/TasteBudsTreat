@@ -7,13 +7,13 @@ import IconButton from "@mui/material/IconButton";
 import { Grid } from "@mui/material";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
 import "react-quill/dist/quill.snow.css";
-import "react-toastify/dist/ReactToastify.css";
 import PaymentSuccess from "../PaymentSuccess/PaymentSuccess";
 import { useDispatch } from "react-redux";
 import Navbar from "../Navbar/Navbar";
 import { useUser } from "@clerk/clerk-react";
+import toast, { Toaster } from "react-hot-toast";
+
 function Cart() {
   const [cartItems, setCartItems] = useState([]);
   const [paymentSuccess, setPaymentSuccess] = useState(false); // State to show PaymentSuccess
@@ -361,7 +361,7 @@ function Cart() {
           )}
         </div>
         <div>
-          <ToastContainer />
+          <Toaster />
         </div>
       </div>
     </div>

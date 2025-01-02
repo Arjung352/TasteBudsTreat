@@ -24,7 +24,8 @@ function App() {
       );
       loadingServer(true);
     })();
-  });
+  }),
+    [];
   return (
     <>
       {load ? (
