@@ -66,7 +66,7 @@ function Register_Restaurant() {
   };
 
   return load ? (
-    <div>
+    <div className="relative">
       <Navbar />
       <div className="flex justify-center">
         <div className="w-4/5">

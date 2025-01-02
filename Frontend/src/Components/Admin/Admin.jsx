@@ -80,7 +80,7 @@ function Admin() {
     })();
   }, []);
   return (
-    <div className="h-svh">
+    <div className="relative">
       <Navbar />
       {username == "TasteBudsTreat" ? (
         <div className="flex justify-center">
