@@ -93,8 +93,6 @@ function Cart() {
         "https://taste-buds-treat-backend.vercel.app/checkout",
         {
           amount: calculateTotalPrice(),
-          userId: user.id,
-          username: localStorage.getItem("UserName"),
         }
       );
 
@@ -113,6 +111,9 @@ function Cart() {
                 razorpay_order_id: response.razorpay_order_id,
                 razorpay_payment_id: response.razorpay_payment_id,
                 razorpay_signature: response.razorpay_signature,
+                userId: user.id,
+                username: localStorage.getItem("UserName"),
+                amount: calculateTotalPrice(),
               }
             )
             .then(async (res) => {

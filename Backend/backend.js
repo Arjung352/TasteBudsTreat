@@ -72,18 +72,48 @@ const Payment = mongoose.model("Payment", paymentschema);
 
 // Checkout route
 app.post("/checkout", async (req, res) => {
-  const { amount, userId, username } = req.body;
-
+  const { amount } = req.body;
   try {
     const options = {
       amount: amount * 100,
       currency: "INR",
       receipt: `order_rcptid_${Date.now()}`,
     };
+    const order = await instance.orders.create(options);
+    res.json({ order });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to complete checkout" });
+  }
+});
+
+// Payment Verification Route
+app.post("/paymentverification", async (req, res) => {
+  const {
+    razorpay_order_id,
+    razorpay_payment_id,
+    razorpay_signature,
+    userId,
+    username,
+    amount,
+  } = req.body;
+  const generated_signature = crypto
+    .createHmac("sha256", process.env.SECRET)
+    .update(`${razorpay_order_id}|${razorpay_payment_id}`)
+    .digest("hex");
+
+  if (generated_signature === razorpay_signature) {
+    const payment = new Payment({
+      razorpay_order_id,
+      razorpay_payment_id,
+      razorpay_signature,
+    });
+
+    await payment.save();
+
+    // Adding to the DataBase
     const timestamp = new Date();
     const date = timestamp.toISOString().split("T")[0];
-
-    const order = await instance.orders.create(options);
 
     // Fetch the user and their cart
     const user = await CartModel.find({ Username: username });
@@ -120,32 +150,10 @@ app.post("/checkout", async (req, res) => {
     await userModel.save();
 
     // Respond with success message
-    res.json({ order, message: "Checkout successful, order added to history" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to complete checkout" });
-  }
-});
-
-// Payment Verification Route
-app.post("/paymentverification", async (req, res) => {
-  const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
-    req.body;
-  const generated_signature = crypto
-    .createHmac("sha256", process.env.SECRET)
-    .update(`${razorpay_order_id}|${razorpay_payment_id}`)
-    .digest("hex");
-
-  if (generated_signature === razorpay_signature) {
-    const payment = new Payment({
-      razorpay_order_id,
-      razorpay_payment_id,
-      razorpay_signature,
+    res.json({
+      success: true,
+      message: "Checkout successful, order added to history",
     });
-
-    await payment.save();
-
-    res.json({ success: true });
   } else {
     res.json({ success: false });
   }
