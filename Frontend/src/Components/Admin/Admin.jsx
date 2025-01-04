@@ -5,9 +5,10 @@ import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import { Chart as ChartJS, defaults } from "chart.js/auto";
-import { Bar, Doughnut, Line } from "react-chartjs-2";
+import { Doughnut, Line } from "react-chartjs-2";
 import axios from "axios";
 import Footer from "../Footer/Footer";
+import RecentOrder from "./RecentOrder/RecentOrder";
 
 defaults.maintainAspectRatio = false;
 defaults.responsive = true;
@@ -25,6 +26,7 @@ function Admin() {
     orderPlaceToday: 0,
     todayOrderValue: 0,
   });
+  const [recentOrder, SetRecentOrder] = useState([]);
   const [dateData, setDateData] = useState([{ date: "", totalCost: 0 }]);
   useEffect(() => {
     setUserName(localStorage.getItem("UserName"));
@@ -32,29 +34,65 @@ function Admin() {
     let totalOrderValue = 0;
     let todaysOrderValue = 0;
     let ordersPlacedToday = 0;
-    const fetchData = (async () => {
+
+    const fetchData = async () => {
       try {
-        // Fetching the user data
+        // Fetch user data
         const response = await axios.get(
           "https://taste-buds-treat-backend.vercel.app/api/dashboard/get-user"
         );
         const data = response.data.data;
-        data.forEach((user) => {
-          user.orderHistory.forEach((order) => {
-            totalOrderValue += order.totalCost;
-            const orderDate = order.purchasedAt.split("T")[0];
-            if (orderDate === today) {
-              todaysOrderValue += order.totalCost;
-              ordersPlacedToday++;
-            }
-          });
+
+        const allOrders = data.flatMap((user) =>
+          user.orderHistory.map((order) => ({
+            ...order,
+            username: user.userName,
+          }))
+        );
+
+        // Aggregate totals
+        allOrders.forEach((order) => {
+          totalOrderValue += order.totalCost;
+          const orderDate = order.purchasedAt.split("T")[0];
+          if (orderDate === today) {
+            todaysOrderValue += order.totalCost;
+            ordersPlacedToday++;
+          }
         });
+
+        const todayOrders = allOrders.filter((order) => {
+          const orderDate = new Date(order.purchasedAt)
+            .toISOString()
+            .split("T")[0];
+          return orderDate === today;
+        });
+        console.log(todayOrders);
+        const allProducts = todayOrders.flatMap((order) =>
+          order.products.map((product) => {
+            const orderDate = new Date(order.purchasedAt);
+            return {
+              Item: product.dishName,
+              Img: product.image,
+              Date: orderDate.toISOString().split("T")[0],
+              Username: order.username,
+              price: product.price,
+            };
+          })
+        );
+
+        console.log("All Products:", allProducts);
+
+        SetRecentOrder(allProducts);
+
+        // Update dashboard data
         setdashboardData({
           totalUser: data.length,
           totalOrderValue,
           orderPlaceToday: ordersPlacedToday,
           todayOrderValue: todaysOrderValue,
         });
+
+        // Create date data
         const dateMap = {};
         data.forEach((user) => {
           user.orderHistory.forEach((order) => {
@@ -77,7 +115,9 @@ function Admin() {
       } catch (error) {
         console.error("Error fetching dashboard data:", error);
       }
-    })();
+    };
+
+    fetchData();
   }, []);
   return (
     <div className="relative">
@@ -87,54 +127,76 @@ function Admin() {
           <div className="w-4/5">
             <div className=" flex flex-col items-center ">
               <p className=" font-WorkSans text-4xl mt-5">Admin Dashboard</p>
-              <p className="backdrop-filter bg-gray-400 backdrop-blur-md bg-opacity-20 w-full mt-4 p-4 rounded-xl text-green-400 text-2xl font-medium ">
+              <p className="backdrop-filter shadow-xl bg-gray-400 backdrop-blur-md bg-opacity-10 w-full mt-4 p-4 rounded-xl text-black text-2xl font-medium ">
                 Dashboard
               </p>
             </div>
             <div className=" grid grid-cols-4 gap-10 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 text-white mt-10 text-xl font-WorkSans">
-              <div className="flex justify-between bg-red-500 rounded-xl w-full mr-5 p-4">
+              <div
+                title="Total User"
+                className="flex justify-between backdrop-filter  hover:scale-105 ease-in-out transition-all cursor-pointer bg-gray-400 backdrop-blur-md bg-opacity-10 text-black shadow-xl rounded-xl w-full mr-5 p-4"
+              >
                 <div className="flex flex-col justify-between">
-                  <p className=" ">Total User</p>
-                  <p>{dashboardData.totalUser}</p>
+                  <p className=" font-medium">Total User</p>
+                  <p className="text-green-500">{dashboardData.totalUser}</p>
                 </div>
                 <div className="flex items-center">
                   <PersonIcon fontSize="large" />
                 </div>
               </div>
-              <div className="flex justify-between bg-green-500 rounded-xl w-full mr-5 p-4">
+              <div
+                title="Total Order Value"
+                className="flex justify-between backdrop-filter  hover:scale-105 ease-in-out transition-all cursor-pointer bg-gray-400 backdrop-blur-md bg-opacity-10 text-black shadow-xl rounded-xl w-full mr-5 p-4"
+              >
                 <div className="flex flex-col justify-between">
-                  <p className=" ">Total Order Value</p>
-                  <p>{dashboardData.totalOrderValue}</p>
+                  <p className=" font-medium">Total Order Value</p>
+                  <p className="text-green-500">
+                    {dashboardData.totalOrderValue}
+                  </p>
                 </div>
                 <div className="flex items-center">
                   <CurrencyRupeeIcon fontSize="large" />
                 </div>
               </div>
-              <div className="flex justify-between bg-blue-500 rounded-xl w-full mr-5 p-4">
+              <div
+                title="Order's Placed Today"
+                className="flex justify-between backdrop-filter  hover:scale-105 ease-in-out transition-all cursor-pointer bg-gray-400 backdrop-blur-md bg-opacity-10 text-black shadow-xl rounded-xl w-full mr-5 p-4"
+              >
                 <div className="flex flex-col justify-between">
-                  <p className=" ">Order's Placed Today</p>
-                  <p>{dashboardData.orderPlaceToday}</p>
+                  <p className=" font-medium">Order's Placed Today</p>
+                  <p className="text-green-500">
+                    {dashboardData.orderPlaceToday}
+                  </p>
                 </div>
                 <div className="flex items-center">
                   <CalendarMonthIcon fontSize="large" />
                 </div>
               </div>
-              <div className="flex justify-between bg-yellow-500 rounded-xl w-full p-4">
+              <div
+                title="Today's Order Value"
+                className="flex justify-between backdrop-filter  hover:scale-105 ease-in-out transition-all cursor-pointer bg-gray-400 backdrop-blur-md bg-opacity-10 text-black shadow-xl rounded-xl w-full p-4"
+              >
                 <div className="flex flex-col justify-between">
-                  <p className=" ">Today's Order Value</p>
-                  <p>{dashboardData.todayOrderValue}</p>
+                  <p className=" font-medium">Today's Order Value</p>
+                  <p className="text-green-500">
+                    {dashboardData.todayOrderValue}
+                  </p>
                 </div>
                 <div className="flex items-center">
                   <BarChartIcon fontSize="large" />
                 </div>
               </div>
             </div>
+            {/* Visual representation of every day total order */}
             <div className="flex flex-col mt-10 gap-10">
               <p className="text-center font-WorkSans text-2xl font-medium">
                 Every Day's Total Order Value
               </p>
               <div className="flex max-xl:flex-col max-xl:gap-7 mb-16 items-center">
-                <div className="w-full xl:max-w-screen-sm  h-80">
+                <div
+                  title="Line Chart Representing Order Value"
+                  className="w-full xl:max-w-screen-sm text-green-500 h-80"
+                >
                   <Line
                     data={{
                       labels: dateData.map((entry) => entry.date),
@@ -158,12 +220,16 @@ function Admin() {
                       plugins: {
                         title: {
                           text: "Line Chart",
+                          color: "#22c55e",
                         },
                       },
                     }}
                   />
                 </div>
-                <div className="w-full xl:max-w-screen-sm h-80">
+                <div
+                  title="Pie Chart Representing Order Value"
+                  className="w-full xl:max-w-screen-sm h-80"
+                >
                   <Doughnut
                     data={{
                       labels: dateData.slice(0, 11).map((entry) => entry.date),
@@ -183,16 +249,7 @@ function Admin() {
                                   Math.random() * 256
                                 )}, ${Math.floor(Math.random() * 256)}, 0.8)`
                             ), // Random colors for each day
-                          borderColor: dateData
-                            .slice(0, 11)
-                            .map(
-                              () =>
-                                `rgba(${Math.floor(
-                                  Math.random() * 256
-                                )}, ${Math.floor(
-                                  Math.random() * 256
-                                )}, ${Math.floor(Math.random() * 256)}, 0.8)`
-                            ), // Random border color
+                          borderColor: "rgba(0,0,0,0.5)",
                           borderWidth: 2,
                         },
                       ],
@@ -208,6 +265,7 @@ function Admin() {
                         title: {
                           display: true,
                           text: "Pie Chart",
+                          color: "#22c55e",
                         },
                       },
                     }}
@@ -215,6 +273,8 @@ function Admin() {
                 </div>
               </div>
             </div>
+            {/* Recent order's */}
+            <RecentOrder recentOrder={recentOrder} />
             <Footer />
           </div>
         </div>
