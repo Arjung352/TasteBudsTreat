@@ -9,6 +9,7 @@ import { Doughnut, Line } from "react-chartjs-2";
 import axios from "axios";
 import Footer from "../Footer/Footer";
 import RecentOrder from "./RecentOrder/RecentOrder";
+import { subDays, format } from "date-fns";
 
 defaults.maintainAspectRatio = false;
 defaults.responsive = true;
@@ -104,12 +105,15 @@ function Admin() {
         });
 
         const newDateData = [];
-        for (let i = 1; i <= 11; i++) {
-          const date = new Date(2025, 0, i).toISOString().split("T")[0];
+        console.log(today.split("-"));
+        const todayDate = new Date(today);
+        for (let i = 10; i >= 0; i--) {
+          const date = format(subDays(todayDate, i), "yyyy-MM-dd");
           newDateData.push({
             date,
             totalCost: dateMap[date] || 0,
           });
+          console.log(date);
         }
         setDateData(newDateData);
       } catch (error) {
@@ -279,13 +283,18 @@ function Admin() {
           </div>
         </div>
       ) : (
-        <div className="text-center h-svh py-8 flex flex-col justify-center items-center">
-          <img
-            src="https://ps.w.org/admin-only-dashboard/assets/icon-256x256.png?rev=3074610"
-            className="h-36 w-36 md:h-44 md:w-44 rounded-xl bg-blend-multiply"
-            alt="Authorize person only image"
-          />
-        </div>
+        <>
+          <p className=" font-WorkSans text-center max-md:text-3xl text-4xl mt-5">
+            Admin Dashboard
+          </p>
+          <div className="text-center h-[80vh]  flex flex-col justify-center items-center">
+            <img
+              src="https://ps.w.org/admin-only-dashboard/assets/icon-256x256.png?rev=3074610"
+              className="h-36 w-36 md:h-44 md:w-44 rounded-xl bg-blend-multiply"
+              alt="Authorize person only image"
+            />
+          </div>
+        </>
       )}
     </div>
   );
