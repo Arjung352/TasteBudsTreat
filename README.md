@@ -34,11 +34,14 @@ TasteBudsTreat/
 │   ├── Models/                         # Mongoose models for Cart, Menu, and Restaurant
 │   │   ├── Cart.js                     # Model for Cart data
 │   │   ├── Menu.js                     # Model for Menu items
-│   │   └── Restaurant.js               # Model for Restaurant data
+│   │   ├── Restaurant.js               # Model for Restaurant data
+│   │   └── User.js                     # Model for User data
 │   ├── routes/                         # API route handlers
 │   │   ├── cart.js                     # Cart-related API routes
+│   │   ├── dashboard.js                # Dashboard-related API routes
 │   │   ├── menu.js                     # Menu-related API routes
-│   │   └── restaurant.js               # Restaurant-related API routes
+│   │   ├── restaurant.js               # Restaurant-related API routes
+│   │   └── user.js                     # user-related API routes
 │   ├── .gitignore                      # Git ignore file to exclude unnecessary files
 │   ├── backend.js                      # Backend server entry point
 │   ├── package-lock.json               # Locked versions of dependencies
