@@ -44,62 +44,75 @@ TasteBudsTreat/
 │   ├── package-lock.json               # Locked versions of dependencies
 │   ├── package.json                    # Frontend dependencies and scripts
 │   └── vercel.json                     # Vercel deployment configuration
-├── client/                             # React frontend files
-│   ├── public/                         # Public files (HTML, images, etc.)
-│   ├── src/                            # Source files
-│   │   ├── Components/                 # Reusable components
+client/                             # React frontend files
+├── public/                         # Public files (HTML, images, etc.)
+├── src/                            # Source files
+│   ├── Components/                 # Reusable components
 │   │   ├── AboutMe/
-│   │   │   ├── Myself.css              # Styles for the 'Myself' component
-│   │   │   ├── Myself.jsx              # 'Myself' component for user profile
-│   │   ├── About.jsx                   # About page component
+│   │   │   ├── Myself.css          # Styles for the 'Myself' component
+│   │   │   ├── Myself.jsx          # 'Myself' component for user profile
+│   │   ├── About.jsx               # About page component
 │   │   ├── Admin/
 │   │   │   ├── Restaurant/
-│   │   │   │   ├── Menu.jsx            # Menu management component for admin
+│   │   │   │   ├── Menu.jsx        # Menu management component for admin
 │   │   │   │   └── Register_Restaurant.jsx # Register restaurant component for admin
 │   │   ├── Cart/
-│   │   │   └── Cart.jsx                # Cart component
+│   │   │   └── Cart.jsx            # Cart component
 │   │   ├── ContactUs/
-│   │   │   ├── ContactUs.jsx           # Contact us page component
+│   │   │   ├── ContactUs.jsx       # Contact us page component
 │   │   ├── FAQ/
-│   │   │   ├── FAQ.css                 # Styles for FAQ component
-│   │   │   └── FAQ.jsx                 # FAQ component
+│   │   │   ├── FAQ.css             # Styles for FAQ component
+│   │   │   └── FAQ.jsx             # FAQ component
 │   │   ├── Footer/
-│   │   │   └── Footer.jsx              # Footer component
+│   │   │   └── Footer.jsx          # Footer component
 │   │   ├── Home/
 │   │   │   ├── Card/
-│   │   │   │   └── Card.jsx            # Card component for displaying products
-│   │   │   ├── Crousal.css             # Styles for carousel
-│   │   │   ├── Favourite.jsx           # Favourite items component
-│   │   │   ├── name.jsx                # Name display component
+│   │   │   │   └── Card.jsx        # Card component for displaying products
+│   │   │   ├── Crousal.css         # Styles for carousel
+│   │   │   ├── Favourite.jsx       # Favourite items component
+│   │   │   ├── name.jsx            # Name display component
 │   │   │   ├── PopularCategories/
 │   │   │   │   └── PopularCategories.jsx # Popular categories component
 │   │   │   ├── ServiceSection/
 │   │   │   │   └── ServiceSection.jsx  # Service section component
 │   │   │   ├── Testimonials/
 │   │   │   │   └── Testimonials.jsx    # Testimonials section component
-│   │   │   ├── Home.jsx                # Main homepage component
-│   │   │   └── home.css                # Styles for the home page
+│   │   │   ├── Home.jsx            # Main homepage component
+│   │   │   └── home.css            # Styles for the home page
 │   │   ├── Main/
-│   │   │   ├── App.jsx                 # Main app entry point
-│   │   │   ├── Error.jsx               # Error page component
-│   │   │   ├── index.css               # Global CSS styles
-│   │   │   └── main.jsx                # Main entry point for React app
+│   │   │   ├── App.jsx             # Main app entry point
+│   │   │   ├── Error.jsx           # Error page component
+│   │   │   ├── index.css           # Global CSS styles
+│   │   │   └── main.jsx            # Main entry point for React app
 │   │   ├── Menu/
-│   │   │   └── Menu.jsx                # Menu page component
+│   │   │   └── Menu.jsx            # Menu page component
 │   │   ├── Navbar/
-│   │   │   └── Navbar.jsx              # Navbar component
+│   │   │   └── Navbar.jsx          # Navbar component
 │   │   ├── PaymentSuccess/
-│   │   │   └── PaymentSuccess.jsx      # Payment success page component
-│   ├── .env                             # Environment variables
-│   ├── .eslintrc.cjs                    # ESLint configuration
-│   ├── .gitignore                       # Git ignore file
-│   ├── README.md                        # Project documentation
-│   ├── components.json                  # JSON configuration for components
-│   ├── index.html                       # HTML file for React app
-│   ├── package-lock.json                # Locked versions of dependencies
-│   ├── package.json                     # Project dependencies and scripts
-│   ├── postcss.config.js                # PostCSS configuration
-│   └── tailwind.config.js               # Tailwind CSS configuration
-├── .gitignore                          # Global git ignore file
-└── README.md                           # Project documentation
+│   │   │   └── PaymentSuccess.jsx  # Payment success page component
+│   ├── .env                         # Environment variables
+│   ├── .eslintrc.cjs                # ESLint configuration
+│   ├── .gitignore                   # Git ignore file
+│   ├── README.md                    # Project documentation
+│   ├── components.json              # JSON configuration for components
+│   ├── index.html                   # HTML file for React app
+│   ├── package-lock.json            # Locked versions of dependencies
+│   ├── package.json                 # Project dependencies and scripts
+│   ├── postcss.config.js            # PostCSS configuration
+│   └── tailwind.config.js           # Tailwind CSS configuration
+├── .gitignore                        # Global git ignore file
+└── README.md                         # Project documentation
+
+public/                             # Static public files
+├── images/
+│   ├── salad-with-fresh-vegetables-plate-top-view_169016-29107-removebg-preview.png
+│   ├── image/
+│   │   ├── burger.png
+│   │   ├── dessert.png
+│   │   ├── sandwich.png
+│   │   └── thali.png
+└── myself/
+    ├── adarsh.jpg
+    ├── ansh.jpeg
+    └── arjun.png
 ```
