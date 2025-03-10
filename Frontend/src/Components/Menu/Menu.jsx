@@ -77,12 +77,19 @@ function Menu() {
     };
   }, []);
 
-  // Filtered food based on selections
-  const filteredFood = food.filter(
-    (item) =>
-      (!selectedRestaurant || item.restaurantId === selectedRestaurant) &&
-      (!foodType || item.foodType === foodType) &&
-      (!foodCategory || item.category === foodCategory)
+  // Shuffle function
+  const shuffleArray = (array) => {
+    return array.sort(() => Math.random() - 0.5);
+  };
+
+  // Filtered and shuffled food based on selections
+  const filteredFood = shuffleArray(
+    food.filter(
+      (item) =>
+        (!selectedRestaurant || item.restaurantId === selectedRestaurant) &&
+        (!foodType || item.foodType === foodType) &&
+        (!foodCategory || item.category === foodCategory)
+    )
   );
 
   const addingToCart = async (productId, price, dishName, img) => {
@@ -272,6 +279,7 @@ function Menu() {
               Dishish Near You!
             </p>
           </div>
+          {console.log(currentItems)}
           <div className="grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 gap-x-10 mb-10 gap-y-10">
             {currentItems.map((value, index) => (
               <div

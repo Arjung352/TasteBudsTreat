@@ -11,8 +11,8 @@ const PaymentSuccess = () => {
         if (prev > 1) {
           return prev - 1;
         } else {
-          clearInterval(timer); // Stop the timer when countdown reaches 1
-          navigate("/"); // Redirect when countdown is 0
+          clearInterval(timer);
+          navigate("/");
           return 0;
         }
       });

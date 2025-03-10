@@ -6,6 +6,7 @@ import ServicesSection from "./ServiceSection/ServiceSection";
 import PopularCatagories from "./PopularCatagories/PopularCatagories";
 import Footer from "../Footer/Footer";
 import Navbar from "../Navbar/Navbar";
+import Chatbot from "../ChatBot/Chatbot";
 import "./home.css";
 function Home() {
   const recipie = useNavigate();
@@ -48,6 +49,7 @@ function Home() {
               />
             </div>
           </div>
+          <Chatbot />
           <PopularCatagories />
           <Favourite />
           <Testimonials />
