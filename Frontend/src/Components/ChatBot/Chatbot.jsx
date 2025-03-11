@@ -9,23 +9,30 @@ import { TailSpin } from "react-loader-spinner";
 function Chatbot() {
   const [open, setOpen] = useState(false);
   const [UserMessage, setUserMessage] = useState("");
+  const [chatHistory, setChatHistory] = useState([]);
   const handleInputChange = (e) => {
     setUserMessage(e.target.value);
   };
   const [messageStatus, setmessageStatus] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!UserMessage.trim()) return;
+
+    setChatHistory((history) => [
+      ...history,
+      { role: "User", text: UserMessage },
+    ]);
+    setUserMessage("");
+
+    // Simulating a bot response after a delay
     setmessageStatus(true);
-    // await axios
-    //   .post("https://taste-buds-treat-backend.vercel.app/send", formData)
-    //   .then((response) => {
-    //     setFormData({ name: "", email: "", message: "" });
-    //     toast.success("Message Sent Successfully!");
-    //   })
-    //   .catch((error) => {
-    //     toast.error("Failed to send message.");
-    //   });
-    setmessageStatus(false);
+    setTimeout(() => {
+      setChatHistory((history) => [
+        ...history,
+        { role: "Model", text: "Thinking...." },
+      ]);
+      setmessageStatus(false);
+    }, 1000);
   };
 
   return (
@@ -77,7 +84,7 @@ function Chatbot() {
               </div>
 
               {/* Chatbot Content */}
-              <div className="mt-2 font-WorkSans flex flex-col gap-4 max-h-full overflow-y-auto">
+              <div className="mt-2 font-WorkSans flex flex-col gap-4 max-h-full w-full max-w-full ">
                 {/* ChatBot dailog box */}
                 <div className="flex">
                   <img
@@ -92,14 +99,33 @@ function Chatbot() {
                   </p>
                 </div>
                 {/* User content */}
-                <p className=" w-2/3 self-end text-sm p-2 text-white bg-green-400 rounded-xl mr-5">
-                  Lorem ipsum is a dummy or placeholder text commonly used in
-                  graphic design, publishing, and web development
-                </p>
+                {chatHistory.map((chat, index) =>
+                  chat.role === "User" ? (
+                    // User Message Styling
+                    <p
+                      key={index}
+                      className="max-w-[66%] self-end text-sm p-2 text-white bg-green-400 rounded-xl mr-5"
+                    >
+                      {chat.text}
+                    </p>
+                  ) : (
+                    // Bot Message Styling (Same as Initial Greeting)
+                    <div key={index} className="flex items-start">
+                      <img
+                        src="https://res.cloudinary.com/dmxlqw5ix/image/upload/v1731066887/qxhi70lws9tx5ssy8ff3.png"
+                        alt="Logo"
+                        className="h-6 self-end"
+                      />
+                      <p className=" max-w-[66%] text-sm bg-green-100 p-2 rounded-xl ml-2">
+                        {chat.text}
+                      </p>
+                    </div>
+                  )
+                )}
               </div>
             </div>
             {/* Message input field */}
-            <form className="" onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
               <div className="flex items-center mt-4">
                 <input
                   placeholder="Message.."
@@ -111,15 +137,17 @@ function Chatbot() {
                 />
                 <button
                   type="submit"
-                  className=" bg-green-400 rounded-full text-white flex items-center mb-4 ml-4"
+                  className={` rounded-full text-white flex items-center mb-4 ml-4 ${
+                    messageStatus ? "" : "bg-green-400"
+                  }`}
                 >
                   {messageStatus ? (
                     <TailSpin
-                      height="15"
-                      width="15"
-                      color="#ffffff"
+                      height="25"
+                      width="25"
+                      color="#2F820c"
                       ariaLabel="tail-spin-loading"
-                      radius="2"
+                      radius="5"
                       wrapperStyle={{ display: "inline-block" }}
                       visible={true}
                     />
