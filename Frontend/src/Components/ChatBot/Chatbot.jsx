@@ -5,7 +5,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { TailSpin } from "react-loader-spinner";
-
+import { TasteBudsTreatAbout } from "./TasteBudsTreatAbout.js";
 function Chatbot() {
   const [open, setOpen] = useState(false);
   const [UserMessage, setUserMessage] = useState("");
@@ -18,21 +18,86 @@ function Chatbot() {
     e.preventDefault();
     if (!UserMessage.trim()) return;
 
+    // Add User Message to Chat History
     setChatHistory((history) => [
       ...history,
       { role: "User", text: UserMessage },
     ]);
     setUserMessage("");
 
-    // Simulating a bot response after a delay
+    // Display "Thinking..." Message from Bot
     setmessageStatus(true);
-    setTimeout(() => {
-      setChatHistory((history) => [
-        ...history,
-        { role: "Model", text: "Thinking...." },
-      ]);
-      setmessageStatus(false);
-    }, 1000);
+    // Append user message to history before calling the bot function
+    const updatedHistory = [
+      ...chatHistory,
+      { role: "User", text: UserMessage },
+    ];
+
+    await generateBotResponse(updatedHistory, setChatHistory, setmessageStatus);
+  };
+
+  const generateBotResponse = async (
+    history,
+    setChatHistory,
+    setmessageStatus
+  ) => {
+    const lastUserMessage = history[history.length - 1].text.toLowerCase();
+    let response = "";
+
+    if (
+      lastUserMessage.includes("about") ||
+      lastUserMessage.includes("what is tastebudstreat")
+    ) {
+      response = TasteBudsTreatAbout.introduction;
+    } else if (
+      lastUserMessage.includes("founders") ||
+      lastUserMessage.includes("who created tastebudstreat")
+    ) {
+      response = `TasteBudsTreat was founded by ${TasteBudsTreatAbout.team.founders.join(
+        ", "
+      )}.`;
+    } else if (
+      lastUserMessage.includes("contact") ||
+      lastUserMessage.includes("email") ||
+      lastUserMessage.includes("phone")
+    ) {
+      response = `You can reach us at ${TasteBudsTreatAbout.contact.email} or call ${TasteBudsTreatAbout.contact.phone}.`;
+    } else if (lastUserMessage.includes("website")) {
+      response = `Visit our website: ${TasteBudsTreatAbout.contact.website}`;
+    } else if (lastUserMessage.includes("social media")) {
+      response = `Follow us on Instagram: ${TasteBudsTreatAbout.contact.instagram}`;
+    } else if (lastUserMessage.includes("menu")) {
+      response =
+        "Here's our menu:\n" +
+        "🍔 Burgers & Sandwiches:\n" +
+        TasteBudsTreatAbout.menu.burgersAndSandwiches
+          .map((item) => `- ${item.name} - ${item.price}`)
+          .join("\n") +
+        "\n🍕 Pizza & Pasta:\n" +
+        TasteBudsTreatAbout.menu.pizzaAndPasta
+          .map((item) => `- ${item.name} - ${item.price}`)
+          .join("\n") +
+        "\n🥗 Healthy Bites:\n" +
+        TasteBudsTreatAbout.menu.healthyBites
+          .map((item) => `- ${item.name} - ${item.price}`)
+          .join("\n") +
+        "\n🍹 Beverages & Desserts:\n" +
+        TasteBudsTreatAbout.menu.beveragesAndDesserts
+          .map((item) => `- ${item.name} - ${item.price}`)
+          .join("\n");
+    } else {
+      response =
+        "Sorry, I couldn't understand that. Please ask about our services, menu, or contact details.";
+    }
+
+    // Update chat history with bot response
+    setChatHistory((prevHistory) => [
+      ...prevHistory,
+      { role: "Model", text: response },
+    ]);
+
+    // Set message status to false after responding
+    setmessageStatus(false);
   };
 
   return (
