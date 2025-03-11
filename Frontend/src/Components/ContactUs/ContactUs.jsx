@@ -6,6 +6,7 @@ import Footer from "../Footer/Footer";
 import FAQ from "./FAQ/FAQ";
 import { TailSpin } from "react-loader-spinner";
 import Navbar from "../Navbar/Navbar";
+import Chatbot from "../ChatBot/Chatbot";
 
 function ContactUs() {
   const [formData, setFormData] = useState({
@@ -38,6 +39,7 @@ function ContactUs() {
     <div className="relative">
       <Navbar />
       <div className="overflow-x-hidden overflow-y-hidden w-screen">
+        <Chatbot />
         <div>
           <div className="h-64 relative mt-3">
             <div>

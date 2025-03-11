@@ -7,12 +7,14 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import XIcon from "@mui/icons-material/X";
 import Footer from "../Footer/Footer";
 import Navbar from "../Navbar/Navbar";
+import Chatbot from "../ChatBot/Chatbot";
 
 function About() {
   return (
     <div className="relative">
       <Navbar />
       <div className="flex flex-col items-center">
+        <Chatbot />
         <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row max-md:pt-0 py-8">
             <div className="lg:hidden w-full mb-8">

@@ -104,7 +104,7 @@ function Chatbot() {
     <>
       {/* Chatbot Toggle Button */}
       <motion.div
-        className="fixed bottom-5 right-5 bg-green-500 text-white p-4 rounded-full cursor-pointer shadow-lg hover:bg-olive transition-all hover:scale-105"
+        className="fixed bottom-5 right-5 z-50 bg-green-500 text-white p-4 rounded-full cursor-pointer shadow-lg hover:bg-olive transition-all hover:scale-105"
         title="ChatBot"
         onClick={() => setOpen(!open)}
         whileTap={{ scale: 0.9 }}

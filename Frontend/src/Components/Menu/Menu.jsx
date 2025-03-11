@@ -12,6 +12,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { TailSpin } from "react-loader-spinner";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import Chatbot from "../ChatBot/Chatbot";
 
 // importing redux
 import { useDispatch } from "react-redux";
@@ -173,6 +174,7 @@ function Menu() {
     <div className="relative">
       <Navbar />
       <div className="flex justify-center">
+        <Chatbot />
         <div className="w-4/5 font-WorkSans max-md:w-3/4">
           <div className="flex max-md:flex-col max-md:items-start gap-7 mt-10 items-center text-gray-500">
             <p className="p-2 bg-white border-gray-300 border rounded-xl">
