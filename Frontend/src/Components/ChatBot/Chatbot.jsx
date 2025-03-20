@@ -202,7 +202,7 @@ function Chatbot() {
                 />
                 <button
                   type="submit"
-                  className={` rounded-full text-white flex items-center mb-4 ml-4 ${
+                  className={` rounded-full text-white flex items-center mb-4 ml-4 max-md:ml-0 ${
                     messageStatus ? "" : "bg-green-400"
                   }`}
                 >
