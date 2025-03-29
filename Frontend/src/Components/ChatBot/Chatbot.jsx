@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import ChatIcon from "@mui/icons-material/Chat";
+import AssistantIcon from "@mui/icons-material/Assistant";
 import CloseIcon from "@mui/icons-material/Close";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { TailSpin } from "react-loader-spinner";
-import { TasteBudsTreatAbout } from "./TasteBudsTreatAbout.js";
 function Chatbot() {
   const [open, setOpen] = useState(false);
   const [UserMessage, setUserMessage] = useState("");
@@ -13,98 +12,113 @@ function Chatbot() {
   const handleInputChange = (e) => {
     setUserMessage(e.target.value);
   };
+
   const [messageStatus, setmessageStatus] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!UserMessage.trim()) return;
 
-    // Add User Message to Chat History
-    setChatHistory((history) => [
-      ...history,
-      { role: "User", text: UserMessage },
-    ]);
+    setChatHistory((prevHistory) => {
+      const newHistory = [...prevHistory, { role: "User", text: UserMessage }];
+      generateBotResponse(newHistory);
+      return newHistory;
+    });
+
     setUserMessage("");
-
-    // Display "Thinking..." Message from Bot
     setmessageStatus(true);
-    // Append user message to history before calling the bot function
-    const updatedHistory = [
-      ...chatHistory,
-      { role: "User", text: UserMessage },
-    ];
-
-    await generateBotResponse(updatedHistory, setChatHistory, setmessageStatus);
   };
 
-  const generateBotResponse = async (
-    history,
-    setChatHistory,
-    setmessageStatus
-  ) => {
+  const generateBotResponse = async (history) => {
     const lastUserMessage = history[history.length - 1].text.toLowerCase();
-    let response = "";
 
-    if (
-      lastUserMessage.includes("about") ||
-      lastUserMessage.includes("what is tastebudstreat")
-    ) {
-      response = TasteBudsTreatAbout.introduction;
-    } else if (
-      lastUserMessage.includes("founders") ||
-      lastUserMessage.includes("who created tastebudstreat")
-    ) {
-      response = `TasteBudsTreat was founded by ${TasteBudsTreatAbout.team.founders.join(
-        ", "
-      )}.`;
-    } else if (
-      lastUserMessage.includes("contact") ||
-      lastUserMessage.includes("email") ||
-      lastUserMessage.includes("phone")
-    ) {
-      response = `You can reach us at ${TasteBudsTreatAbout.contact.email} or call ${TasteBudsTreatAbout.contact.phone}.`;
-    } else if (lastUserMessage.includes("website")) {
-      response = `Visit our website: ${TasteBudsTreatAbout.contact.website}`;
-    } else if (lastUserMessage.includes("social media")) {
-      response = `Follow us on Instagram: ${TasteBudsTreatAbout.contact.instagram}`;
-    } else if (lastUserMessage.includes("menu")) {
-      response =
-        "Here's our menu:\n" +
-        "🍔 Burgers & Sandwiches:\n" +
-        TasteBudsTreatAbout.menu.burgersAndSandwiches
-          .map((item) => `- ${item.name} - ${item.price}`)
-          .join("\n") +
-        "\n🍕 Pizza & Pasta:\n" +
-        TasteBudsTreatAbout.menu.pizzaAndPasta
-          .map((item) => `- ${item.name} - ${item.price}`)
-          .join("\n") +
-        "\n🥗 Healthy Bites:\n" +
-        TasteBudsTreatAbout.menu.healthyBites
-          .map((item) => `- ${item.name} - ${item.price}`)
-          .join("\n") +
-        "\n🍹 Beverages & Desserts:\n" +
-        TasteBudsTreatAbout.menu.beveragesAndDesserts
-          .map((item) => `- ${item.name} - ${item.price}`)
-          .join("\n");
-    } else {
-      response =
-        "Sorry, I couldn't understand that. Please ask about our services, menu, or contact details.";
-    }
-
-    // Update chat history with bot response
     setChatHistory((prevHistory) => [
       ...prevHistory,
-      { role: "Model", text: response },
+      { role: "Model", text: "Thinking..." },
     ]);
 
-    // Set message status to false after responding
-    setmessageStatus(false);
+    setmessageStatus(true); // Show loader
+
+    // Check predefined responses first
+    const predefinedResponses = {
+      "about tastebudstreat":
+        "TasteBudsTreat is your go-to food ordering platform, making it easier than ever to satisfy your cravings with just a few taps. We collaborate with top-rated restaurants, local eateries, and renowned cafes to bring you a diverse selection of cuisines, ensuring there's something for everyone.With a seamless ordering experience, real-time order tracking, and multiple payment options, TasteBudsTreat is designed for convenience and quality. Whether you're in the mood for comfort food, a quick snack, or a gourmet meal, we've got you covered.This platform was proudly built as a major project by three passionate 3rd-year BCA students from SGTBIMIT, driven by a shared love for technology and great food.",
+      "what is tastebudstreat":
+        "TasteBudsTreat is your go-to food ordering platform, making it easier than ever to satisfy your cravings with just a few taps. We collaborate with top-rated restaurants, local eateries, and renowned cafes to bring you a diverse selection of cuisines, ensuring there's something for everyone.With a seamless ordering experience, real-time order tracking, and multiple payment options, TasteBudsTreat is designed for convenience and quality. Whether you're in the mood for comfort food, a quick snack, or a gourmet meal, we've got you covered.This platform was proudly built as a major project by three passionate 3rd-year BCA students from SGTBIMIT, driven by a shared love for technology and great food.",
+      menu: "Our menu includes Burgers, Pizzas, Pasta... and so much more you can check it out now!!",
+      "payment options":
+        "We accept UPI, credit/debit cards, and cash on delivery.",
+      "contact information":
+        "You can reach us at tastebudstreat29@gmail.com or you can reach out to our social media account https://www.instagram.com/tastebudstreat29/ or call +91 9999 88 2574 or fill the contact form from the Contact section.",
+      contact:
+        "You can reach us at tastebudstreat29@gmail.com or you can reach out to our social media account https://www.instagram.com/tastebudstreat29/ or call +91 9999 88 2574 or fill the contact form from the Contact section.",
+      founder:
+        "TasteBudsTreat was founded by three 3rd-year BCA students. You can check out more details in the About section.",
+      founded:
+        "TasteBudsTreat was founded by three 3rd-year BCA students. You can check out more details in the About section.",
+      founders:
+        "TasteBudsTreat was founded by three 3rd-year BCA students. You can check out more details in the About section.",
+    };
+
+    for (const key in predefinedResponses) {
+      if (lastUserMessage.includes(key)) {
+        setChatHistory((prevHistory) => {
+          const updatedHistory = prevHistory.map((msg, index) =>
+            index === prevHistory.length - 1 && msg.role === "Model"
+              ? { ...msg, text: predefinedResponses[key] }
+              : msg
+          );
+
+          return updatedHistory;
+        });
+
+        setmessageStatus(false);
+        return;
+      }
+    }
+
+    // If no predefined response, proceed with API call
+    try {
+      const response = await fetch(import.meta.env.VITE_API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: history.map(({ role, text }) => ({
+            role,
+            parts: [{ text }],
+          })),
+        }),
+      });
+
+      const data = await response.json();
+      if (!response.ok) throw new Error("API Error");
+
+      const botReply =
+        data.candidates[0]?.content?.parts[0]?.text ||
+        "Sorry, I couldn't understand that.";
+
+      setChatHistory((prevHistory) => [
+        ...prevHistory.slice(0, -1),
+        { role: "Model", text: botReply },
+      ]);
+    } catch (error) {
+      console.error("Error fetching bot response:", error);
+      setChatHistory((prevHistory) => [
+        ...prevHistory.slice(0, -1),
+        {
+          role: "Model",
+          text: "Oops! Something went wrong. Please try again.",
+        },
+      ]);
+    } finally {
+      setmessageStatus(false);
+    }
   };
 
   return (
     <>
       {/* Chatbot Toggle Button */}
       <motion.div
-        className="fixed bottom-5 right-5 z-50 bg-green-500 text-white p-4 rounded-full cursor-pointer shadow-lg hover:bg-olive transition-all hover:scale-105"
+        className="fixed bottom-5 right-5 z-50 bg-green-500 text-white p-2 rounded-full cursor-pointer shadow-lg hover:bg-olive transition-all hover:scale-105"
         title="ChatBot"
         onClick={() => setOpen(!open)}
         whileTap={{ scale: 0.9 }}
@@ -116,7 +130,14 @@ function Chatbot() {
           exit={{ rotate: 180, opacity: 0 }}
           transition={{ duration: 0.3 }}
         >
-          {open ? <CloseIcon /> : <ChatIcon />}
+          {open ? (
+            <CloseIcon fontSize="large" />
+          ) : (
+            <img
+              src="https://res.cloudinary.com/dzrjja888/image/upload/v1743273556/gemini-icon-on-a-transparent-background-free-png_vh8ump.webp"
+              className="w-10 h-10"
+            />
+          )}
         </motion.div>
       </motion.div>
 

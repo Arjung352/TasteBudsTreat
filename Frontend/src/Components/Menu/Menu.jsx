@@ -83,15 +83,20 @@ function Menu() {
     return array.sort(() => Math.random() - 0.5);
   };
 
-  // Filtered and shuffled food based on selections
-  const filteredFood = shuffleArray(
-    food.filter(
-      (item) =>
-        (!selectedRestaurant || item.restaurantId === selectedRestaurant) &&
-        (!foodType || item.foodType === foodType) &&
-        (!foodCategory || item.category === foodCategory)
-    )
-  );
+  const [shuffledFood, setShuffledFood] = useState([]);
+
+  useEffect(() => {
+    setShuffledFood(
+      shuffleArray(
+        food.filter(
+          (item) =>
+            (!selectedRestaurant || item.restaurantId === selectedRestaurant) &&
+            (!foodType || item.foodType === foodType) &&
+            (!foodCategory || item.category === foodCategory)
+        )
+      )
+    );
+  }, [food, selectedRestaurant, foodType, foodCategory]);
 
   const addingToCart = async (productId, price, dishName, img) => {
     setLoadingStates((prevState) => ({
@@ -155,8 +160,8 @@ function Menu() {
   };
   // Pagination logic
   const offset = currentPage * itemsPerPage;
-  const currentItems = filteredFood.slice(offset, offset + itemsPerPage);
-  const pageCount = Math.ceil(filteredFood.length / itemsPerPage);
+  const currentItems = shuffledFood.slice(offset, offset + itemsPerPage);
+  const pageCount = Math.ceil(shuffledFood.length / itemsPerPage);
 
   const handlePageClick = (event) => {
     setCurrentPage(event.selected);
