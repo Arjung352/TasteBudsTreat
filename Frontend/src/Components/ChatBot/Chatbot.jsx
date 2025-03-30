@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import AssistantIcon from "@mui/icons-material/Assistant";
 import CloseIcon from "@mui/icons-material/Close";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
@@ -76,7 +75,6 @@ function Chatbot() {
       }
     }
 
-    // If no predefined response, proceed with API call
     try {
       const response = await fetch(import.meta.env.VITE_API_URL, {
         method: "POST",
@@ -84,7 +82,11 @@ function Chatbot() {
         body: JSON.stringify({
           contents: history.map(({ role, text }) => ({
             role,
-            parts: [{ text }],
+            parts: [
+              {
+                text: `TasteBudsTreat is a food ordering platform by Arjun, Adarsh, and Ansh. Only answer queries related to food ordering, menu items, and delivery services. Do not answer anything outside this scope. User query: ${text}`,
+              },
+            ],
           })),
         }),
       });
