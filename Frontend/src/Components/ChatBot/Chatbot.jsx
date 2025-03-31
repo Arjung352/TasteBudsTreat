@@ -84,7 +84,7 @@ function Chatbot() {
             role,
             parts: [
               {
-                text: `TasteBudsTreat is a food ordering platform by Arjun, Adarsh, and Ansh. Only answer queries related to food ordering, menu items, and delivery services. Do not answer anything outside this scope. User query: ${text}`,
+                text: `TasteBudsTreat is a food ordering platform by Arjun, Adarsh, and Ansh.Its a college project so food delivery cannot be done and so its a project so the food is not going to be delivered actually. Only answer queries related to food ordering, menu items, and delivery services. Do not answer anything outside this scope. User query: ${text}`,
               },
             ],
           })),
