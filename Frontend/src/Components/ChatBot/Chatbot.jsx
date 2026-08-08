@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import CloseIcon from "@mui/icons-material/Close";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -18,7 +18,7 @@ function Chatbot() {
     if (!UserMessage.trim()) return;
 
     setChatHistory((prevHistory) => {
-      const newHistory = [...prevHistory, { role: "User", text: UserMessage }];
+      const newHistory = [...prevHistory, { role: "user", text: UserMessage }];
       generateBotResponse(newHistory);
       return newHistory;
     });
@@ -32,7 +32,7 @@ function Chatbot() {
 
     setChatHistory((prevHistory) => [
       ...prevHistory,
-      { role: "Model", text: "Thinking..." },
+      { role: "model", text: "Thinking..." },
     ]);
 
     setmessageStatus(true); // Show loader
@@ -62,9 +62,9 @@ function Chatbot() {
       if (lastUserMessage.includes(key)) {
         setChatHistory((prevHistory) => {
           const updatedHistory = prevHistory.map((msg, index) =>
-            index === prevHistory.length - 1 && msg.role === "Model"
+            index === prevHistory.length - 1 && msg.role === "model"
               ? { ...msg, text: predefinedResponses[key] }
-              : msg
+              : msg,
           );
 
           return updatedHistory;
@@ -76,15 +76,90 @@ function Chatbot() {
     }
 
     try {
-      const response = await fetch(import.meta.env.VITE_API_URL, {
+      const response = await fetch(import.meta.env.VITE_GEMINI_API_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
-          contents: history.map(({ role, text }) => ({
-            role,
+          system_instruction: {
             parts: [
               {
-                text: `TasteBudsTreat is a food ordering platform by Arjun, Adarsh, and Ansh.Its a college project so food delivery cannot be done and so its a project so the food is not going to be delivered actually. Only answer queries related to food ordering, menu items, and delivery services. Do not answer anything outside this scope. User query: ${text}`,
+                text: `You are the AI assistant for TasteBudsTreat, a college food-ordering project created by Arjun Gupta, Adarsh Sharma, and Ansh Bansal.
+
+TasteBudsTreat allows users to browse food items, view prices, add items to their cart, and simulate the food-ordering process.
+
+IMPORTANT:
+- TasteBudsTreat is a college/demo project.
+- No actual food is delivered.
+- Orders are simulated only.
+- Do not claim that an order has been actually placed, paid for, prepared, or delivered.
+- Do not invent restaurants, menu items, prices, offers, delivery times, or order statuses.
+- Do not claim that TasteBudsTreat has real restaurant or delivery-service partnerships.
+
+You can answer questions about:
+- TasteBudsTreat and its features
+- Food ordering and the ordering process
+- Menu items and prices
+- Food categories
+- Cart and checkout
+- Payment options shown in the project
+- The founders and project information
+- TasteBudsTreat contact information
+- General food-related questions
+
+Available menu:
+
+Burgers & Sandwiches:
+- Classic Cheeseburger - ₹199
+- Spicy Chicken Burger - ₹229
+- Veg Club Sandwich - ₹179
+- Paneer Tikka Wrap - ₹199
+
+Pizza & Pasta:
+- Margherita Pizza - ₹299
+- BBQ Chicken Pizza - ₹349
+- Alfredo Pasta - ₹269
+- Spaghetti Arrabbiata - ₹249
+
+Healthy Bites:
+- Greek Salad - ₹199
+- Quinoa Bowl - ₹249
+- Avocado Toast - ₹179
+
+Beverages & Desserts:
+- Cold Coffee - ₹129
+- Fresh Fruit Smoothie - ₹149
+- Brownie with Ice Cream - ₹159
+- Gulab Jamun - ₹99
+
+Founders:
+- Arjun Gupta
+- Adarsh Sharma
+- Ansh Bansal
+
+Contact:
+- Website: https://taste-buds-treat.vercel.app
+- Instagram: https://www.instagram.com/tastebudstreat29/
+- Email: tastebudstreat29@gmail.com
+- Phone: +91 9999882574
+
+Response rules:
+- Be concise, friendly, and direct.
+- For menu questions, provide the relevant food items and prices.
+- For recommendations, recommend only items from the available menu unless the user explicitly asks for general food recommendations.
+- If information is not available, say that you do not have that information instead of making it up.
+- If asked about real food delivery, clearly explain that TasteBudsTreat does not provide actual delivery because it is a college project.
+- If a question is unrelated to TasteBudsTreat, food ordering, food, menu items, or the projects functionality, politely refuse to answer and redirect the user to the supported topics.`,
+              },
+            ],
+          },
+
+          contents: history.map(({ role, text }) => ({
+            role: role.toLowerCase(),
+            parts: [
+              {
+                text,
               },
             ],
           })),
@@ -92,22 +167,28 @@ function Chatbot() {
       });
 
       const data = await response.json();
-      if (!response.ok) throw new Error("API Error");
+
+      if (!response.ok) {
+        throw new Error(data?.error?.message || "API Error");
+      }
 
       const botReply =
-        data.candidates[0]?.content?.parts[0]?.text ||
+        data.candidates?.[0]?.content?.parts?.[0]?.text ||
         "Sorry, I couldn't understand that.";
 
       setChatHistory((prevHistory) => [
         ...prevHistory.slice(0, -1),
-        { role: "Model", text: botReply },
+        {
+          role: "model",
+          text: botReply,
+        },
       ]);
     } catch (error) {
       console.error("Error fetching bot response:", error);
       setChatHistory((prevHistory) => [
         ...prevHistory.slice(0, -1),
         {
-          role: "Model",
+          role: "model",
           text: "Oops! Something went wrong. Please try again.",
         },
       ]);
@@ -188,7 +269,7 @@ function Chatbot() {
                 </div>
                 {/* User content */}
                 {chatHistory.map((chat, index) =>
-                  chat.role === "User" ? (
+                  chat.role === "user" ? (
                     // User Message Styling
                     <p
                       key={index}
@@ -208,7 +289,7 @@ function Chatbot() {
                         {chat.text}
                       </p>
                     </div>
-                  )
+                  ),
                 )}
               </div>
             </div>
