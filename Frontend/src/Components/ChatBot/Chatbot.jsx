@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import CloseIcon from "@mui/icons-material/Close";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -47,9 +47,9 @@ function Chatbot() {
       "payment options":
         "We accept UPI, credit/debit cards, and cash on delivery.",
       "contact information":
-        "You can reach us at tastebudstreat29@gmail.com or you can reach out to our social media account https://www.instagram.com/tastebudstreat29/ or call +91 9999 88 2574 or fill the contact form from the Contact section.",
+        "You can reach us at tastebudstreat29@gmail.com or you can reach out to our social media account https://www.instagram.com/tastebudstreat29/ or call +91 9999882574 or fill the contact form from the Contact section.",
       contact:
-        "You can reach us at tastebudstreat29@gmail.com or you can reach out to our social media account https://www.instagram.com/tastebudstreat29/ or call +91 9999 88 2574 or fill the contact form from the Contact section.",
+        "You can reach us at tastebudstreat29@gmail.com or you can reach out to our social media account https://www.instagram.com/tastebudstreat29/ or call +91 9999882574 or fill the contact form from the Contact section.",
       founder:
         "TasteBudsTreat was founded by three 3rd-year BCA students. You can check out more details in the About section.",
       founded:
