@@ -142,36 +142,54 @@ TasteBudsTreat/
 
 ```mermaid
 flowchart TD
-    User[Visitor / Customer] --> UI[React Frontend]
-    UI --> Home[Home & Restaurant Discovery]
-    UI --> Menu[Menu Browsing]
-    UI --> Cart[Cart & Checkout]
-    UI --> Admin[Admin Dashboard]
-    UI --> ChatBot[Gemini Chatbot]
+    subgraph front_end["React Frontend"]
+        ui["Customer UI"]
+        admin["Admin UI"]
+    end
 
-    Home --> API[Express REST API]
-    Menu --> API
-    Cart --> API
-    Admin --> API
-    ChatBot --> Gemini[Gemini API]
+    subgraph api_layer["Express REST API"]
+        auth["CORS + Security Headers"]
+        clerk_mw["Clerk Auth Middleware"]
+        routes["Cart / Restaurant / Menu / User Routes"]
+        validation["Validation + Order Logic"]
+    end
 
-    API --> RestaurantRoutes[restaurant.js]
-    API --> MenuRoutes[menu.js]
-    API --> CartRoutes[cart.js]
-    API --> UserRoutes[user.js]
-    API --> DashboardRoutes[dashboard.js]
+    subgraph data_layer["MongoDB"]
+        mongo[("MongoDB")]
+    end
 
-    RestaurantRoutes --> Mongo[(MongoDB)]
-    MenuRoutes --> Mongo
-    CartRoutes --> Mongo
-    UserRoutes --> Mongo
-    DashboardRoutes --> Mongo
+    subgraph integrations["External Services"]
+        clerk["Clerk Authentication"]
+        razorpay["Razorpay Payments"]
+        cloudinary["Cloudinary Image Uploads"]
+        gmail["Gmail Email"]
+        gemini["Gemini Chatbot"]
+    end
 
-    API --> Razorpay[Razorpay]
-    API --> Gmail[Gmail / Nodemailer]
-    API --> Cloudinary[Cloudinary]
-    UI --> Clerk[Clerk Auth]
-    API --> ClerkWebhook[Clerk Webhooks]
+    user(("User")) --> ui
+    admin --> routes
+    ui --> auth
+    auth --> routes
+    routes --> validation
+    validation --> mongo
+
+    clerk --> ui
+    ui --> clerk
+    routes --> razorpay
+    routes --> cloudinary
+    routes --> gmail
+    routes --> gemini
+    mongo --> routes
+
+    classDef front fill:#f8fafc,stroke:#cbd5e1,stroke-width:1.5px,color:#0f172a
+    classDef api fill:#e2e8f0,stroke:#94a3b8,stroke-width:1.5px,color:#0f172a
+    classDef data fill:#dbeafe,stroke:#60a5fa,stroke-width:1.5px,color:#172554
+    classDef ext fill:#fef3c7,stroke:#f59e0b,stroke-width:1.5px,color:#78350f
+
+    class ui,admin front
+    class auth,clerk_mw,routes,validation api
+    class mongo data
+    class clerk,razorpay,cloudinary,gmail,gemini ext
 ```
 
 ### Architectural Summary
