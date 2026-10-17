@@ -141,55 +141,67 @@ TasteBudsTreat/
 ## 🏗️ High-Level Architecture
 
 ```mermaid
-flowchart TD
-    subgraph front_end["React Frontend"]
-        ui["Customer UI"]
-        admin["Admin UI"]
+flowchart LR
+    %% Frontend
+    FE["React 18 + Tailwind CSS<br/>Customer UI • Restaurant UI • Admin UI"]
+
+    %% CI/CD
+    CI["GitHub Actions<br/>Docker build / deploy"]
+
+    %% Backend API
+    subgraph API["Express REST API"]
+        direction LR
+        SEC["CORS +<br/>Security Headers"]
+        AUTH["Clerk Auth<br/>Middleware"]
+        ROUTES["Cart / Restaurant /<br/>Menu / User Routes"]
+        CTRL["Controllers +<br/>Validation"]
+        ORDER["Order &<br/>Payment Logic"]
+
+        SEC --> AUTH --> ROUTES --> CTRL --> ORDER
     end
 
-    subgraph api_layer["Express REST API"]
-        auth["CORS + Security Headers"]
-        clerk_mw["Clerk Auth Middleware"]
-        routes["Cart / Restaurant / Menu / User Routes"]
-        validation["Validation + Order Logic"]
-    end
+    %% Database
+    DB[("MongoDB<br/>Cart • Restaurant •<br/>Menu • Users • Orders")]
 
-    subgraph data_layer["MongoDB"]
-        mongo[("MongoDB")]
-    end
+    %% External services
+    CLERK["Clerk<br/>Authentication"]
+    RAZOR["Razorpay<br/>Payments"]
+    CLOUD["Cloudinary<br/>Image Uploads"]
+    EMAIL["Gmail<br/>Email"]
+    GEMINI["Gemini<br/>Food Chatbot"]
 
-    subgraph integrations["External Services"]
-        clerk["Clerk Authentication"]
-        razorpay["Razorpay Payments"]
-        cloudinary["Cloudinary Image Uploads"]
-        gmail["Gmail Email"]
-        gemini["Gemini Chatbot"]
-    end
+    %% Main request flow
+    FE -->|"HTTPS / REST JSON"| SEC
+    ORDER <-->|"CRUD"| DB
 
-    user(("User")) --> ui
-    admin --> routes
-    ui --> auth
-    auth --> routes
-    routes --> validation
-    validation --> mongo
+    %% External service interactions
+    CLERK <-->|"Identity / Auth"| AUTH
+    ORDER <-->|"Create & verify payments"| RAZOR
+    CTRL <-->|"Upload / retrieve images"| CLOUD
+    CTRL -->|"Send email"| EMAIL
+    ROUTES <-->|"Chatbot requests / responses"| GEMINI
 
-    clerk --> ui
-    ui --> clerk
-    routes --> razorpay
-    routes --> cloudinary
-    routes --> gmail
-    routes --> gemini
-    mongo --> routes
+    %% Deployment flow
+    CI -.->|"CI/CD • Build & deploy"| API
+    CI -.->|"Frontend deployment"| FE
 
-    classDef front fill:#f8fafc,stroke:#cbd5e1,stroke-width:1.5px,color:#0f172a
-    classDef api fill:#e2e8f0,stroke:#94a3b8,stroke-width:1.5px,color:#0f172a
-    classDef data fill:#dbeafe,stroke:#60a5fa,stroke-width:1.5px,color:#172554
-    classDef ext fill:#fef3c7,stroke:#f59e0b,stroke-width:1.5px,color:#78350f
+    %% Chatbot UI interaction
+    FE -.->|"Chat messages"| GEMINI
 
-    class ui,admin front
-    class auth,clerk_mw,routes,validation api
-    class mongo data
-    class clerk,razorpay,cloudinary,gmail,gemini ext
+    %% Styling
+    classDef frontend fill:#17212d,stroke:#aab8c8,color:#f1f5f9,stroke-width:1.5px
+    classDef backend fill:#17212d,stroke:#aab8c8,color:#f1f5f9,stroke-width:1.5px
+    classDef database fill:#17212d,stroke:#aab8c8,color:#f1f5f9,stroke-width:1.5px
+    classDef external fill:#17212d,stroke:#aab8c8,color:#f1f5f9,stroke-width:1.5px
+    classDef deployment fill:#17212d,stroke:#aab8c8,color:#f1f5f9,stroke-width:1.5px
+
+    class FE frontend
+    class SEC,AUTH,ROUTES,CTRL,ORDER backend
+    class DB database
+    class CLERK,RAZOR,CLOUD,EMAIL,GEMINI external
+    class CI deployment
+
+    style API fill:#202832,stroke:#aab8c8,color:#f1f5f9,stroke-width:2px
 ```
 
 ### Architectural Summary
